@@ -7,7 +7,7 @@
 class Project
 {
 public:
-	Project(int projectID, std::string title, std::string summary, std::string genre, std::string releaseDate, unsigned int runtime, bool playingInCinimam, bool unreleased);
+	Project(int projectID, std::string title, std::string summary, std::string releaseDate, unsigned int runtime, bool playingInCinimam, bool unreleased);
 
 	~Project();
 
@@ -18,7 +18,7 @@ public:
 
 	std::string summary;
 
-	std::string genre;
+	std::vector<std::string> genres;
 
 	std::string releaseDate;
 
@@ -41,6 +41,11 @@ public:
 	void addCrewMember(std::string name, std::string role);
 
 	void addFilmingLocation(std::string location);
+
+	void addGenre(std::string genre);
+
+	std::string save();
+
 
 };
 

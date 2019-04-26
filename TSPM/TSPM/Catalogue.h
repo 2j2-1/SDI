@@ -19,7 +19,7 @@ public:
 	//Returns a vector of projects contain the actor  **Make use of constainsCast**
 	std::vector<Project> searchByActor(std::vector <Project> projects, std::string actorName);
 
-	//Returns a vector of ids in order
+	//Returns a vector of ids in alphabetical order
 	std::vector<int> sortByText(std::vector<std::string> text, std::vector<int> IDs);
 
 	//Returns a vector of projects in alphabetical order
@@ -29,16 +29,14 @@ public:
 	std::vector<int> sortByDate(std::vector<std::string> dates, std::vector<int> IDs);
 
 	//Returns a vector of projects in date order
-	std::vector<Project> sortByDate(std::vector<Project>);
-
-	std::vector<Project> projects;
+	std::vector<Project> sortByDate(std::vector<Project> projects);
 
 	void add(Project p);
 
 private:
-	int binarySearch(std::vector<std::string> arr, int start, int end, std::string target);
-	void quickSort(std::vector<std::string> &arr, int start, int end);
-	void swap(std::string &x, std::string &y);
-	int partition(std::vector<std::string> &arr, int start, int end);
+	static int binarySearch(std::vector<std::string> arr, int start, int end, std::string target);
+	static void quickSort(std::vector<std::string> &arr, int start, int end);
+	static void swap(std::string &x, std::string &y);
+	static int partition(std::vector<std::string> &arr, int start, int end);
 };
 

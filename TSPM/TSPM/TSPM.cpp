@@ -125,21 +125,23 @@ int menu() {
 }
 
 int main(){
-	Project p1(0, "Dumbo", "Ridiculed because of his enormous ears, a young circus elephant is assisted by a mouse to achieve his full potential.", "Animation, Drama, Family", "1942/01/02", 64, false, false);
+	Project p1(0, "Dumbo", "Ridiculed because of his enormous ears, a young circus elephant is assisted by a mouse to achieve his full potential.", "1942/01/02", 64, false, false);
 	p1.addKeyword("Try not to cry");
 	p1.addKeyword("another keyword");
 	p1.addFilmingLocation("Home");
 	p1.addFilmingLocation("not home");
 	p1.addCrewMember("Dumbo", "actor");
 	p1.addCrewMember("Dumbo's mum", "dead");
+	p1.addGenre("sad");
 
-	Project p2(0, "Dumbo2", "Big elaphant and mum ded 2", "sad 2", "2019/04/27", 90, false, false);
+	Project p2(0, "Dumbo2", "Big elaphant and mum ded 2", "2019/04/27", 90, false, false);
 	p2.addKeyword("Try not to cry 2");
 	p2.addKeyword("another keyword 2");
 	p2.addFilmingLocation("Home 2");
 	p2.addFilmingLocation("not home 2");
 	p2.addCrewMember("Dumbo", "actor 2");
 	p2.addCrewMember("Dumbo's mum 2", "dead 2");
+	p2.addGenre("sad 2");
 
 	
 
