@@ -320,6 +320,22 @@ Project Catalogue::parse(std::string filePath, int projectID)
 
 	}
 
+	while (std::getline(infile, line))
+	{
+		if (line == ",")
+		{
+			break;
+		}
+		std::string name = line;
+
+		std::getline(infile, line);
+
+		std::string role = line;
+
+		p.addCrewMember(name, role);
+	}
+
+
 	return p;
 }
 
