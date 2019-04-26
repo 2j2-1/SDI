@@ -11,39 +11,86 @@
 
 
 cGame game;
+Catalogue c1;
 
 int search() {
-	int offset = 4;
+	int offsetY = 4;
+	int offsetX = 20;
 	int selected = 0;
 	int projectOffset = 0;
-	std::vector<std::string> projects = { "Alpha","Beta","Gamma","Omega","Beta","Gamma","Omega","Beta","Gamma","Omega","Beta","Gamma","Omega","Beta","Jordan","Omega","Beta","Gamma","Omega","Beta","Gamma","Omega","Beta","Gamma","Omega","Beta","Gamma","Omega","Beta","Gamma","Omega","Beta","Gamma","Omega","Beta","Gamma","Omega","Beta","Gamma","Omega" };
+	std::vector<std::string> projects;
+	for (int i = 0; i < c1.projects.size(); i++){
+		projects.push_back(c1.projects[i].title);
+	}
 	while (!GetAsyncKeyState(VK_ESCAPE)){
 		game.blank_screen();
 		game.border(2);
 		if (game.input() != "") {
 			game.stringBuffer += game.input();
-			game.drawColor(3, offset + 2 + selected, projects.at(selected + projectOffset).size(), 15);
+			game.drawColor(3, offsetY + 2 + selected, projects.at(selected + projectOffset).size(), 15);
 			selected = 0;
 			projectOffset = 0;
 		}
-		game.print("Search Term: " + game.stringBuffer, 3, offset);
-		game.drawColor(3, offset + 2 + selected, projects.at(selected + projectOffset).size(),240);
-		for (int i = 0; i < 20; i++) {
-			game.print(projects.at(i+projectOffset), 3, offset + i + 2);
+		game.print("Search Term: " + game.stringBuffer, 3, offsetY);
+		game.drawColor(3, offsetY + 2 + selected, projects.at(selected + projectOffset).size(),240);
+		for (int i = 0; i < min(20,projects.size()); i++) {
+			game.print(projects.at(i+projectOffset), 3, offsetY + i + 2);
 		}
 		game.print("More Below...", 3, 27);
 
+		Project current = c1.projects.at(selected+projectOffset);
+
+		std::vector<std::string> metaData;
+		metaData.push_back("Title: " + current.title);
+		metaData.push_back("Summary: ");
+		int lenOfSummary = 95;
+		int nextline = 0;
+		for (int i = 0; i < current.summary.size()/ lenOfSummary+1; i++){
+			metaData.push_back(current.summary.substr(i*lenOfSummary,(i+1)*lenOfSummary));
+		}
+		metaData.push_back("Genre: " + current.genres[0]);
+		for (int i = 1; i < current.genres.size(); i++) {
+			metaData.push_back(current.genres[i]);
+		}
+		metaData.push_back("Release Date: " + current.releaseDate);
+		metaData.push_back("Filming Locations: " + current.filmingLocations[0]);
+		for (int i = 1; i < current.filmingLocations.size(); i++){
+			metaData.push_back(current.filmingLocations[i]);
+		}
+		metaData.push_back("Runtime: " + std::to_string(current.runtime) + " Minutes");
+		metaData.push_back("Keywords: " + current.keywords[0]);
+		for (int i = 1; i < current.keywords.size(); i++) {
+			metaData.push_back(current.keywords[i]);
+		}
+		
+		metaData.push_back("Crew Members: ");
+		for (int i = 0; i < current.crewMembers.size(); i++) {
+			metaData.push_back(current.crewMembers[i].role + " " + current.crewMembers[i].name);
+		}
+		if (current.playingInCinima)
+			metaData.push_back("Currently Playing In Cinemas");
+		else if (current.unreleased)
+			metaData.push_back("Currently Unrealeased");
+		else 
+			metaData.push_back("This Project Has Been Realeased");
+
+
+
+
+		for (int i = 0; i < metaData.size(); i++){
+			game.print(metaData[i], offsetX, offsetY + i);
+		}
 		if (GetAsyncKeyState(VK_DOWN)) {
-			game.drawColor(3, offset + 2 + selected, projects.at(selected+projectOffset).size(), 15);
+			game.drawColor(3, offsetY + 2 + selected, projects.at(selected + projectOffset).size(), 15);
 			selected++;
-			if (selected > 19) {
-				selected = 19;
+			if (selected > min(19, projects.size()-1)) {
+				selected = min(19, projects.size()-1);
 				projectOffset++;
 			}
 			
 		}
 		if (GetAsyncKeyState(VK_UP)) {
-			game.drawColor(3, offset + 2 + selected, projects.at(selected + projectOffset).size(), 15);
+			game.drawColor(3, offsetY + 2 + selected, projects.at(selected + projectOffset).size(), 15);
 			selected--;
 			if (selected < 0) {
 				selected = 0;
@@ -57,7 +104,8 @@ int search() {
 		Sleep(150);
 		
 	}
-	return 5;
+	game.drawColor(3, offsetY + 2 + selected, projects.at(selected + projectOffset).size(), 15);
+	return -1;
 }
 
 int menu() {
@@ -80,7 +128,7 @@ int menu() {
 }
 
 int main(){
-	Project p1(0, "Dumbo", "Big elaphant and mum ded", "2019/04/26", 90, false, false);
+	Project p1(0, "Dumbo", "Ridiculed because of his enormous ears, a young circus elephant is assisted by a mouse to achieve his full potential.", "1942/01/02", 64, false, false);
 	p1.addKeyword("Try not to cry");
 	p1.addKeyword("another keyword");
 	p1.addFilmingLocation("Home");
@@ -98,7 +146,7 @@ int main(){
 	p2.addCrewMember("Dumbo's mum 2", "dead 2");
 	p2.addGenre("sad 2");
 
-	Catalogue c1;
+	
 
 	c1.add(p1);
 	c1.add(p2);

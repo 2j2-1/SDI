@@ -33,6 +33,10 @@ public:
 
 	void add(Project p);
 
+	std::vector<Project> projects;
+
+	void write();
+
 private:
 	static int binarySearch(std::vector<std::string> arr, int start, int end, std::string target);
 	static void quickSort(std::vector<std::string> &arr, int start, int end);
