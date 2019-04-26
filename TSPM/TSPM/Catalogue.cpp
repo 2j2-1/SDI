@@ -62,14 +62,19 @@ std::vector<int> Catalogue::sortByText(std::vector<std::string> text, std::vecto
 		oldIndexes.push_back(std::make_pair(IDs[i], text[i]));
 	}
 
+	std::cout << "hit3" << std::endl;
+
 	int start = 0;
 	int end = text.size() - 1;
 	quickSort(text, start, end);
+	std::cout << "hit4" << std::endl;
+
 
 	for (int i = 0; i < text.size(); i++)
 	{
 		newIndexes.push_back(std::make_pair(i, text[i]));
 	}
+	std::cout << "hit5" << std::endl;
 
 	int count = 0;
 	std::vector<int> ret;
@@ -78,8 +83,10 @@ std::vector<int> Catalogue::sortByText(std::vector<std::string> text, std::vecto
 	{
 		for (int i = 0; i < newIndexes.size(); i++)
 		{
+			std::cout << "hit6" << std::endl;
 			if (newIndexes[count].second == oldIndexes[i].second)
 			{
+				std::cout << "hit7" << std::endl;
 				ret.push_back(oldIndexes[i].first);
 				count += 1;
 			}
@@ -103,8 +110,10 @@ std::vector<Project> Catalogue::sortByTitle(std::vector<Project> projects)
 		titles.push_back(projects[i].title);
 		indexes.push_back(i);
 	}
+	std::cout << "hit1" << std::endl;
 
 	std::vector<int> newIndexes = sortByText(titles, indexes);
+	std::cout << "hit2" << std::endl;
 
 	std::vector<Project> ret;
 
