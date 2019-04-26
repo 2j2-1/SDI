@@ -11,7 +11,7 @@ public:
 	~Catalogue();
 
 	//Returns a vector of ids which match the search term
-	std::vector<int> searchByText(std::vector<std::string> text, std::vector<int> projectID, std::string searchTerm);
+	std::vector<int> searchByText(std::vector<std::string> text, std::string searchTerm);
 
 	//Returns a vector of projects which match the search term
 	std::vector<Project> searchByProjectTitle(std::vector<Project> projects, std::string searchTerm);
