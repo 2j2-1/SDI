@@ -2,10 +2,24 @@
 #include "Project.h"
 
 
-Project::Project()
+Project::Project(int projectID, std::string title, std::string summary, std::string genre, std::string releaseDate, unsigned int runtime, bool playingInCinimam, bool unreleased)
 {
-}
+	this->projectID = projectID;
 
+	this->title = title;
+
+	this->summary = summary;
+
+	this->genre = genre;
+
+	this->releaseDate = releaseDate;
+
+	this->runtime = runtime;
+
+	this->playingInCinima = playingInCinima;
+
+	this->unreleased = unreleased;
+}
 
 Project::~Project()
 {
@@ -13,7 +27,6 @@ Project::~Project()
 
 bool Project::containsCast(std::string name, std::string role)
 {
-	/*When talking about the algorythms used for searches talk about how linear search was used because there does not tend to be a large number of crew memmbers */
 
 	for (CrewMember c : crewMembers)
 	{
@@ -23,4 +36,19 @@ bool Project::containsCast(std::string name, std::string role)
 		}
 	}
 	return false;
+}
+
+void Project::addKeyword(std::string keyword)
+{
+	keywords.push_back(keyword);
+}
+
+void Project::addCrewMember(std::string name, std::string role)
+{
+	crewMembers.push_back({ name, role });
+}
+
+void Project::addFilmingLocation(std::string location)
+{
+	filmingLocations.push_back(location);
 }

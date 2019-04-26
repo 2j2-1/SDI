@@ -6,6 +6,7 @@
 #include <iostream>
 #include <Windows.h>
 #include <string>
+#include "Project.h"
 
 cGame game;
 
@@ -45,6 +46,23 @@ int menu() {
 }
 
 int main(){
+	Project p1(0, "Dumbo", "Big elaphant and mum ded", "sad", "2019/04/26", 90, false, false);
+	p1.addKeyword("Try not to cry");
+	p1.addKeyword("another keyword");
+	p1.addFilmingLocation("Home");
+	p1.addFilmingLocation("not home");
+	p1.addCrewMember("Dumbo", "actor");
+	p1.addCrewMember("Dumbo's mum", "dead");
+
+	Project p2(0, "Dumbo2", "Big elaphant and mum ded 2", "sad 2", "2019/04/27", 90, false, false);
+	p2.addKeyword("Try not to cry 2");
+	p2.addKeyword("another keyword 2");
+	p2.addFilmingLocation("Home 2");
+	p2.addFilmingLocation("not home 2");
+	p2.addCrewMember("Dumbo", "actor 2");
+	p2.addCrewMember("Dumbo's mum 2", "dead 2");
+
+
 	int screen = -1;
 	game.setup();
 	game.blank_screen();

@@ -7,7 +7,8 @@
 class Project
 {
 public:
-	Project();
+	Project(int projectID, std::string title, std::string summary, std::string genre, std::string releaseDate, unsigned int runtime, bool playingInCinimam, bool unreleased);
+
 	~Project();
 
 
@@ -19,7 +20,7 @@ public:
 
 	std::string genre;
 
-	std::string string;
+	std::string releaseDate;
 
 	std::vector<std::string> filmingLocations;
 
@@ -34,5 +35,12 @@ public:
 	bool unreleased;
 
 	bool containsCast(std::string name, std::string role);
+
+	void addKeyword(std::string keyword);
+
+	void addCrewMember(std::string name, std::string role);
+
+	void addFilmingLocation(std::string location);
+
 };
 
