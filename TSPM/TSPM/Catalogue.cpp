@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Catalogue.h"
-
-
+#include <fstream>
+#include <sstream>
 
 Catalogue::Catalogue()
 {
@@ -243,10 +243,80 @@ void Catalogue::add(Project p)
 	projects.push_back(p);
 }
 
+void Catalogue::read()
+{
+	std::ifstream infile("directories.txt");
+
+	std::string line;
+	while (std::getline(infile, line))
+	{
+		projects.push_back(parse(line + ".txt", std::stoi(line)));
+		
+		
+	}
+	
+}
+
 void Catalogue::write()
 {
+	std::ofstream f;
+	f.open("directories.txt");
 	for (Project p : projects)
 	{
 		p.save();
+
+		f << std::to_string(p.projectID) << "\n";
 	}
+	f.close();
 }
+
+Project Catalogue::parse(std::string filePath, int projectID)
+{
+	std::ifstream infile(filePath);
+
+	std::string line;
+
+	
+	std::getline(infile, line);
+
+	//int projectID = std::stoi(line);
+
+	//std::getline(infile, line);
+
+	std::string title = line;
+
+	std::getline(infile, line);
+
+	std::string summary = line;
+
+	std::getline(infile, line);
+
+	std::string releaseDate = line;
+
+	std::getline(infile, line);
+
+	unsigned int runtime = std::stoi(line);
+
+	std::getline(infile, line);
+
+	bool playingInCinimam = (line == "true");
+
+	std::getline(infile, line);
+
+	bool unreleased = (line == "true");
+
+	Project p(projectID, title, summary,  releaseDate,  runtime,  playingInCinimam,  unreleased);
+
+
+
+
+	/*while (std::getline(infile, line))
+	{
+		projects.push_back(parse(line + ".txt"));
+
+
+	}*/
+
+	return p;
+}
+

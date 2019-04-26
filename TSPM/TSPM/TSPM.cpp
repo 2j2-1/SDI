@@ -151,7 +151,8 @@ int main(){
 	c1.add(p1);
 	c1.add(p2);
 
-	c1.write();
+	//c1.write();
+	c1.read();
 
 	int screen = 5;
 	game.setup();

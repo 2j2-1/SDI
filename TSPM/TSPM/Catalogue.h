@@ -35,7 +35,11 @@ public:
 
 	std::vector<Project> projects;
 
+	void read();
+
 	void write();
+
+	Project parse(std::string filePath, int projectID);
 
 private:
 	static int binarySearch(std::vector<std::string> arr, int start, int end, std::string target);

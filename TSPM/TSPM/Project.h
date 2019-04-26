@@ -12,6 +12,24 @@ public:
 
 	~Project();
 
+	void addPhysicalMedium(PhysicalMedium m);
+
+	bool playingInCinima;
+
+	bool unreleased;
+
+	bool containsCast(std::string name, std::string role);
+
+	void addKeyword(std::string keyword);
+
+	void addCrewMember(std::string name, std::string role);
+
+	void addFilmingLocation(std::string location);
+
+	void addGenre(std::string genre);
+
+	std::string save();
+
 
 	int projectID;
 
@@ -33,23 +51,7 @@ public:
 
 	std::vector<PhysicalMedium> physcicalMeduims;
 
-	void addPhysicalMedium(PhysicalMedium m);
-
-	bool playingInCinima;
-
-	bool unreleased;
-
-	bool containsCast(std::string name, std::string role);
-
-	void addKeyword(std::string keyword);
-
-	void addCrewMember(std::string name, std::string role);
-
-	void addFilmingLocation(std::string location);
-
-	void addGenre(std::string genre);
-
-	std::string save();
+	
 
 
 };
