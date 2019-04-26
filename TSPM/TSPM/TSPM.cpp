@@ -10,9 +10,18 @@
 cGame game;
 
 int search() {
-	if (GetAsyncKeyState(VK_BACK)) {
+	int offset = 4;
+	std::vector<std::string> projects = {"Alpha","Beta","Gamma","Omega"};
+	game.print("Search Term: " + game.stringBuffer, 3, offset);
+	for (int i = 0; i < projects.size(); i++){
+		game.print(projects.at(i),3,offset+i+2);
+	}
+	if (GetAsyncKeyState(VK_ESCAPE)) {
+		game.stringBuffer.clear();
 		return -1;
 	}
+
+
 	return 5;
 }
 
