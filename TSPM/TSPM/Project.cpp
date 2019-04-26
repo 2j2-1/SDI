@@ -2,15 +2,13 @@
 #include "Project.h"
 
 
-Project::Project(int projectID, std::string title, std::string summary, std::string genre, std::string releaseDate, unsigned int runtime, bool playingInCinimam, bool unreleased)
+Project::Project(int projectID, std::string title, std::string summary, std::string releaseDate, unsigned int runtime, bool playingInCinimam, bool unreleased)
 {
 	this->projectID = projectID;
 
 	this->title = title;
 
 	this->summary = summary;
-
-	this->genre = genre;
 
 	this->releaseDate = releaseDate;
 
@@ -51,4 +49,28 @@ void Project::addCrewMember(std::string name, std::string role)
 void Project::addFilmingLocation(std::string location)
 {
 	filmingLocations.push_back(location);
+}
+
+void Project::addGenre(std::string genre)
+{
+	genres.push_back(genre);
+}
+
+std::string Project::save()
+{
+	std::string data;
+
+	data = title + "\n";
+	data += summary + "\n";
+	data += releaseDate + "\n";
+	data += runtime + "\n";
+	data += playingInCinima + "\n";
+	data += unreleased + "\n";
+
+	for (std::string keyword : keywords)
+	{
+
+	}
+
+	return data;
 }

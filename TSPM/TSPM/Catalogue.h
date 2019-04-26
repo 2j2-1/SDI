@@ -2,7 +2,8 @@
 #include <string>
 #include <vector>
 #include "Project.h"
-
+#include <fstream>
+#include <iostream>
 
 class Catalogue
 {
@@ -34,6 +35,8 @@ public:
 	std::vector<Project> projects;
 
 	void add(Project p);
+
+	void write();
 
 private:
 	int binarySearch(std::vector<std::string> arr, int start, int end, std::string target);
