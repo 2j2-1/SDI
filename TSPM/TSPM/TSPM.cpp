@@ -13,19 +13,47 @@ int search() {
 	int offset = 4;
 	int selected = 0;
 	int projectOffset = 0;
-	std::vector<std::string> projects = {"Alpha","Beta","Gamma","Omega","Beta","Gamma","Omega","Beta","Gamma","Omega","Beta","Gamma","Omega","Beta","Jordan","Omega","Beta","Gamma","Omega","Beta","Gamma","Omega","Beta","Gamma","Omega","Beta","Gamma","Omega","Beta","Gamma","Omega","Beta","Gamma","Omega","Beta","Gamma","Omega","Beta","Gamma","Omega" };
-	game.print("Search Term: " + game.stringBuffer, 3, offset);
-	game.drawColor(3, offset+2+selected,projects.at(selected).size());
-	for (int i = 0; i < 20; i++){
-		game.print(projects.at(i),3,offset+i+2);
-	}
-	game.print("More Below...", 3, 27);
-	if (GetAsyncKeyState(VK_ESCAPE)) {
-		game.stringBuffer.clear();
-		return -1;
-	}
+	std::vector<std::string> projects = { "Alpha","Beta","Gamma","Omega","Beta","Gamma","Omega","Beta","Gamma","Omega","Beta","Gamma","Omega","Beta","Jordan","Omega","Beta","Gamma","Omega","Beta","Gamma","Omega","Beta","Gamma","Omega","Beta","Gamma","Omega","Beta","Gamma","Omega","Beta","Gamma","Omega","Beta","Gamma","Omega","Beta","Gamma","Omega" };
+	while (!GetAsyncKeyState(VK_ESCAPE)){
+		game.blank_screen();
+		game.border(2);
+		if (game.input() != "") {
+			game.stringBuffer += game.input();
+			game.drawColor(3, offset + 2 + selected, projects.at(selected + projectOffset).size(), 15);
+			selected = 0;
+			projectOffset = 0;
+		}
+		game.print("Search Term: " + game.stringBuffer, 3, offset);
+		game.drawColor(3, offset + 2 + selected, projects.at(selected + projectOffset).size(),240);
+		for (int i = 0; i < 20; i++) {
+			game.print(projects.at(i+projectOffset), 3, offset + i + 2);
+		}
+		game.print("More Below...", 3, 27);
 
-
+		if (GetAsyncKeyState(VK_DOWN)) {
+			game.drawColor(3, offset + 2 + selected, projects.at(selected+projectOffset).size(), 15);
+			selected++;
+			if (selected > 19) {
+				selected = 19;
+				projectOffset++;
+			}
+			
+		}
+		if (GetAsyncKeyState(VK_UP)) {
+			game.drawColor(3, offset + 2 + selected, projects.at(selected + projectOffset).size(), 15);
+			selected--;
+			if (selected < 0) {
+				selected = 0;
+				projectOffset--;
+				if (projectOffset < 0)
+					projectOffset = 0;
+			}
+			
+		}
+		game.draw();
+		Sleep(150);
+		
+	}
 	return 5;
 }
 
