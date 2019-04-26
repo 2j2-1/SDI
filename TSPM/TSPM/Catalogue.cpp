@@ -12,14 +12,39 @@ Catalogue::~Catalogue()
 {
 }
 
-std::vector<int> Catalogue::searchByText(std::vector<std::string> text, std::vector<int> projectID, std::string searchTerm)
+std::vector<int> Catalogue::searchByText(std::vector<std::string> text, std::string searchTerm)
 {
-	return std::vector<int>();
+	std::vector<int> indexes;
+
+	for (int i = 0; i < text.size(); i++)
+	{
+		if (text[i].find(searchTerm) != std::string::npos)
+		{
+			indexes.push_back(i);
+		}
+	}
+
+	return indexes;
 }
 
 std::vector<Project> Catalogue::searchByProjectTitle(std::vector<Project> projects, std::string searchTerm)
 {
-	return std::vector<Project>();
+	std::vector<std::string> titles;
+	for (int i = 0; i < projects.size(); i++)
+	{
+		titles.push_back(projects[i].title);
+	}
+
+	std::vector<int> indexes = searchByText(titles, searchTerm);
+
+	std::vector<Project> ret;
+
+	for (int i : indexes)
+	{
+		ret.push_back(projects[i]);
+	}
+
+	return ret;
 }
 
 std::vector<Project> Catalogue::searchByActor(std::vector<Project> projects, std::string actorName)
