@@ -32,5 +32,7 @@ public:
 	bool playingInCinima;
 
 	bool unreleased;
+
+	bool containsCast(std::string name, std::string role);
 };
 
