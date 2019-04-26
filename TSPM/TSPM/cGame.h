@@ -11,6 +11,7 @@ class cGame {
 public:
 	int screenWidth = 120;
 	int screenHeight = 30;
+	std::string stringBuffer;
 
 
 	void draw_pixel(int, int, char);

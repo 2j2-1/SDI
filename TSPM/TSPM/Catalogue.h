@@ -16,7 +16,7 @@ public:
 	//Returns a vector of projects which match the search term
 	std::vector<Project> searchByProjectTitle(std::vector<Project> projects, std::string searchTerm);
 
-	//Returns a vector of projects contain the actor
+	//Returns a vector of projects contain the actor  **Make use of constainsCast**
 	std::vector<Project> searchByActor(std::vector <Project> projects, std::string actorName);
 
 	//Returns a vector of ids in order
@@ -33,5 +33,10 @@ public:
 
 	void add(Project p);
 
+private:
+	int binarySearch(std::vector<std::string> arr, int start, int end, std::string target);
+	void quickSort(std::vector<std::string> &arr, int start, int end);
+	void swap(std::string &x, std::string &y);
+	int partition(std::vector<std::string> &arr, int start, int end);
 };
 
