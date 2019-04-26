@@ -222,6 +222,6 @@ void Catalogue::write()
 {
 	for (Project p : projects)
 	{
-		std::cout << p.save();
+		p.save();
 	}
 }

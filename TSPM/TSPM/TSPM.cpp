@@ -48,7 +48,10 @@ int search() {
 		for (int i = 0; i < current.summary.size()/ lenOfSummary+1; i++){
 			metaData.push_back(current.summary.substr(i*lenOfSummary,(i+1)*lenOfSummary));
 		}
-		metaData.push_back("Genre: " + current.genre);
+		metaData.push_back("Genre: " + current.genres[0]);
+		for (int i = 1; i < current.genres.size(); i++) {
+			metaData.push_back(current.genres[i]);
+		}
 		metaData.push_back("Release Date: " + current.releaseDate);
 		metaData.push_back("Filming Locations: " + current.filmingLocations[0]);
 		for (int i = 1; i < current.filmingLocations.size(); i++){
