@@ -148,13 +148,18 @@
   <ItemGroup>
     <ClInclude Include="Catalogue.h" />
     <ClInclude Include="CrewMember.h" />
+    <ClInclude Include="DVD.h" />
+    <ClInclude Include="PhysicalMedium.h" />
     <ClInclude Include="Project.h" />
     <ClInclude Include="cGame.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="VHS.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Catalogue.cpp" />
+    <ClCompile Include="DVD.cpp" />
+    <ClCompile Include="PhysicalMedium.cpp" />
     <ClCompile Include="Project.cpp" />
     <ClCompile Include="cGame.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -164,6 +169,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="TSPM.cpp" />
+    <ClCompile Include="VHS.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
