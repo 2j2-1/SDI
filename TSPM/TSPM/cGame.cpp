@@ -25,6 +25,15 @@ void cGame::blank_screen() {
 	}
 }
 
+void cGame::drawColor(int x,int y,int size) {
+	//draws each char in the array to the screen
+	DWORD written;
+	for (int i = x+screenWidth*y; i < x + screenWidth*y+size; i++){
+			FillConsoleOutputAttribute(hConsole, 240, 1, { i % (short)screenWidth, (short)(i / screenWidth) }, &written);
+	}
+	WriteConsoleOutputCharacterA(hConsole, screen, screenHeight*screenWidth, { 0,0 }, &written);
+}
+
 void cGame::draw() {
 	DWORD written;
 	WriteConsoleOutputCharacterA(hConsole, screen, screenHeight*screenWidth, { 0,0 }, &written);

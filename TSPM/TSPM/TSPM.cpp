@@ -1,4 +1,4 @@
-// TSPM.cpp : Defines the entry point for the console application.
+﻿// TSPM.cpp : Defines the entry point for the console application.
 //
 
 #include "stdafx.h"
@@ -11,11 +11,15 @@ cGame game;
 
 int search() {
 	int offset = 4;
-	std::vector<std::string> projects = {"Alpha","Beta","Gamma","Omega"};
+	int selected = 0;
+	int projectOffset = 0;
+	std::vector<std::string> projects = {"Alpha","Beta","Gamma","Omega","Beta","Gamma","Omega","Beta","Gamma","Omega","Beta","Gamma","Omega","Beta","Jordan","Omega","Beta","Gamma","Omega","Beta","Gamma","Omega","Beta","Gamma","Omega","Beta","Gamma","Omega","Beta","Gamma","Omega","Beta","Gamma","Omega","Beta","Gamma","Omega","Beta","Gamma","Omega" };
 	game.print("Search Term: " + game.stringBuffer, 3, offset);
-	for (int i = 0; i < projects.size(); i++){
+	game.drawColor(3, offset+2+selected,projects.at(selected).size());
+	for (int i = 0; i < 20; i++){
 		game.print(projects.at(i),3,offset+i+2);
 	}
+	game.print("More Below...", 3, 27);
 	if (GetAsyncKeyState(VK_ESCAPE)) {
 		game.stringBuffer.clear();
 		return -1;
@@ -45,7 +49,7 @@ int menu() {
 }
 
 int main(){
-	int screen = -1;
+	int screen = 5;
 	game.setup();
 	game.blank_screen();
 	while (true) {
