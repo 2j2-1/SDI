@@ -310,12 +310,15 @@ Project Catalogue::parse(std::string filePath, int projectID)
 
 
 
-	/*while (std::getline(infile, line))
+	while (std::getline(infile, line))
 	{
-		projects.push_back(parse(line + ".txt"));
+		if (line == ",")
+		{
+			break;
+		}
+		p.addKeyword(line);
 
-
-	}*/
+	}
 
 	return p;
 }
