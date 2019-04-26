@@ -7,6 +7,8 @@
 #include <Windows.h>
 #include <string>
 #include "Project.h"
+#include "Catalogue.h"
+
 
 cGame game;
 
@@ -62,6 +64,10 @@ int main(){
 	p2.addCrewMember("Dumbo", "actor 2");
 	p2.addCrewMember("Dumbo's mum 2", "dead 2");
 
+	Catalogue c1;
+
+	c1.add(p1);
+	c1.add(p2);
 
 	int screen = -1;
 	game.setup();

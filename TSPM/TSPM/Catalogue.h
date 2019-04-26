@@ -31,6 +31,8 @@ public:
 	//Returns a vector of projects in date order
 	std::vector<Project> sortByDate(std::vector<Project>);
 
+	std::vector<Project> projects;
+
 	void add(Project p);
 
 private:

@@ -94,3 +94,8 @@ int Catalogue::partition(std::vector<std::string>& arr, int start, int end)
 
 	return store;
 }
+
+void Catalogue::add(Project p)
+{
+	projects.push_back(p);
+}
