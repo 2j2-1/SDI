@@ -13,7 +13,7 @@ public:
 	int screenHeight = 30;
 	std::string stringBuffer;
 
-
+	void drawColor(int,int,int,int);
 	void draw_pixel(int, int, char);
 	void blank_screen();
 	void draw();

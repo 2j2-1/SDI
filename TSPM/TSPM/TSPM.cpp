@@ -1,4 +1,4 @@
-// TSPM.cpp : Defines the entry point for the console application.
+﻿// TSPM.cpp : Defines the entry point for the console application.
 //
 
 #include "stdafx.h"
@@ -14,17 +14,49 @@ cGame game;
 
 int search() {
 	int offset = 4;
-	std::vector<std::string> projects = {"Alpha","Beta","Gamma","Omega"};
-	game.print("Search Term: " + game.stringBuffer, 3, offset);
-	for (int i = 0; i < projects.size(); i++){
-		game.print(projects.at(i),3,offset+i+2);
-	}
-	if (GetAsyncKeyState(VK_ESCAPE)) {
-		game.stringBuffer.clear();
-		return -1;
-	}
+	int selected = 0;
+	int projectOffset = 0;
+	std::vector<std::string> projects = { "Alpha","Beta","Gamma","Omega","Beta","Gamma","Omega","Beta","Gamma","Omega","Beta","Gamma","Omega","Beta","Jordan","Omega","Beta","Gamma","Omega","Beta","Gamma","Omega","Beta","Gamma","Omega","Beta","Gamma","Omega","Beta","Gamma","Omega","Beta","Gamma","Omega","Beta","Gamma","Omega","Beta","Gamma","Omega" };
+	while (!GetAsyncKeyState(VK_ESCAPE)){
+		game.blank_screen();
+		game.border(2);
+		if (game.input() != "") {
+			game.stringBuffer += game.input();
+			game.drawColor(3, offset + 2 + selected, projects.at(selected + projectOffset).size(), 15);
+			selected = 0;
+			projectOffset = 0;
+		}
+		game.print("Search Term: " + game.stringBuffer, 3, offset);
+		game.drawColor(3, offset + 2 + selected, projects.at(selected + projectOffset).size(),240);
+		for (int i = 0; i < 20; i++) {
+			game.print(projects.at(i+projectOffset), 3, offset + i + 2);
+		}
+		game.print("More Below...", 3, 27);
 
-
+		if (GetAsyncKeyState(VK_DOWN)) {
+			game.drawColor(3, offset + 2 + selected, projects.at(selected+projectOffset).size(), 15);
+			selected++;
+			if (selected > 19) {
+				selected = 19;
+				projectOffset++;
+			}
+			
+		}
+		if (GetAsyncKeyState(VK_UP)) {
+			game.drawColor(3, offset + 2 + selected, projects.at(selected + projectOffset).size(), 15);
+			selected--;
+			if (selected < 0) {
+				selected = 0;
+				projectOffset--;
+				if (projectOffset < 0)
+					projectOffset = 0;
+			}
+			
+		}
+		game.draw();
+		Sleep(150);
+		
+	}
 	return 5;
 }
 
@@ -69,7 +101,7 @@ int main(){
 	c1.add(p1);
 	c1.add(p2);
 
-	int screen = -1;
+	int screen = 5;
 	game.setup();
 	game.blank_screen();
 	while (true) {
