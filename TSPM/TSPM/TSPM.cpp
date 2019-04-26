@@ -18,7 +18,7 @@ int search() {
 	int offsetX = 20;
 	int selected = 0;
 	int projectOffset = 0;
-	std::vector<Project> allProjects = c1.searchByProjectTitle(c1.projects, "");
+	std::vector<Project> allProjects = c1.sortByTitle(c1.searchByProjectTitle(c1.projects, ""));
 	std::vector<std::string> projects;
 	for (int i = 0; i < allProjects.size(); i++){
 		projects.push_back(allProjects[i].title);
@@ -104,7 +104,7 @@ int search() {
 			game.stringBuffer.pop_back();
 		}
 		if (GetAsyncKeyState(VK_RETURN)) {
-			allProjects = c1.searchByProjectTitle(c1.projects, game.stringBuffer);
+			allProjects = c1.sortByTitle(c1.searchByProjectTitle(c1.projects, game.stringBuffer));
 			projects.clear();
 			for (int i = 0; i < allProjects.size(); i++) {
 				projects.push_back(allProjects[i].title);
