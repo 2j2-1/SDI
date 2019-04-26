@@ -47,14 +47,19 @@ std::string cGame::input() {
 	std::string str;
 	for (int i = 0; i < 26; i++) {
 		if (GetAsyncKeyState(0x41 + i)) {
-			if (GetAsyncKeyState(0xA0)|| GetAsyncKeyState(0xA1))
+			if (GetAsyncKeyState(0xA0) || GetAsyncKeyState(0xA1))
 				str += 0x41 + i;
 			else
 				str += 0x61 + i;
 		}
+	}
+	for (int i = 0; i < 10; i++) {
+		if (GetAsyncKeyState(0x30 + i)) {
+			str += 0x30 + i;
+		}
+	}
 	if (GetAsyncKeyState(VK_SPACE)) {
 			str += ' ';
-		}
 	}
 	return str;
 }
