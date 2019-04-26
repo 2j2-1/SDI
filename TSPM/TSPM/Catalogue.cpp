@@ -75,8 +75,8 @@ std::vector<Project> Catalogue::sortByTitle(std::vector<Project> projects)
 	std::vector<int> indexes;
 	for (int i = 0; i < projects.size(); i++)
 	{
-		titles.push_back(projects[i].title);	// list of all project titles
-		indexes.push_back(i);					// list with number of projects
+		titles.push_back(projects[i].title);
+		indexes.push_back(i);
 	}
 
 	std::vector<int> newIndexes = sortByText(titles, indexes);
@@ -88,12 +88,49 @@ std::vector<Project> Catalogue::sortByTitle(std::vector<Project> projects)
 		ret.push_back(projects[i]);
 	}
 
-	return std::vector<Project>();
+	return ret;
 }
 
 std::vector<int> Catalogue::sortByDate(std::vector<std::string> dates, std::vector<int> IDs)
 {
-	return std::vector<int>();
+	std::vector<std::pair<int, std::string>> oldIndexes;
+	std::vector<std::pair<int, std::string>> newIndexes;
+
+	for (int i = 0; i < IDs.size(); i++)
+	{
+		oldIndexes.push_back(std::make_pair(IDs[i], dates[i]));
+	}
+
+	int start = 0;
+	int end = dates.size() - 1;
+	quickSort(dates, start, end);
+
+	for (int i = 0; i < dates.size(); i++)
+	{
+		newIndexes.push_back(std::make_pair(i, dates[i]));
+	}
+
+	int count = 0;
+	std::vector<int> ret;
+	bool complete = false;
+	while (!complete)
+	{
+		for (int i = 0; i < newIndexes.size(); i++)
+		{
+			if (newIndexes[count].second == oldIndexes[i].second)
+			{
+				ret.push_back(oldIndexes[i].first);
+				count += 1;
+			}
+		}
+		if (count == newIndexes.size())
+		{
+			complete = true;
+		}
+	}
+
+
+	return ret;
 }
 
 std::vector<Project> Catalogue::sortByDate(std::vector<Project> projects)
@@ -102,10 +139,20 @@ std::vector<Project> Catalogue::sortByDate(std::vector<Project> projects)
 	std::vector<int> indexes;
 	for (int i = 0; i < projects.size(); i++)
 	{
-		//dates.push_back(projects[i].releaseDate)
+		dates.push_back(projects[i].releaseDate);
+		indexes.push_back(i);
 	}
 
-	return std::vector<Project>();
+	std::vector<int> newIndexes = sortByDate(dates, indexes);
+
+	std::vector<Project> ret;
+
+	for (int i : newIndexes)
+	{
+		ret.push_back(projects[i]);
+	}
+
+	return ret;
 }
 
 int Catalogue::binarySearch(std::vector<std::string> arr, int start, int end, std::string target)

@@ -2,8 +2,7 @@
 #include <string>
 #include <vector>
 #include "Project.h"
-#include <fstream>
-#include <iostream>
+
 
 class Catalogue
 {
@@ -30,13 +29,9 @@ public:
 	std::vector<int> sortByDate(std::vector<std::string> dates, std::vector<int> IDs);
 
 	//Returns a vector of projects in date order
-	std::vector<Project> sortByDate(std::vector<Project>);
-
-	std::vector<Project> projects;
+	std::vector<Project> sortByDate(std::vector<Project> projects);
 
 	void add(Project p);
-
-	void write();
 
 private:
 	static int binarySearch(std::vector<std::string> arr, int start, int end, std::string target);
