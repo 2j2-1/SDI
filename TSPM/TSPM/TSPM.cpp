@@ -24,7 +24,6 @@ int search() {
 	}
 	while (!GetAsyncKeyState(VK_ESCAPE)){
 		game.blank_screen();
-		game.border(2);
 		if (game.input() != "") {
 			game.stringBuffer += game.input();
 			game.drawColor(3, offsetY + 2 + selected, projects.at(selected + projectOffset).size(), 15);
@@ -158,7 +157,6 @@ int main(){
 	game.blank_screen();
 	while (true) {
 		game.blank_screen();
-		game.border(2);
 		game.print("Welcome to TSPM",game.screenWidth/2-8,2);
 		game.draw_pixel(0, 0, char(screen+48));
 		game.stringBuffer += game.input();
