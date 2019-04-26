@@ -18,10 +18,14 @@ void cGame::draw_pixel(int x, int y, char c) {
 
 void cGame::blank_screen() {
 	//Fill screen with blank pixels
+	DWORD written;
 	for (int y = 0; y < this->screenHeight; y++) {
 		for (int x = 0; x < screenWidth; x++) {
 			draw_pixel(x, y, 32);
 		}
+	}
+	for (int i = 0; i < screenHeight*screenWidth - 1; i++) {
+		FillConsoleOutputAttribute(hConsole, 15, 1, { i % (short)screenWidth, (short)(i / screenWidth) }, &written);
 	}
 }
 
