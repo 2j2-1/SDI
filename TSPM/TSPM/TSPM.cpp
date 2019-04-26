@@ -18,9 +18,10 @@ int search() {
 	int offsetX = 20;
 	int selected = 0;
 	int projectOffset = 0;
+	std::vector<Project> allProjects = c1.sortByTitle(c1.searchByProjectTitle(c1.projects, ""));
 	std::vector<std::string> projects;
-	for (int i = 0; i < c1.projects.size(); i++){
-		projects.push_back(c1.projects[i].title);
+	for (int i = 0; i < allProjects.size(); i++){
+		projects.push_back(allProjects[i].title);
 	}
 	while (!GetAsyncKeyState(VK_ESCAPE)){
 		game.blank_screen();
@@ -30,7 +31,7 @@ int search() {
 			selected = 0;
 			projectOffset = 0;
 		}
-		game.print("Search Term: " + game.stringBuffer, 3, offsetY);
+		game.print("Search Term: " + game.stringBuffer, 3, offsetY-1);
 		game.drawColor(3, offsetY + 2 + selected, projects.at(selected + projectOffset).size(),240);
 		for (int i = 0; i < min(20,projects.size()); i++) {
 			game.print(projects.at(i+projectOffset), 3, offsetY + i + 2);
@@ -99,6 +100,16 @@ int search() {
 			}
 			
 		}
+		if (GetAsyncKeyState(VK_BACK)) {
+			game.stringBuffer.pop_back();
+		}
+		if (GetAsyncKeyState(VK_RETURN)) {
+			allProjects = c1.sortByTitle(c1.searchByProjectTitle(c1.projects, game.stringBuffer));
+			projects.clear();
+			for (int i = 0; i < allProjects.size(); i++) {
+				projects.push_back(allProjects[i].title);
+			}
+		}
 		game.draw();
 		Sleep(150);
 		
@@ -136,7 +147,7 @@ int main(){
 	p1.addCrewMember("Dumbo's mum", "dead");
 	p1.addGenre("sad");
 
-	Project p2(1, "Dumbo2", "Big elaphant and mum ded 2", "2019/04/27", 90, false, false);
+	Project p2(1, "Jumbz", "Big elaphant and mum ded 2", "2019/04/27", 90, false, false);
 	p2.addKeyword("Try not to cry 2");
 	p2.addKeyword("another keyword 2");
 	p2.addFilmingLocation("Home 2");
@@ -145,12 +156,21 @@ int main(){
 	p2.addCrewMember("Dumbo's mum 2", "dead 2");
 	p2.addGenre("sad 2");
 
+	Project p3(1, "Jumbo", "Big elaphant and mum ded 2", "2019/04/27", 90, false, false);
+	p3.addKeyword("Try not to cry 2");
+	p3.addKeyword("another keyword 2");
+	p3.addFilmingLocation("Home 2");
+	p3.addFilmingLocation("not home 2");
+	p3.addCrewMember("Dumbo", "actor 2");
+	p3.addCrewMember("Dumbo's mum 2", "dead 2");
+	p3.addGenre("sad 2");
+
 	
 
 	c1.add(p1);
 	c1.add(p2);
+	c1.add(p3);
 
-	c1.write();
 
 	int screen = 5;
 	game.setup();

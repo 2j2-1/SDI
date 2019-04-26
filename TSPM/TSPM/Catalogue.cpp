@@ -75,21 +75,16 @@ std::vector<int> Catalogue::sortByText(std::vector<std::string> text, std::vecto
 
 	int count = 0;
 	std::vector<int> ret;
-	bool complete = false;
-	while (!complete)
-	{
-		for (int i = 0; i < newIndexes.size(); i++)
-		{
-			if (newIndexes[count].second == oldIndexes[i].second)
-			{
+	while (count != newIndexes.size()){
+		for (int i = 0; i < newIndexes.size(); i++){
+			if (newIndexes[count].second == oldIndexes[i].second){
 				ret.push_back(oldIndexes[i].first);
 				count += 1;
+				if (count == newIndexes.size())
+					break;
 			}
 		}
-		if (count == newIndexes.size())
-		{
-			complete = true;
-		}
+		
 	}
 
 
