@@ -35,6 +35,7 @@ void cGame::drawColor(int x,int y,int size,int color) {
 }
 
 void cGame::draw() {
+	border(2);
 	DWORD written;
 	WriteConsoleOutputCharacterA(hConsole, screen, screenHeight*screenWidth, { 0,0 }, &written);
 }
