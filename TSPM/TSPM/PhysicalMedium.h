@@ -12,5 +12,7 @@ public:
 	std::string format;
 	std::string frameAspect;
 	std::string packaging;
+
+	std::string save();
 };
 

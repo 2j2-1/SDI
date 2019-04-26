@@ -89,7 +89,7 @@ int main(){
 	p1.addCrewMember("Dumbo's mum", "dead");
 	p1.addGenre("sad");
 
-	Project p2(0, "Dumbo2", "Big elaphant and mum ded 2", "2019/04/27", 90, false, false);
+	Project p2(1, "Dumbo2", "Big elaphant and mum ded 2", "2019/04/27", 90, false, false);
 	p2.addKeyword("Try not to cry 2");
 	p2.addKeyword("another keyword 2");
 	p2.addFilmingLocation("Home 2");
@@ -102,6 +102,8 @@ int main(){
 
 	c1.add(p1);
 	c1.add(p2);
+
+	c1.write();
 
 	int screen = 5;
 	game.setup();

@@ -104,6 +104,15 @@ void Catalogue::write()
 {
 	for (Project p : projects)
 	{
-		std::cout << p.save();
+		
+		//std::ofstream f;
+		//f.open(std::to_string(p.projectID) + ".txt");
+
+		//f << p.save();
+
+		//f.close();
+
+		p.save();
+
 	}
 }

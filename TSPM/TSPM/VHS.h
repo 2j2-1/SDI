@@ -9,5 +9,7 @@ public:
 
 	std::string AudioTrackLanguage;
 	std::string subtitlesLanguage;
+
+	std::string save();
 };
 

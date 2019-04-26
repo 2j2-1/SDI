@@ -3,6 +3,7 @@
 #include <string>
 #include <vector> 
 #include "CrewMember.h"
+#include "PhysicalMedium.h"
 
 class Project
 {
@@ -29,6 +30,10 @@ public:
 	std::vector<std::string> keywords;
 
 	std::vector<CrewMember> crewMembers;
+
+	std::vector<PhysicalMedium> physcicalMeduims;
+
+	void addPhysicalMedium(PhysicalMedium m);
 
 	bool playingInCinima;
 

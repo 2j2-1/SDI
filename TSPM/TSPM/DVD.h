@@ -13,5 +13,7 @@ public:
 	std::vector<std::string> AudioTracksDubs;
 	std::vector<std::string> SubtitleLanguages;
 	std::vector<std::string> bonusFeatures;
+
+	std::string save();
 };
 

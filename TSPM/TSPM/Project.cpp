@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Project.h"
 
+#include <fstream>
 
 Project::Project(int projectID, std::string title, std::string summary, std::string releaseDate, unsigned int runtime, bool playingInCinimam, bool unreleased)
 {
@@ -21,6 +22,11 @@ Project::Project(int projectID, std::string title, std::string summary, std::str
 
 Project::~Project()
 {
+}
+
+void Project::addPhysicalMedium(PhysicalMedium m)
+{
+	physcicalMeduims.push_back(m);
 }
 
 bool Project::containsCast(std::string name, std::string role)
@@ -58,19 +64,49 @@ void Project::addGenre(std::string genre)
 
 std::string Project::save()
 {
+	std::ofstream f;
+	f.open(std::to_string(projectID) + ".txt");
+
 	std::string data;
 
 	data = title + "\n";
 	data += summary + "\n";
 	data += releaseDate + "\n";
-	data += runtime + "\n";
-	data += playingInCinima + "\n";
-	data += unreleased + "\n";
+	data += std::to_string(runtime) + "\n";
+	data += (std::string)(playingInCinima ? "true" : "false") + "\n";
+	data += (std::string)(unreleased ? "true" : "false") + "\n";
 
 	for (std::string keyword : keywords)
 	{
-
+		data += keyword + "\n";
 	}
+
+	data += ",\n";
+
+	for (CrewMember crewMember : crewMembers)
+	{
+		data += crewMember.name + "\n";
+		data += crewMember.role + "\n";
+	}
+
+	data += ",\n";
+
+	for (std::string location : filmingLocations)
+	{
+		data += location + "\n";
+	}
+
+	data += ",\n";
+
+	for (std::string genre : genres)
+	{
+		data += genre + "\n";
+	}
+
+	data += ",\n";
+
+
+	f << data;
 
 	return data;
 }
