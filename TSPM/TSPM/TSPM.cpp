@@ -117,71 +117,93 @@ int update() {
 	int xoff = 3;
 	int yoff = 3;
 	int dataoff = 20;
+	int data = 0;
+	std::vector<std::string> para = { selectedProject.title, selectedProject.summary, selectedProject.releaseDate, std::to_string(selectedProject.runtime),std::to_string(selectedProject.playingInCinima),std::to_string(selectedProject.unreleased)};
+	std::vector<std::string> words = { "Title","Summary","Release Date","Run Time","Playing In Cinima","unreleased","genres","filmingLocations","keywords","crewMembers" };
+	game.stringBuffer = para.at(data);
+	std::string temp;
+	for (int i = 0; i < selectedProject.genres.size(); i++) {
+		temp += selectedProject.genres.at(i) + ",";
+	}
+	if (temp.size() > 0) {
+		temp.pop_back();
+		para.push_back(temp);
+	}
+	temp.clear();
+	for (int i = 0; i < selectedProject.filmingLocations.size(); i++) {
+		temp += selectedProject.filmingLocations.at(i) + ",";
+	}
+	if (temp.size() > 0) {
+		temp.pop_back();
+		para.push_back(temp);
+	}
+	temp.clear();
+	for (int i = 0; i < selectedProject.keywords.size(); i++) {
+		temp += selectedProject.keywords.at(i) + ",";
+	}
+	if (temp.size() > 0) {
+		temp.pop_back();
+		para.push_back(temp);
+	}
+	temp.clear();
+	for (int i = 0; i < selectedProject.crewMembers.size(); i++) {
+		temp += selectedProject.crewMembers.at(i).name + "," + selectedProject.crewMembers.at(i).role + ",";
+	}
+	if (temp.size() > 0) {
+		temp.pop_back();
+		para.push_back(temp);
+	}
+		
+
 	while (true) {
+		game.stringBuffer += game.input();
 		yoff = 3;
 		game.blank_screen();
-		game.print("Title: ", xoff, yoff);
-		game.print(selectedProject.title, xoff + dataoff, yoff);
-		yoff++;
-
-		game.print("Summary: ", xoff, yoff);
-		game.print(selectedProject.summary, xoff + dataoff, yoff);
-		yoff++;
-
-		game.print("Release Date: ", xoff, yoff);
-		game.print(selectedProject.releaseDate, xoff + dataoff, yoff);
-		yoff++;
-
-		game.print("Run Time: ", xoff, yoff);
-		game.print(std::to_string(selectedProject.runtime), xoff + dataoff, yoff);
-		yoff++;
-
-		game.print("Playing In Cinima: ", xoff, yoff);
-		if (selectedProject.playingInCinima)
-			game.print("True", xoff + dataoff, yoff);
-		else
-			game.print("False", xoff + dataoff, yoff);
-		yoff++;
-
-		game.print("unreleased: ", xoff, yoff);
-		if (selectedProject.unreleased)
-			game.print("True", xoff + dataoff, yoff);
-		else
-			game.print("False", xoff + dataoff, yoff);
-		yoff++;
-
-		game.print("weeklySales: ", xoff, yoff);
-		game.print(std::to_string(selectedProject.weeklySales), xoff + dataoff, yoff);
-		yoff++;
-
-		game.print("genres: ", xoff, yoff);
-		for (int i = 0; i < selectedProject.genres.size(); i++){
-			game.print(selectedProject.genres.at(i), xoff + dataoff, yoff);
+		for (int i = 0; i < para.size(); i++) {
+			if (data == i)
+				game.print(words.at(i) + ": " + game.stringBuffer, xoff, yoff);
+			else if (data < para.size())
+				game.print(words.at(i) + ": " + para.at(i), xoff, yoff);
+			else
+				game.print(words.at(i) + ": ", xoff, yoff);
 			yoff++;
 		}
 		
-		game.print("filmingLocations: ", xoff, yoff);
-		for (int i = 0; i < selectedProject.filmingLocations.size(); i++) {
-			game.print(selectedProject.filmingLocations.at(i), xoff + dataoff, yoff);
-			yoff++;
-		}
+		if (GetAsyncKeyState(VK_RETURN) && para.size() <= words.size()) {
+			
+			if (para.size() > data)
+				para.at(data) = game.stringBuffer;
+			else 
+				para.push_back(game.stringBuffer);
+			data++;
+			
+			if (data == words.size()) {
+				bool a;
+				std::istringstream(para.at(4)) >> std::boolalpha >> a;
+				bool b;
+				std::istringstream(para.at(5)) >> std::boolalpha >> b;
+				Project temp(selectedProject.projectID, para.at(0), para.at(1), para.at(2), std::stoi(para.at(3)), a, b);
+				for (int i = 0; i < temp.split(para.at(6), ',').size(); i++) {
+					temp.addGenre(temp.split(para.at(6), ',').at(i));
+				}
+				for (int i = 0; i < temp.split(para.at(7), ',').size(); i++) {
+					temp.addFilmingLocation(temp.split(para.at(7), ',').at(i));
+				}
+				for (int i = 0; i < temp.split(para.at(8), ',').size(); i++) {
+					temp.addKeyword(temp.split(para.at(8), ',').at(i));
+				}
+				for (int i = 0; i < temp.split(para.at(9), ',').size(); i += 2) {
+					temp.addCrewMember(temp.split(para.at(9), ',').at(i), temp.split(para.at(9), ',').at(i + 1));
+				}
 
-		game.print("keywords: ", xoff, yoff);
-		for (int i = 0; i < selectedProject.keywords.size(); i++) {
-			game.print(selectedProject.keywords.at(i), xoff + dataoff, yoff);
-			yoff++;
-		}
 
-		game.print("crewMembers: ", xoff, yoff);
-		for (int i = 0; i < selectedProject.crewMembers.size(); i++) {
-			game.print(selectedProject.crewMembers.at(i).role + " - " + selectedProject.crewMembers.at(i).name, xoff + dataoff, yoff);
-			yoff++;
-		}
+				c1.add(temp);
+				temp.save();
+				
+				return -1;
+			} else
+				game.stringBuffer = para.at(data);
 
-		game.print("physcicalMeduims: ", xoff, yoff);
-		for (int i = 0; i < selectedProject.physcicalMeduims.size(); i++) {
-			game.print(selectedProject.physcicalMeduims.at(i)->type, xoff + dataoff, yoff);
-			yoff++;
 		}
 
 		game.draw();
