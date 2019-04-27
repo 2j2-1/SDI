@@ -620,10 +620,11 @@ int main(){
 			game.stringBuffer.clear();
 			break;
 		case 3:
-			if (selectedProject.getProjectID()!=-1)
+			if (selectedProject.getProjectID() != -1) {
 				screen = update();
-			if (_weeklySalesThreshold)
-				logWeeklySales(selectedProject);
+				if (_weeklySalesThreshold)
+					logWeeklySales(selectedProject);
+			}
 			game.stringBuffer.clear();
 			screen = -1;
 			break;
