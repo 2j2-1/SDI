@@ -36,7 +36,24 @@ void Project::addPhysicalMedium(PhysicalMedium m)
 
 bool Project::containsCast(std::string name, std::string role)
 {
+	std::vector<std::string> names;
+	for (CrewMember c : crewMembers)
+	{
+		names.push_back(c.name);
+	}
 
+	int index = binarySearch(names, 0, names.size() - 1, name);
+
+	if (index == -1)
+	{
+		return false;
+	}
+	else
+	{
+		return true;
+	}
+
+	/*
 	for (CrewMember c : crewMembers)
 	{
 		if (c.name == name && c.role == role)
@@ -45,6 +62,7 @@ bool Project::containsCast(std::string name, std::string role)
 		}
 	}
 	return false;
+	*/
 }
 
 void Project::addKeyword(std::string keyword)
@@ -119,4 +137,25 @@ std::string Project::save()
 	f << data;
 
 	return data;
+}
+
+int Project::binarySearch(std::vector<std::string> arr, int start, int end, std::string target)
+{
+	if (end >= start) {
+		int mid = start + (end - start) / 2;
+
+		// If element in middle 
+		if (arr[mid] == target)
+			return mid;
+
+		// If in left half
+		if (arr[mid] > target)
+			return binarySearch(arr, start, mid - 1, target);
+
+		// Else in right half
+		return binarySearch(arr, mid + 1, end, target);
+	}
+
+	// Not present
+	return -1;
 }

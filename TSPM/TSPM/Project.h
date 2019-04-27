@@ -55,7 +55,8 @@ public:
 	std::vector<PhysicalMedium> physcicalMeduims;
 
 	
-
+private:
+	static int binarySearch(std::vector<std::string> arr, int start, int end, std::string target);
 
 };
 
