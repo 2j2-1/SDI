@@ -33,15 +33,13 @@ void printSearch(std::vector<std::string> projects, int offsetY, int selected, i
 		if (projects.size()>20)
 			game.print("More Below...", 3, 27);
 	}
-	else
-		game.drawColor(3, offsetY + 2 + selected, 20, 15);
 }
 int search() {
 	int offsetY = 4;
 	int offsetX = 20;
 	int selected = 0;
 	int projectOffset = 0;
-	std::vector<Project> allProjects = c1.sortByTitle(c1.searchByProjectTitle(c1.projects, ""));
+	std::vector<Project> allProjects = c1.sortByTitle(c1.projects);
 	std::vector<std::string> projects;
 	int metaDataSize;
 	for (int i = 0; i < allProjects.size(); i++){
@@ -51,7 +49,6 @@ int search() {
 		game.blank_screen();
 		if (game.input() != "") {
 			game.stringBuffer += game.input();
-			game.drawColor(3, offsetY + 2 + selected, projects.at(selected + projectOffset).size(), 15);
 			selected = 0;
 			projectOffset = 0;
 		}
@@ -61,7 +58,6 @@ int search() {
 		//printSearch(projects, offsetY, selected, projectOffset);
 
 		if (GetAsyncKeyState(VK_DOWN)) {
-			game.drawColor(3, offsetY + 2 + selected, projects.at(selected + projectOffset).size(), 15);
 			selected++;
 			if (selected > min(19, projects.size() - 1)) {
 				selected = min(19, projects.size() - 1);
@@ -69,7 +65,6 @@ int search() {
 			}
 		}
 		if (GetAsyncKeyState(VK_UP)) {
-			game.drawColor(3, offsetY + 2 + selected, projects.at(selected + projectOffset).size(), 15);
 			selected--;
 			if (selected < 0) {
 				selected = 0;
@@ -80,7 +75,7 @@ int search() {
 		}
 		
 		if (GetAsyncKeyState(VK_TAB)) {
-			allProjects = c1.sortByTitle(c1.searchByProjectTitle(c1.projects, game.stringBuffer));
+			allProjects = c1.sortByTitle(c1.searchByActor(c1.projects, game.stringBuffer));
 			projects.clear();
 			for (int i = 0; i < allProjects.size(); i++) {
 				projects.push_back(allProjects[i].title);
@@ -252,29 +247,31 @@ int update() {
 			data++;
 			
 			if (data == words.size()) {
-				bool a;
-				std::istringstream(para.at(4)) >> std::boolalpha >> a;
-				bool b;
-				std::istringstream(para.at(5)) >> std::boolalpha >> b;
-				Project temp(selectedProject.projectID, para.at(0), para.at(1), para.at(2), std::stoi(para.at(3)), a, b);
-				for (int i = 0; i < temp.split(para.at(6), ',').size(); i++) {
-					temp.addGenre(temp.split(para.at(6), ',').at(i));
-				}
-				for (int i = 0; i < temp.split(para.at(7), ',').size(); i++) {
-					temp.addFilmingLocation(temp.split(para.at(7), ',').at(i));
-				}
-				for (int i = 0; i < temp.split(para.at(8), ',').size(); i++) {
-					temp.addKeyword(temp.split(para.at(8), ',').at(i));
-				}
-				for (int i = 0; i < temp.split(para.at(9), ',').size(); i += 2) {
-					temp.addCrewMember(temp.split(para.at(9), ',').at(i), temp.split(para.at(9), ',').at(i + 1));
-				}
+				try {
+					bool a;
+					std::istringstream(para.at(4)) >> std::boolalpha >> a;
+					bool b;
+					std::istringstream(para.at(5)) >> std::boolalpha >> b;
+					Project temp(selectedProject.projectID, para.at(0), para.at(1), para.at(2), std::stoi(para.at(3)), a, b);
+					for (int i = 0; i < temp.split(para.at(6), ',').size(); i++) {
+						temp.addGenre(temp.split(para.at(6), ',').at(i));
+					}
+					for (int i = 0; i < temp.split(para.at(7), ',').size(); i++) {
+						temp.addFilmingLocation(temp.split(para.at(7), ',').at(i));
+					}
+					for (int i = 0; i < temp.split(para.at(8), ',').size(); i++) {
+						temp.addKeyword(temp.split(para.at(8), ',').at(i));
+					}
+					for (int i = 0; i < temp.split(para.at(9), ',').size(); i += 2) {
+						temp.addCrewMember(temp.split(para.at(9), ',').at(i), temp.split(para.at(9), ',').at(i + 1));
+					}
 
-				c1.deleteProject(selectedProject.projectID);
-				c1.add(temp);
-				selectedProject = temp;
-				temp.save();
-				
+					c1.deleteProject(selectedProject.projectID);
+					c1.add(temp);
+					selectedProject = temp;
+					temp.save();
+				}
+				catch (std::invalid_argument ex){}
 				return -1;
 			} else
 				game.stringBuffer = para.at(data);
@@ -310,27 +307,31 @@ int create() {
 		if (GetAsyncKeyState(VK_RETURN) && para.size() <= words.size()) {
 			para.push_back(game.stringBuffer);
 			if (para.size() == words.size()) {
-				bool a;
-				std::istringstream(para.at(4)) >> std::boolalpha >> a;
-				bool b;
-				std::istringstream(para.at(5)) >> std::boolalpha >> b;
-				Project temp(4, para.at(0), para.at(1), para.at(2), std::stoi(para.at(3)), a, b);
-				for (int i = 0; i < temp.split(para.at(6), ',').size(); i++) {
-					temp.addGenre(temp.split(para.at(6), ',').at(i));
+				try {
+					bool a;
+					std::istringstream(para.at(4)) >> std::boolalpha >> a;
+					bool b;
+					std::istringstream(para.at(5)) >> std::boolalpha >> b;
+					Project temp(c1.projects.back().getProjectID()+1, para.at(0), para.at(1), para.at(2), std::stoi(para.at(3)), a, b);
+					for (int i = 0; i < temp.split(para.at(6), ',').size(); i++) {
+						temp.addGenre(temp.split(para.at(6), ',').at(i));
+					}
+					for (int i = 0; i < temp.split(para.at(7), ',').size(); i++) {
+						temp.addFilmingLocation(temp.split(para.at(7), ',').at(i));
+					}
+					for (int i = 0; i < temp.split(para.at(8), ',').size(); i++) {
+						temp.addKeyword(temp.split(para.at(8), ',').at(i));
+					}
+					for (int i = 0; i < temp.split(para.at(9), ',').size(); i += 2) {
+						temp.addCrewMember(temp.split(para.at(9), ',').at(i), temp.split(para.at(9), ',').at(i + 1));
+					}
+
+
+					c1.add(temp);
+					temp.save();
 				}
-				for (int i = 0; i < temp.split(para.at(7), ',').size(); i++) {
-					temp.addFilmingLocation(temp.split(para.at(7), ',').at(i));
-				}
-				for (int i = 0; i < temp.split(para.at(8), ',').size(); i++) {
-					temp.addKeyword(temp.split(para.at(8), ',').at(i));
-				}
-				for (int i = 0; i < temp.split(para.at(9), ',').size(); i+=2) {
-					temp.addCrewMember(temp.split(para.at(9), ',').at(i), temp.split(para.at(9), ',').at(i+1));
-				}
-				
-				
-				c1.add(temp);
-				temp.save();
+				catch (std::invalid_argument ex){}
+				catch(std::out_of_range){}
 				return -1;
 			}
 			
@@ -613,7 +614,8 @@ int main(){
 			game.stringBuffer.clear();
 			break;
 		case 3:
-			screen = update();
+			if (selectedProject.getProjectID()!=-1)
+				screen = update();
 			if (_weeklySalesThreshold)
 				logWeeklySales(selectedProject);
 			game.stringBuffer.clear();
@@ -621,12 +623,15 @@ int main(){
 			break;
 		case 4:
 			screen = -1;
-			c1.deleteProjectFile(selectedProject.getProjectID());
-			c1.deleteProject(selectedProject.getProjectID());
-			selectedProject = Project();
+			if (selectedProject.getProjectID() != -1) {
+				c1.deleteProjectFile(selectedProject.getProjectID());
+				c1.deleteProject(selectedProject.getProjectID());
+				selectedProject = Project();
+			}
 			game.stringBuffer.clear();
 			break;
 		case 5:
+			if (c1.projects.size() != 0)
 			screen = search();
 			game.stringBuffer.clear();
 			break;
