@@ -333,8 +333,36 @@ Project Catalogue::parse(std::string filePath, int projectID)
 			break;
 		}
 		p.addGenre(line);
-
 	}
+
+	while (std::getline(infile, line))
+	{
+		if (line == ",")
+		{
+			break;
+		}
+		int ID = std::stoi(line);
+		std::getline(infile, line);
+		std::string type = line;
+		std::string title = line;
+		std::string format = line;
+		std::string frameAspect = line;
+		std::string packaging = line;
+
+		if (type == "VHS")
+		{
+			std::string AudioTrackLang = line;
+			std::string subtitlesLang = line;
+			p.addPhysicalMedium(VHS(ID, type, title, format, frameAspect, packaging, AudioTrackLang, subtitlesLang));
+		}
+		else
+		{
+
+		}
+
+		
+	}
+
 
 
 	return p;
