@@ -346,14 +346,21 @@ Project Catalogue::parse(std::string filePath, int projectID)
 		int ID = std::stoi(line);
 		std::getline(infile, line);
 		std::string type = line;
+		std::getline(infile, line);
 		std::string title = line;
+		std::getline(infile, line);
 		std::string format = line;
+		std::getline(infile, line);
 		std::string frameAspect = line;
+		std::getline(infile, line);
 		std::string packaging = line;
+
 
 		if (type == "VHS")
 		{
+			std::getline(infile, line);
 			std::string AudioTrackLang = line;
+			std::getline(infile, line);
 			std::string subtitlesLang = line;
 			p.addPhysicalMedium(new VHS(ID, type, title, format, frameAspect, packaging, AudioTrackLang, subtitlesLang));
 		}
