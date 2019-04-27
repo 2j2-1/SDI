@@ -21,10 +21,6 @@ public:
 
 	void addPhysicalMedium(PhysicalMedium * m);
 
-	bool playingInCinima;
-
-	bool unreleased;
-
 	bool containsCast(std::string name, std::string role);
 
 	void addKeyword(std::string keyword);
@@ -47,6 +43,10 @@ public:
 	int getRunTime();
 
 	int getWeeklySales();
+
+	bool getUnreleased();
+
+	bool getPlayingInCinima();
 
 	std::vector<std::string> getGenres();
 
@@ -82,11 +82,30 @@ public:
 
 	void setPhyicalMediums(std::vector<PhysicalMedium*> mediumVector);
 
+	void setUnreleased(bool unreleased);
+
+	void setPlayingInCinima(bool playing);
 
 	std::string save();
 
 	static std::vector<std::string> split(std::string text, char = ',');
 
+
+	
+
+	std::vector<std::string> genres;
+
+	std::vector<std::string> filmingLocations;
+
+	std::vector<std::string> keywords;
+
+	std::vector<CrewMember> crewMembers;
+
+	std::vector<PhysicalMedium*> physcicalMeduims;
+
+	
+protected:
+	static int binarySearch(std::vector<std::string> arr, int start, int end, std::string target);
 
 	int projectID;
 
@@ -100,19 +119,9 @@ public:
 
 	int weeklySales;
 
-	std::vector<std::string> genres;
+	bool unreleased;
 
-	std::vector<std::string> filmingLocations;
-
-	std::vector<std::string> keywords;
-
-	std::vector<CrewMember> crewMembers;
-
-	std::vector<PhysicalMedium*> physcicalMeduims;
-
-	
-private:
-	static int binarySearch(std::vector<std::string> arr, int start, int end, std::string target);
+	bool playingInCinima;
 
 };
 
