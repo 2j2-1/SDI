@@ -36,7 +36,7 @@ public:
 
 	std::string save();
 
-	std::vector<std::string> split(std::string text, char = ',');
+	static std::vector<std::string> split(std::string text, char = ',');
 
 
 	int projectID;

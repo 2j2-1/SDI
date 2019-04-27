@@ -37,6 +37,9 @@ std::string DVD::save()
 	{
 		data += feature + "\n";
 	}
+	
+	data += ",\n";
+
 
 	return data;
 }

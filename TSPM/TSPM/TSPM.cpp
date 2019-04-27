@@ -272,16 +272,18 @@ int main(){
 	p3.addGenre("sad 2");
 
 	p3.addPhysicalMedium(new VHS(5, "VHS", "Dumbo on vhs", "MP4", "Standard", "Card", "English", "English"));
+	p3.addPhysicalMedium(new VHS(6, "VHS", "Dumbo on vhs", "MP4", "Standard", "Card", "English", "English"));
+	p3.addPhysicalMedium(new VHS(7, "VHS", "Dumbo on vhs", "MP4", "Standard", "Card", "English", "English"));
 
-	DVD * dvd1 = new DVD(6, "Blue ray", "Dumbo on blue ray", "MP4", "Wide sceen", "Plastic");
-	DVD * dvd2 = new DVD(6, "Blue ray", "Dumbo on blue ray remastered", "MP4", "Wide sceen", "Plastic");
+	DVD * dvd1 = new DVD(8, "Blue ray", "Dumbo on blue ray", "MP4", "Wide sceen", "Plastic");
+	DVD * dvd2 = new DVD(9, "Blue ray", "Dumbo on blue ray remastered", "MP4", "Wide sceen", "Plastic");
 
 	p3.addPhysicalMedium(dvd1);
 	p3.addPhysicalMedium(dvd2);
 
-	c1.add(p1);
-	c1.add(p2);
-	c1.add(p3);
+	//c1.add(p1);
+	//c1.add(p2);
+	//c1.add(p3);
 
 
 	//c1.write();
