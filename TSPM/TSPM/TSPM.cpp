@@ -94,7 +94,6 @@ int search() {
 	game.drawColor(3, offsetY + 2 + selected, projects.at(selected + projectOffset).size(), 15);
 	return -1;
 }
-
 int menu() {
 	int offset = 1;
 	int choice = -1;
@@ -103,7 +102,7 @@ int menu() {
 	game.print("3. View/Update File", 3, 5 + offset);
 	game.print("4. Delete Project", 3, 6 + offset);
 	game.print("5. Search", 3, 7 + offset);
-	game.print("6. Maintenance", 3, 8 + offset);
+	game.print("6. Add Physical Media ", 3, 8 + offset);
 	game.print("0. Exit", 3, 9 + offset);
 	game.print("Please Enter Choice: " + game.stringBuffer, 3, 11 + offset);
 	if (GetAsyncKeyState(VK_RETURN)) {
@@ -167,6 +166,12 @@ int update() {
 				game.print(words.at(i) + ": " + para.at(i), xoff, yoff);
 			else
 				game.print(words.at(i) + ": ", xoff, yoff);
+			yoff++;
+		}
+		game.print("Physcial Meduims: ", xoff, yoff);
+		yoff++;
+		for (int i = 0; i < selectedProject.physcicalMeduims.size(); i++){
+			game.print(selectedProject.physcicalMeduims.at(i)->type, xoff, yoff);
 			yoff++;
 		}
 		
@@ -393,6 +398,7 @@ int main(){
 			screen = search();
 			break;
 		case 6:
+			
 			screen = -1;
 			break;
 		default:
