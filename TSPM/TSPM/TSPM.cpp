@@ -196,8 +196,9 @@ int update() {
 					temp.addCrewMember(temp.split(para.at(9), ',').at(i), temp.split(para.at(9), ',').at(i + 1));
 				}
 
-
+				c1.deleteProject(selectedProject.projectID);
 				c1.add(temp);
+				selectedProject = temp;
 				temp.save();
 				
 				return -1;
@@ -335,13 +336,13 @@ int main(){
 	p3.addPhysicalMedium(dvd1);
 	p3.addPhysicalMedium(dvd2);
 
-	/*c1.add(p1);
-	c1.add(p2);
-	c1.add(p3);*/
+	//c1.add(p1);
+	//c1.add(p2);
+	//c1.add(p3);
 
 
 	//c1.write();
-	c1.read();
+	
 
 
 	int screen = -1;
@@ -360,6 +361,7 @@ int main(){
 		case 0:
 			return 0;
 		case 1:
+			c1.read();
 			screen = -1;
 			break;
 		case 2:
