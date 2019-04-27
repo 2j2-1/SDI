@@ -2,6 +2,7 @@
 #include "Project.h"
 
 #include <fstream>
+#include "Catalogue.h"
 
 Project::Project(int projectID, std::string title, std::string summary, std::string releaseDate, unsigned int runtime, bool playingInCinimam, bool unreleased, int weeklySales)
 {
@@ -97,7 +98,27 @@ void Project::addKeyword(std::string keyword)
 
 void Project::addCrewMember(std::string name, std::string role)
 {
-	crewMembers.push_back({ name, role });
+	std::vector<CrewMember> temp;
+	bool added = false;
+
+	for (int i = 0; i < crewMembers.size(); i++)
+	{
+		if (crewMembers[i].name > name && !added)
+		{
+			temp.push_back({ name, role });
+			added = true;
+		}
+		temp.push_back(crewMembers[i]);
+		
+
+	}
+	crewMembers = temp;
+
+	if (crewMembers.size() == 0 || crewMembers.back().name < name)
+	{
+		crewMembers.push_back({ name, role });
+	}
+	std::cout <<  "";
 }
 
 void Project::addFilmingLocation(std::string location)
@@ -321,8 +342,6 @@ std::string Project::save()
 		{
 			data += ((DVD*)physicalMedium)->save();
 		}
-
-		
 	}
 
 
