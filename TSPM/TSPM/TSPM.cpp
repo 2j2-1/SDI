@@ -223,8 +223,8 @@ int main(){
 	c1.add(p2);
 	c1.add(p3);
 
+
 	c1.write();*/
-	c1.read();
 
 
 	int screen = -1;
