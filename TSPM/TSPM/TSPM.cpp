@@ -49,8 +49,6 @@ int search() {
 			selected = 0;
 			projectOffset = 0;
 		}
-		
-		printSearch(projects, offsetY, selected, projectOffset);
 
 		if (GetAsyncKeyState(VK_DOWN)) {
 			game.drawColor(3, offsetY + 2 + selected, projects.at(selected + projectOffset).size(), 15);
@@ -186,7 +184,7 @@ int update() {
 }
 
 int main(){
-	/*Project p1(0, "Dumbo", "Ridiculed because of his enormous ears, a young circus elephant is assisted by a mouse to achieve his full potential.", "1942/01/02", 64, false, false);
+	Project p1(0, "Dumbo", "Ridiculed because of his enormous ears, a young circus elephant is assisted by a mouse to achieve his full potential.", "1942/01/02", 64, false, false);
 	p1.addKeyword("Try not to cry");
 	p1.addKeyword("another keyword");
 	p1.addFilmingLocation("Home");
@@ -215,16 +213,21 @@ int main(){
 	p3.addFilmingLocation("not home 2");
 	p3.addCrewMember("Dumbo", "actor 2");
 	p3.addCrewMember("Dumbo's mum 2", "dead 2");
-	p3.addGenre("sad 2");*/
+	p3.addGenre("sad 2");
+	
+	//PhysicalMedium * phy = new PhysicalMedium(5, "VHS", "Jumbo on vhs", "Mp4 format", "Frame aspect standard", "Card");
+	VHS * vhs = new VHS(5,  "VHS", "Jumbo on vhs", "Mp4 format", "Frame aspect standard", "Card", "English", "English");
 
+
+	p3.addPhysicalMedium(vhs);
 	
 
-	//c1.add(p1);
-	//c1.add(p2);
-	//c1.add(p3);
+	c1.add(p1);
+	c1.add(p2);
+	c1.add(p3);
 
-	//c1.write();
-	c1.read();
+	c1.write();
+	//c1.read();
 
 
 	int screen = -1;

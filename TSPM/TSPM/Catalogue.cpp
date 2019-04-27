@@ -235,6 +235,8 @@ void Catalogue::read()
 	{
 		add(parse(line + ".txt", std::stoi(line)));
 	}
+
+	infile.close();
 	
 }
 
@@ -353,11 +355,11 @@ Project Catalogue::parse(std::string filePath, int projectID)
 		{
 			std::string AudioTrackLang = line;
 			std::string subtitlesLang = line;
-			p.addPhysicalMedium(VHS(ID, type, title, format, frameAspect, packaging, AudioTrackLang, subtitlesLang));
+			p.addPhysicalMedium(new VHS(ID, type, title, format, frameAspect, packaging, AudioTrackLang, subtitlesLang));
 		}
 		else
 		{
-			DVD dvd(ID, type, title, format, frameAspect, packaging);
+			DVD * dvd = new DVD(ID, type, title, format, frameAspect, packaging);
 
 			while (std::getline(infile, line))
 			{
@@ -366,7 +368,7 @@ Project Catalogue::parse(std::string filePath, int projectID)
 					break;
 				}
 
-				dvd.addAudioTrack(line);
+				dvd->addAudioTrack(line);
 			}
 
 			while (std::getline(infile, line))
@@ -376,7 +378,7 @@ Project Catalogue::parse(std::string filePath, int projectID)
 					break;
 				}
 
-				dvd.addSubtitleLanguage(line);
+				dvd->addSubtitleLanguage(line);
 			}
 
 			while (std::getline(infile, line))
@@ -386,7 +388,7 @@ Project Catalogue::parse(std::string filePath, int projectID)
 					break;
 				}
 
-				dvd.addBonusFeature(line);
+				dvd->addBonusFeature(line);
 			}
 
 			p.addPhysicalMedium(dvd);
