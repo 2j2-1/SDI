@@ -49,9 +49,16 @@ std::vector<Project> Catalogue::searchByProjectTitle(std::vector<Project> projec
 
 std::vector<Project> Catalogue::searchByActor(std::vector<Project> projects, std::string actorName)
 {
+	std::vector<Project> ret;
+	for (Project p : projects)
+	{
+		if (p.containsCast(actorName, "actor"))
+		{
+			ret.push_back(p);
+		}
+	}
 
-
-	return std::vector<Project>();
+	return ret;
 }
 
 std::vector<int> Catalogue::sortByText(std::vector<std::string> text, std::vector<int> IDs)
@@ -175,27 +182,6 @@ std::vector<Project> Catalogue::sortByDate(std::vector<Project> projects)
 	}
 
 	return ret;
-}
-
-int Catalogue::binarySearch(std::vector<std::string> arr, int start, int end, std::string target)
-{
-	if (end >= start) {
-		int mid = start + (end - start) / 2;
-
-		// If element in middle 
-		if (arr[mid] == target)
-			return mid;
-
-		// If in left half
-		if (arr[mid] > target)
-			return binarySearch(arr, start, mid - 1, target);
-
-		// Else in right half
-		return binarySearch(arr, mid + 1, end, target);
-	}
-
-	// Not present
-	return -1;
 }
 
 void Catalogue::quickSort(std::vector<std::string>& arr, int start, int end)
