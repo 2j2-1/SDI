@@ -94,17 +94,19 @@ int search() {
 	game.drawColor(3, offsetY + 2 + selected, projects.at(selected + projectOffset).size(), 15);
 	return -1;
 }
+
 int menu() {
 	int offset = 1;
 	int choice = -1;
 	game.print("1. Load File",3,3 + offset);
 	game.print("2. Create New Project", 3, 4 + offset);
-	game.print("3. View/Update File", 3, 5 + offset);
+	game.print("3. Update Project", 3, 5 + offset);
 	game.print("4. Delete Project", 3, 6 + offset);
 	game.print("5. Search", 3, 7 + offset);
 	game.print("6. Add Physical Media ", 3, 8 + offset);
-	game.print("0. Exit", 3, 9 + offset);
-	game.print("Please Enter Choice: " + game.stringBuffer, 3, 11 + offset);
+	game.print("7. View Project ", 3, 9 + offset);
+	game.print("0. Exit", 3, 10 + offset);
+	game.print("Please Enter Choice: " + game.stringBuffer, 3, 12 + offset);
 	if (GetAsyncKeyState(VK_RETURN)) {
 		int temp = std::stoi(game.stringBuffer);
 		game.stringBuffer.clear();
@@ -119,7 +121,7 @@ int addPhysicalMedia(){
 	int dataoff = 20;
 	std::vector<std::string> para;
 	std::vector<std::string> words = { "ID","Type","Title","Format","Frame Aspect","Packing","Audio Track Language","Subtitle Language","Bonus Feature" };
-	while (true) {
+	while (!GetAsyncKeyState(VK_ESCAPE)) {
 		game.stringBuffer += game.input();
 		yoff = 3;
 		game.blank_screen();
@@ -209,7 +211,7 @@ int update() {
 	}
 		
 
-	while (true) {
+	while(!GetAsyncKeyState(VK_ESCAPE)) {
 		game.stringBuffer += game.input();
 		yoff = 3;
 		game.blank_screen();
@@ -278,7 +280,7 @@ int create() {
 	int dataoff = 20;
 	std::vector<std::string> para;
 	std::vector<std::string> words = {"Title","Summary","Release Date","Run Time","Playing In Cinima","unreleased","genres","filmingLocations","keywords","crewMembers" };
-	while (true) {
+	while(!GetAsyncKeyState(VK_ESCAPE)) {
 		game.stringBuffer += game.input();
 		yoff = 3;
 		game.blank_screen();
@@ -323,6 +325,138 @@ int create() {
 			game.stringBuffer.clear();
 		}
 		
+		game.draw();
+	}
+	return -1;
+}
+
+int view() {
+	int xoff = 3;
+	int yoff = 3;
+	int dataoff = 20;
+	int mode = -1;
+	while(!GetAsyncKeyState(VK_ESCAPE)) {
+		if (GetAsyncKeyState(VK_RIGHT)) {
+			mode++;
+			mode = min(mode, selectedProject.physcicalMeduims.size()-1);
+		}
+		if (GetAsyncKeyState(VK_LEFT)) {
+			mode--;
+			mode = max(mode,-1);
+		}
+		yoff = 3;
+		game.blank_screen();
+		if (mode == -1) {
+			game.print("Title: ", xoff, yoff);
+			game.print(selectedProject.title, xoff + dataoff, yoff);
+			yoff++;
+
+			game.print("Summary: ", xoff, yoff);
+			game.print(selectedProject.summary, xoff + dataoff, yoff);
+			yoff++;
+
+			game.print("Release Date: ", xoff, yoff);
+			game.print(selectedProject.releaseDate, xoff + dataoff, yoff);
+			yoff++;
+
+			game.print("Run Time: ", xoff, yoff);
+			game.print(std::to_string(selectedProject.runtime), xoff + dataoff, yoff);
+			yoff++;
+
+			game.print("Playing In Cinima: ", xoff, yoff);
+			if (selectedProject.playingInCinima)
+				game.print("True", xoff + dataoff, yoff);
+			else
+				game.print("False", xoff + dataoff, yoff);
+			yoff++;
+
+			game.print("unreleased: ", xoff, yoff);
+			if (selectedProject.unreleased)
+				game.print("True", xoff + dataoff, yoff);
+			else
+				game.print("False", xoff + dataoff, yoff);
+			yoff++;
+
+			game.print("weeklySales: ", xoff, yoff);
+			game.print(std::to_string(selectedProject.weeklySales), xoff + dataoff, yoff);
+			yoff++;
+
+			game.print("genres: ", xoff, yoff);
+			for (int i = 0; i < selectedProject.genres.size(); i++) {
+				game.print(selectedProject.genres.at(i), xoff + dataoff, yoff);
+				yoff++;
+			}
+
+			game.print("filmingLocations: ", xoff, yoff);
+			for (int i = 0; i < selectedProject.filmingLocations.size(); i++) {
+				game.print(selectedProject.filmingLocations.at(i), xoff + dataoff, yoff);
+				yoff++;
+			}
+
+			game.print("keywords: ", xoff, yoff);
+			for (int i = 0; i < selectedProject.keywords.size(); i++) {
+				game.print(selectedProject.keywords.at(i), xoff + dataoff, yoff);
+				yoff++;
+			}
+
+			game.print("crewMembers: ", xoff, yoff);
+			for (int i = 0; i < selectedProject.crewMembers.size(); i++) {
+				game.print(selectedProject.crewMembers.at(i).role + " - " + selectedProject.crewMembers.at(i).name, xoff + dataoff, yoff);
+				yoff++;
+			}
+
+			game.print("physcicalMeduims: ", xoff, yoff);
+			for (int i = 0; i < selectedProject.physcicalMeduims.size(); i++) {
+				game.print(selectedProject.physcicalMeduims.at(i)->type, xoff + dataoff, yoff);
+				yoff++;
+			}
+		}
+		else if (selectedProject.physcicalMeduims.size() > 0) {
+			game.print("ID: ", xoff, yoff);
+			game.print(std::to_string(selectedProject.physcicalMeduims.at(mode)->ID), xoff + dataoff, yoff);
+			yoff++;
+			game.print("type: ", xoff, yoff);
+			game.print(selectedProject.physcicalMeduims.at(mode)->type, xoff + dataoff, yoff);
+			yoff++;
+			game.print("title: ", xoff, yoff);
+			game.print(selectedProject.physcicalMeduims.at(mode)->title, xoff + dataoff, yoff);
+			yoff++;
+			game.print("format: ", xoff, yoff);
+			game.print(selectedProject.physcicalMeduims.at(mode)->format, xoff + dataoff, yoff);
+			yoff++;
+			game.print("frameAspect: ", xoff, yoff);
+			game.print(selectedProject.physcicalMeduims.at(mode)->frameAspect, xoff + dataoff, yoff);
+			yoff++;
+			game.print("packaging: ", xoff, yoff);
+			game.print(selectedProject.physcicalMeduims.at(mode)->packaging, xoff + dataoff, yoff);
+			yoff++;
+			if (selectedProject.physcicalMeduims.at(mode)->type == "VHS") {
+				game.print("AudioTrackLanguage: ", xoff, yoff);
+				game.print(((VHS*)selectedProject.physcicalMeduims.at(mode))->AudioTrackLanguage, xoff + dataoff, yoff);
+				yoff++;
+				game.print("subtitlesLanguage: ", xoff, yoff);
+				game.print(((VHS*)selectedProject.physcicalMeduims.at(mode))->subtitlesLanguage, xoff + dataoff, yoff);
+				yoff++;
+			}
+			else {
+				game.print("AudioTracksDubs: ", xoff, yoff);
+				for (int i = 0; i < ((DVD*)selectedProject.physcicalMeduims.at(mode))->AudioTracksDubs.size(); i++) {
+					game.print(((DVD*)selectedProject.physcicalMeduims.at(mode))->AudioTracksDubs.at(i), xoff + dataoff, yoff);
+					yoff++;
+				}
+				game.print("SubtitleLanguages: ", xoff, yoff);
+				for (int i = 0; i < ((DVD*)selectedProject.physcicalMeduims.at(mode))->SubtitleLanguages.size(); i++) {
+					game.print(((DVD*)selectedProject.physcicalMeduims.at(mode))->SubtitleLanguages.at(i), xoff + dataoff, yoff);
+					yoff++;
+				}
+				game.print("AudioTracksDubs: ", xoff, yoff);
+				for (int i = 0; i < ((DVD*)selectedProject.physcicalMeduims.at(mode))->bonusFeatures.size(); i++) {
+					game.print(((DVD*)selectedProject.physcicalMeduims.at(mode))->bonusFeatures.at(i), xoff + dataoff, yoff);
+					yoff++;
+				}
+			}
+		}
+
 		game.draw();
 	}
 	return -1;
@@ -420,7 +554,7 @@ int main(){
 	int screen = -1;
 	game.setup();
 	game.blank_screen();
-	while (true) {
+	while(true) {
 		game.blank_screen();
 		game.print("Welcome to TSPM",game.screenWidth/2-8,2);
 		game.draw_pixel(0, 0, char(screen+48));
@@ -453,6 +587,10 @@ int main(){
 			break;
 		case 6:
 			addPhysicalMedia();
+			screen = -1;
+			break;
+		case 7:
+			view();
 			screen = -1;
 			break;
 		default:
