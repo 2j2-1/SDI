@@ -12,90 +12,8 @@
 
 cGame game;
 Catalogue c1;
-int printMetaData(Project current, int offsetY, int selected, int projectOffset, int offsetX,int mode) {
+void printMetaData(Project current) {
 
-
-	std::vector<std::vector<std::string>> metaData;
-	std::vector<std::string> tempMetaData;
-	int lenOfSummary = 110;
-
-	tempMetaData.push_back("Title: ");
-	tempMetaData.push_back(current.title);
-	metaData.push_back(tempMetaData);
-	tempMetaData.clear();
-
-	tempMetaData.push_back("Summary: ");
-	for (int i = 0; i < current.summary.size() / lenOfSummary + 1; i++) {
-		tempMetaData.push_back(current.summary.substr(i*lenOfSummary, (i + 1)*lenOfSummary));
-	}
-	metaData.push_back(tempMetaData);
-	tempMetaData.clear();
-
-	tempMetaData.push_back("Genre: ");
-	for (int i = 0; i < current.genres.size(); i++) {
-		tempMetaData.push_back(current.genres[i]);
-	}
-	metaData.push_back(tempMetaData);
-	tempMetaData.clear();
-
-	tempMetaData.push_back("Release Date: ");
-	tempMetaData.push_back(current.releaseDate);
-	metaData.push_back(tempMetaData);
-	tempMetaData.clear();
-
-	tempMetaData.push_back("Filming Locations: ");
-	for (int i = 0; i < current.filmingLocations.size(); i++) {
-		tempMetaData.push_back(current.filmingLocations[i]);
-	}
-	metaData.push_back(tempMetaData);
-	tempMetaData.clear();
-
-	tempMetaData.push_back("Runtime: ");
-	tempMetaData.push_back(std::to_string(current.runtime) + " Minutes");
-	metaData.push_back(tempMetaData);
-	tempMetaData.clear();
-
-	tempMetaData.push_back("Keywords: ");
-	for (int i = 0; i < current.keywords.size(); i++) {
-		tempMetaData.push_back(current.keywords[i]);
-	}
-	metaData.push_back(tempMetaData);
-	tempMetaData.clear();
-
-	tempMetaData.push_back("Crew Members: ");
-	for (int i = 0; i < current.crewMembers.size(); i++) {
-		tempMetaData.push_back(current.crewMembers[i].role + " " + current.crewMembers[i].name);
-	}
-	metaData.push_back(tempMetaData);
-	tempMetaData.clear();
-
-	if (current.playingInCinima)
-		tempMetaData.push_back("Currently Playing In Cinemas  ");
-	else if (current.unreleased)
-		tempMetaData.push_back("Currently Unrealeased  ");
-	else
-		tempMetaData.push_back("This Project Has Been Realeased  ");
-	metaData.push_back(tempMetaData);
-	tempMetaData.clear();
-
-	
-	int lineCount = 0;
-	for (int i = selected; i < metaData.size(); i++) {
-		if(i==selected && mode != 0)
-			game.drawColor(3, offsetY  + lineCount, metaData.at(selected + projectOffset)[0].size() - 2, 240);
-		game.print(metaData[i][0], offsetX, offsetY + i + lineCount - selected);
-		if (metaData[i].size() == 2) {
-			game.print(metaData[i][1], offsetX + metaData[i][0].size(), offsetY + i + lineCount - selected);
-		}
-		else {
-			for (int j = 1; j < metaData[i].size(); j++){
-				lineCount++;
-				game.print(metaData[i][j], offsetX, offsetY + i + lineCount - selected);
-			}
-		}
-		lineCount++;
-	}
-	return lineCount;
 }
 
 void printSearch(std::vector<std::string> projects, int offsetY, int selected, int projectOffset) {
@@ -116,7 +34,6 @@ int search() {
 	int offsetX = 20;
 	int selected = 0;
 	int projectOffset = 0;
-	int mode = 0;
 	std::vector<Project> allProjects = c1.sortByTitle(c1.searchByProjectTitle(c1.projects, ""));
 	std::vector<std::string> projects;
 	Project current = c1.projects.at(selected + projectOffset);
@@ -132,48 +49,27 @@ int search() {
 			selected = 0;
 			projectOffset = 0;
 		}
-		
-		if (mode == 0) {
-			printSearch(projects, offsetY, selected, projectOffset);
-			current = c1.projects.at(selected + projectOffset);
-			printMetaData(current, offsetY, selected, projectOffset, offsetX,mode);
-		}
-		else {
-			metaDataSize = printMetaData(current, offsetY-2, selected, projectOffset, 3,mode);
-		}
-
-		
 
 		if (GetAsyncKeyState(VK_DOWN)) {
-			if (mode == 0) {
-				game.drawColor(3, offsetY + 2 + selected, projects.at(selected + projectOffset).size(), 15);
-				selected++;
-				if (selected > min(19, projects.size() - 1)) {
-					selected = min(19, projects.size() - 1);
-					projectOffset++;
-				}
+			game.drawColor(3, offsetY + 2 + selected, projects.at(selected + projectOffset).size(), 15);
+			selected++;
+			if (selected > min(19, projects.size() - 1)) {
+				selected = min(19, projects.size() - 1);
+				projectOffset++;
 			}
-			else {
-				selected++;
-				//selected = min(selected, metaDataSize);
-			}
+
+
 		}
 		if (GetAsyncKeyState(VK_UP)) {
-			if (mode == 0) {
-				game.drawColor(3, offsetY + 2 + selected, projects.at(selected + projectOffset).size(), 15);
-				selected--;
-				if (selected < 0) {
-					selected = 0;
-					projectOffset--;
-					if (projectOffset < 0)
-						projectOffset = 0;
-				}
-			} else {
-				selected--;
-				selected = max(selected, 0);
+			game.drawColor(3, offsetY + 2 + selected, projects.at(selected + projectOffset).size(), 15);
+			selected--;
+			if (selected < 0) {
+				selected = 0;
+				projectOffset--;
+				if (projectOffset < 0)
+					projectOffset = 0;
 			}
-			
-			
+
 		}
 		if (GetAsyncKeyState(VK_BACK)) {
 			if (game.stringBuffer.size()>0)
@@ -185,11 +81,6 @@ int search() {
 			for (int i = 0; i < allProjects.size(); i++) {
 				projects.push_back(allProjects[i].title);
 			}
-		}
-		if (GetAsyncKeyState(0x53)) {
-			game.stringBuffer.pop_back();
-			mode = 1;
-			game.drawColor(3, offsetY + 2 + selected, projects.at(selected + projectOffset).size(), 15);
 		}
 		game.draw();
 		Sleep(150);
