@@ -357,7 +357,39 @@ Project Catalogue::parse(std::string filePath, int projectID)
 		}
 		else
 		{
+			DVD dvd(ID, type, title, format, frameAspect, packaging);
 
+			while (std::getline(infile, line))
+			{
+				if (line == ",")
+				{
+					break;
+				}
+
+				dvd.addAudioTrack(line);
+			}
+
+			while (std::getline(infile, line))
+			{
+				if (line == ",")
+				{
+					break;
+				}
+
+				dvd.addSubtitleLanguage(line);
+			}
+
+			while (std::getline(infile, line))
+			{
+				if (line == ",")
+				{
+					break;
+				}
+
+				dvd.addBonusFeature(line);
+			}
+
+			p.addPhysicalMedium(dvd);
 		}
 
 		
