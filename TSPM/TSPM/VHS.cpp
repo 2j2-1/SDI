@@ -52,6 +52,6 @@ std::string VHS::save()
 
 	data += AudioTrackLanguage + "\n";
 	data += subtitlesLanguage + "\n";
-	data += ",\n";
+	//data += ",\n";
 	return data;
 }

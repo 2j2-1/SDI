@@ -3,8 +3,9 @@
 
 
 DVD::DVD(int ID, std::string type, std::string title, std::string format, std::string frameAspect, std::string packaging)
+	: PhysicalMedium(ID, type, title, format, frameAspect, packaging)
 {
-	//PhysicalMedium::PhysicalMedium(ID, type, title, format, frameAspect, packaging);
+	
 
 
 }
@@ -36,6 +37,9 @@ std::string DVD::save()
 	{
 		data += feature + "\n";
 	}
+	
+	data += ",\n";
+
 
 	return data;
 }

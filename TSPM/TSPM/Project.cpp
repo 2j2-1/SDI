@@ -134,7 +134,16 @@ std::string Project::save()
 
 	for (PhysicalMedium * physicalMedium : physcicalMeduims)
 	{
-		data += ((VHS*)physicalMedium)->save();
+		if (physicalMedium->type == "VHS")
+		{
+			data += ((VHS*)physicalMedium)->save();
+		}
+		else
+		{
+			data += ((DVD*)physicalMedium)->save();
+		}
+
+		
 	}
 
 

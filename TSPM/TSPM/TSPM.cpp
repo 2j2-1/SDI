@@ -246,7 +246,7 @@ int create() {
 }
 
 int main(){
-	/*Project p1(0, "Dumbo", "Ridiculed because of his enormous ears, a young circus elephant is assisted by a mouse to achieve his full potential.", "1942/01/02", 64, false, false);
+	Project p1(0, "Dumbo", "Ridiculed because of his enormous ears, a young circus elephant is assisted by a mouse to achieve his full potential.", "1942/01/02", 64, false, false);
 	p1.addKeyword("Try not to cry");
 	p1.addKeyword("another keyword");
 	p1.addFilmingLocation("Home");
@@ -278,14 +278,22 @@ int main(){
 	p3.addCrewMember("Dumbo's mum 2", "dead 2");
 	p3.addGenre("sad 2");
 
-	
+	p3.addPhysicalMedium(new VHS(5, "VHS", "Dumbo on vhs", "MP4", "Standard", "Card", "English", "English"));
+	p3.addPhysicalMedium(new VHS(6, "VHS", "Dumbo on vhs", "MP4", "Standard", "Card", "English", "English"));
+	p3.addPhysicalMedium(new VHS(7, "VHS", "Dumbo on vhs", "MP4", "Standard", "Card", "English", "English"));
 
-	c1.add(p1);
-	c1.add(p2);
-	c1.add(p3);
+	DVD * dvd1 = new DVD(8, "Blue ray", "Dumbo on blue ray", "MP4", "Wide sceen", "Plastic");
+	DVD * dvd2 = new DVD(9, "Blue ray", "Dumbo on blue ray remastered", "MP4", "Wide sceen", "Plastic");
+
+	p3.addPhysicalMedium(dvd1);
+	p3.addPhysicalMedium(dvd2);
+
+	//c1.add(p1);
+	//c1.add(p2);
+	//c1.add(p3);
 
 
-	c1.write();*/
+	//c1.write();
 	c1.read();
 
 
