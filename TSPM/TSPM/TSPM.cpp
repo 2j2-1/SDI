@@ -266,12 +266,13 @@ int update() {
 						temp.addCrewMember(temp.split(para.at(9), ',').at(i), temp.split(para.at(9), ',').at(i + 1));
 					}
 
-					c1.deleteProject(selectedProject.projectID);
+					c1.deleteProject(selectedProject.getProjectID());
 					c1.add(temp);
 					selectedProject = temp;
 					temp.save();
 				}
 				catch (std::invalid_argument ex){}
+
 				return -1;
 			} else
 				game.stringBuffer = para.at(data);
@@ -361,11 +362,11 @@ int view() {
 		game.blank_screen();
 		if (mode == -1) {
 			game.print("Title: ", xoff, yoff);
-			game.print(selectedProject.title, xoff + dataoff, yoff);
+			game.print(selectedProject.getTitle(), xoff + dataoff, yoff);
 			yoff++;
 
 			game.print("Summary: ", xoff, yoff);
-			game.print(selectedProject.summary, xoff + dataoff, yoff);
+			game.print(selectedProject.getSummary(), xoff + dataoff, yoff);
 			yoff++;
 
 			game.print("Release Date: ", xoff, yoff);
