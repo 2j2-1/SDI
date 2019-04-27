@@ -253,6 +253,17 @@ void Catalogue::write()
 	f.close();
 }
 
+void Catalogue::updateDirectories()
+{
+	std::ofstream f;
+	f.open("directories.txt");
+	for (Project p : projects)
+	{
+		f << std::to_string(p.projectID) << "\n";
+	}
+	f.close();
+}
+
 Project Catalogue::parse(std::string filePath, int projectID)
 {
 	std::ifstream infile(filePath);
