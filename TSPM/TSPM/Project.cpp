@@ -28,6 +28,10 @@ Project::Project(int projectID, std::string title, std::string summary, std::str
 Project::~Project()
 {
 }
+Project::Project()
+{
+	this->projectID = -1;
+}
 
 void Project::addPhysicalMedium(PhysicalMedium m)
 {

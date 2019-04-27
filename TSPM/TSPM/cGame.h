@@ -12,6 +12,7 @@ public:
 	int screenWidth = 120;
 	int screenHeight = 30;
 	std::string stringBuffer;
+	bool repeat = false;
 
 	void drawColor(int,int,int,int);
 	void draw_pixel(int, int, char);
