@@ -54,7 +54,7 @@ int search() {
 		
 		printSearch(projects, offsetY, selected, projectOffset);
 
-		printSearch(projects, offsetY, selected, projectOffset);
+		//printSearch(projects, offsetY, selected, projectOffset);
 
 		if (GetAsyncKeyState(VK_DOWN)) {
 			game.drawColor(3, offsetY + 2 + selected, projects.at(selected + projectOffset).size(), 15);

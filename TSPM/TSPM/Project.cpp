@@ -143,6 +143,25 @@ std::string Project::save()
 	return data;
 }
 
+std::vector<std::string> Project::split(std::string text, char del)
+{
+	std::vector < std::string > ret;
+	ret.push_back("");
+	for (int i = 0; i < text.size(); i++)
+	{
+		if (text[i] == del)
+		{
+			ret.push_back("");
+		}
+		else
+		{
+			ret.back() += text[i];
+		}
+	}
+
+	return ret;
+}
+
 int Project::binarySearch(std::vector<std::string> arr, int start, int end, std::string target)
 {
 	if (end >= start) {
