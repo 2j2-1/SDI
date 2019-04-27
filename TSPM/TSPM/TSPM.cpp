@@ -34,7 +34,7 @@ void printSearch(std::vector<std::string> projects, int offsetY, int selected, i
 			game.print("More Below...", 3, 27);
 	}
 }
-int search() {
+int search(int searchMode) {
 	int offsetY = 4;
 	int offsetX = 20;
 	int selected = 0;
@@ -75,7 +75,10 @@ int search() {
 		}
 		
 		if (GetAsyncKeyState(VK_TAB)) {
-			allProjects = c1.sortByTitle(c1.searchByActor(c1.projects, game.stringBuffer));
+			if (searchMode=0)
+				allProjects = c1.sortByTitle(c1.searchByActor(c1.projects, game.stringBuffer));
+			else
+				allProjects = c1.sortByTitle(c1.searchByProjectTitle(c1.projects, game.stringBuffer));
 			projects.clear();
 			for (int i = 0; i < allProjects.size(); i++) {
 				projects.push_back(allProjects[i].getTitle());
@@ -100,11 +103,12 @@ int menu() {
 	game.print("2. Create New Project", 3, 4 + offset);
 	game.print("3. Update Project", 3, 5 + offset);
 	game.print("4. Delete Project", 3, 6 + offset);
-	game.print("5. Search", 3, 7 + offset);
-	game.print("6. Add Physical Media ", 3, 8 + offset);
-	game.print("7. View Project ", 3, 9 + offset);
-	game.print("0. Exit", 3, 10 + offset);
-	game.print("Please Enter Choice: " + game.stringBuffer, 3, 12 + offset);
+	game.print("5. Search by Actor", 3, 7 + offset);
+	game.print("6. Search By Title", 3, 8 + offset);
+	game.print("7. Add Physical Media ", 3, 9 + offset);
+	game.print("8. View Project ", 3, 10 + offset);
+	game.print("0. Exit", 3, 11 + offset);
+	game.print("Please Enter Choice: " + game.stringBuffer, 3, 13 + offset);
 	if (GetAsyncKeyState(VK_RETURN)) {
 		try
 		{
@@ -621,7 +625,7 @@ int main(){
 			if (_weeklySalesThreshold)
 				logWeeklySales(selectedProject);
 			game.stringBuffer.clear();
-
+			screen = -1;
 			break;
 		case 4:
 			screen = -1;
@@ -634,16 +638,25 @@ int main(){
 			break;
 		case 5:
 			if (c1.projects.size() != 0)
-			screen = search();
+				screen = search(0);
 			game.stringBuffer.clear();
 			break;
 		case 6:
-			addPhysicalMedia();
+			if (c1.projects.size() != 0)
+				screen = search(1);
+			game.stringBuffer.clear();
+			break;
+		case 7:
+			if (selectedProject.getProjectID() != -1) {
+				addPhysicalMedia();
+			}
 			game.stringBuffer.clear();
 			screen = -1;
 			break;
-		case 7:
-			view();
+		case 8:
+			if (selectedProject.getProjectID() != -1) {
+				view();
+			}
 			game.stringBuffer.clear();
 			screen = -1;
 			break;
