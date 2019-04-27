@@ -281,6 +281,11 @@ void Catalogue::deleteProject(int projectID)
 	}
 }
 
+void Catalogue::deleteProjectFile(int projectID)
+{
+	remove((std::to_string(projectID) + ".txt").c_str());
+}
+
 Project Catalogue::parse(std::string filePath, int projectID)
 {
 	std::ifstream infile(filePath);

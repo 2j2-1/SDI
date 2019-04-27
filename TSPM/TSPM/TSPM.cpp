@@ -10,7 +10,10 @@
 #include "Catalogue.h"
 #include <sstream>
 #include "Stack.h"
+#include <fstream>
+#include <ctime>
 
+const int _weeklySalesThreshold = 1000;
 
 
 cGame game;
@@ -108,9 +111,18 @@ int menu() {
 	game.print("0. Exit", 3, 10 + offset);
 	game.print("Please Enter Choice: " + game.stringBuffer, 3, 12 + offset);
 	if (GetAsyncKeyState(VK_RETURN)) {
-		int temp = std::stoi(game.stringBuffer);
-		game.stringBuffer.clear();
-		return temp;
+		try
+		{
+			int temp = std::stoi(game.stringBuffer);
+			game.stringBuffer.clear();
+			return temp;
+		}
+		catch (std::invalid_argument ex)
+		{
+			game.stringBuffer.clear();
+		}
+		
+		
 	}
 	return -1;
 }
@@ -335,14 +347,14 @@ int view() {
 	int yoff = 3;
 	int dataoff = 20;
 	int mode = -1;
-	while(!GetAsyncKeyState(VK_ESCAPE)) {
+	while (!GetAsyncKeyState(VK_ESCAPE)) {
 		if (GetAsyncKeyState(VK_RIGHT)) {
 			mode++;
-			mode = min(mode, selectedProject.physcicalMeduims.size()-1);
+			mode = min(mode, selectedProject.physcicalMeduims.size() - 1);
 		}
 		if (GetAsyncKeyState(VK_LEFT)) {
 			mode--;
-			mode = max(mode,-1);
+			mode = max(mode, -1);
 		}
 		yoff = 3;
 		game.blank_screen();
@@ -462,6 +474,30 @@ int view() {
 	return -1;
 }
 
+std::string getCurrentDate(){
+	std::time_t t = std::time(0);   // get time now
+	std::tm* now = std::localtime(&t);
+	return std::to_string(1900 + now->tm_year) + "-" + std::to_string(now->tm_mon + 1) + "-" + std::to_string(now->tm_mday);
+}
+
+void logCreation(Project p)
+{
+	std::ofstream outfile;
+
+	outfile.open(getCurrentDate() + ".txt", std::ios_base::app);
+	outfile << "Created project: " << p.getTitle() << "\n";
+	outfile.close();
+}
+
+void logWeeklySales(Project p)
+{
+	std::ofstream outfile;
+
+	outfile.open(getCurrentDate() + ".txt", std::ios_base::app);
+	outfile << p.getTitle() << "'s weekly ticket sales: " << p.getWeeklySales();
+	outfile.close();
+}
+
 int main(){
 	Project p1(0, "Dumbo", "Ridiculed because of his enormous ears, a young circus elephant is assisted by a mouse to achieve his full potential.", "1942/01/02", 64, false, false);
 	p1.addKeyword("Try not to cry");
@@ -572,10 +608,14 @@ int main(){
 			break;
 		case 2:
 			screen = create();
+			logCreation(selectedProject);
 			break;
 		case 3:
 			//if (selectedProject.projectID != -1)
 				screen = update();
+				if (_weeklySalesThreshold)
+					logWeeklySales(selectedProject);
+
 			//else
 				//screen = -1;
 			break;
