@@ -9,6 +9,7 @@
 #include "Project.h"
 #include "Catalogue.h"
 #include <sstream>
+#include "Stack.h"
 
 
 
@@ -340,6 +341,18 @@ int main(){
 	//c1.add(p2);
 	//c1.add(p3);
 
+	Stack stack;
+
+	stack.push(p1);
+	stack.push(p2);
+	stack.push(p3);
+
+	std::vector<Project> vect;
+	
+	while (!stack.isEmpty())
+	{
+		vect.push_back(stack.pop());
+	}
 
 	//c1.write();
 	

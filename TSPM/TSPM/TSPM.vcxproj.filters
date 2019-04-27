@@ -9,6 +9,7 @@
     <ClCompile Include="PhysicalMedium.cpp" />
     <ClCompile Include="VHS.cpp" />
     <ClCompile Include="DVD.cpp" />
+    <ClCompile Include="Stack.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Catalogue.h" />
@@ -20,6 +21,7 @@
     <ClInclude Include="PhysicalMedium.h" />
     <ClInclude Include="VHS.h" />
     <ClInclude Include="DVD.h" />
+    <ClInclude Include="Stack.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
