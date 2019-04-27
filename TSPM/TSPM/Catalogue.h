@@ -3,6 +3,8 @@
 #include <vector>
 #include <iostream>
 #include "Project.h"
+#include "VHS.h"
+#include "DVD.h"
 
 
 class Catalogue

@@ -3,7 +3,7 @@
 
 #include <fstream>
 
-Project::Project(int projectID, std::string title, std::string summary, std::string releaseDate, unsigned int runtime, bool playingInCinimam, bool unreleased)
+Project::Project(int projectID, std::string title, std::string summary, std::string releaseDate, unsigned int runtime, bool playingInCinimam, bool unreleased, int weeklySales)
 {
 	this->projectID = projectID;
 
@@ -18,6 +18,11 @@ Project::Project(int projectID, std::string title, std::string summary, std::str
 	this->playingInCinima = playingInCinima;
 
 	this->unreleased = unreleased;
+
+	if (playingInCinima)
+		this->weeklySales = weeklySales;
+	else
+		this->weeklySales = 0;
 }
 
 Project::~Project()
@@ -104,6 +109,11 @@ std::string Project::save()
 	}
 
 	data += ",\n";
+
+	for (PhysicalMedium physicalMedium : physcicalMeduims)
+	{
+		data += physicalMedium.save();
+	}
 
 
 	f << data;

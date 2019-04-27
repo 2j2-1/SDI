@@ -4,7 +4,7 @@ class VHS :
 	public PhysicalMedium
 {
 public:
-	VHS();
+	VHS(int ID, std::string type, std::string title, std::string format, std::string frameAspect, std::string packaging, std::string AudioTrackLanguage, std::string subtitlesLanguage);
 	~VHS();
 
 	std::string AudioTrackLanguage;
