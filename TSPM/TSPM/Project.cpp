@@ -110,6 +110,116 @@ void Project::addGenre(std::string genre)
 	genres.push_back(genre);
 }
 
+int Project::getProjectID()
+{
+	return projectID;
+}
+
+std::string Project::getTitle()
+{
+	return title;
+}
+
+std::string Project::getSummary()
+{
+	return summary;
+}
+
+std::string Project::getReleaseDate()
+{
+	return releaseDate;
+}
+
+int Project::getRunTime()
+{
+	return runtime;
+}
+
+int Project::getWeeklySales()
+{
+	return weeklySales;
+}
+
+std::vector<std::string> Project::getGenres()
+{
+	return genres;
+}
+
+std::vector<std::string> Project::getFilmingLocations()
+{
+	return filmingLocations;
+}
+
+std::vector<std::string> Project::getKeywords()
+{
+	return keywords;
+}
+
+std::vector<CrewMember> Project::getCrewMembers()
+{
+	return crewMembers;
+}
+
+std::vector<PhysicalMedium*> Project::getPhyicalMediums()
+{
+	return physcicalMeduims;
+}
+
+void Project::setProjectID(int id)
+{
+	this->projectID = id;
+}
+
+void Project::setTitle(std::string title)
+{
+	this->title = title;
+}
+
+void Project::setSummary(std::string summary)
+{
+	this->summary = summary;
+}
+
+void Project::setReleaseDate(std::string date)
+{
+	this->releaseDate = date;
+}
+
+void Project::setRunTime(int runTime)
+{
+	this->runtime = runTime;
+}
+
+void Project::setWeeklySales(int sales)
+{
+	this->weeklySales = sales;
+}
+
+void Project::setGenres(std::vector<std::string> genreVector)
+{
+	this->genres = genreVector;
+}
+
+void Project::setFilmingLocations(std::vector<std::string> locationVector)
+{
+	this->filmingLocations = locationVector;
+}
+
+void Project::setKeywords(std::vector<std::string> keywordVector)
+{
+	this->keywords = keywordVector;
+}
+
+void Project::setCrewMembers(std::vector<CrewMember> crewVector)
+{
+	this->crewMembers = crewVector;
+}
+
+void Project::setPhyicalMediums(std::vector<PhysicalMedium*> mediumVector)
+{
+	this->physcicalMeduims = mediumVector;
+}
+
 std::string Project::save()
 {
 	std::ofstream f;
