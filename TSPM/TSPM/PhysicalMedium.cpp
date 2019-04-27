@@ -8,12 +8,12 @@ PhysicalMedium::PhysicalMedium()
 
 PhysicalMedium::PhysicalMedium(int ID, std::string type, std::string title, std::string format, std::string frameAspect, std::string packaging)
 {
-	this->ID;
-	this->type;
-	this->title;
-	this->format;
-	this->frameAspect;
-	this->packaging;
+	this->ID=ID;
+	this->type=type;
+	this->title=title;
+	this->format=format;
+	this->frameAspect=frameAspect;
+	this->packaging=packaging;
 }
 
 PhysicalMedium::~PhysicalMedium()

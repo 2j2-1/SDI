@@ -29,7 +29,7 @@ Project::~Project()
 {
 }
 
-void Project::addPhysicalMedium(PhysicalMedium m)
+void Project::addPhysicalMedium(PhysicalMedium * m)
 {
 	physcicalMeduims.push_back(m);
 }
@@ -128,9 +128,9 @@ std::string Project::save()
 
 	data += ",\n";
 
-	for (PhysicalMedium physicalMedium : physcicalMeduims)
+	for (PhysicalMedium * physicalMedium : physcicalMeduims)
 	{
-		data += physicalMedium.save();
+		data += ((VHS*)physicalMedium)->save();
 	}
 
 

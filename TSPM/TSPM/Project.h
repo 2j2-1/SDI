@@ -5,6 +5,9 @@
 #include "CrewMember.h"
 #include "PhysicalMedium.h"
 
+#include "VHS.h"
+#include "DVD.h"
+
 class Project
 {
 public:
@@ -12,7 +15,7 @@ public:
 
 	~Project();
 
-	void addPhysicalMedium(PhysicalMedium m);
+	void addPhysicalMedium(PhysicalMedium * m);
 
 	bool playingInCinima;
 
@@ -52,7 +55,7 @@ public:
 
 	std::vector<CrewMember> crewMembers;
 
-	std::vector<PhysicalMedium> physcicalMeduims;
+	std::vector<PhysicalMedium*> physcicalMeduims;
 
 	
 private:
