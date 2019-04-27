@@ -603,6 +603,7 @@ int main(){
 		case 0:
 			return 0;
 		case 1:
+			c1.projects.clear();
 			c1.read();
 			game.stringBuffer.clear();
 			screen = -1;
