@@ -10,7 +10,10 @@
 #include "Catalogue.h"
 #include <sstream>
 #include "Stack.h"
+#include <fstream>
+#include <ctime>
 
+const int _weeklySalesThreshold = 1000;
 
 
 cGame game;
@@ -268,6 +271,32 @@ int create() {
 	return -1;
 }
 
+
+std::string getCurrentDate()
+{
+	std::time_t t = std::time(0);   // get time now
+	std::tm* now = std::localtime(&t);
+	return std::to_string(1900 + now->tm_year) + "-" + std::to_string(now->tm_mon + 1) + "-" + std::to_string(now->tm_mday);
+}
+
+void logCreation(Project p)
+{
+	std::ofstream outfile;
+
+	outfile.open(getCurrentDate() + ".txt", std::ios_base::app);
+	outfile << "Created project: " << p.getTitle() << "\n";
+	outfile.close();
+}
+
+void logWeeklySales(Project p)
+{
+	std::ofstream outfile;
+
+	outfile.open(getCurrentDate() + ".txt", std::ios_base::app);
+	outfile << p.getTitle() << "'s weekly ticket sales: " << p.getWeeklySales();
+	outfile.close();
+}
+
 int main(){
 	Project p1(0, "Dumbo", "Ridiculed because of his enormous ears, a young circus elephant is assisted by a mouse to achieve his full potential.", "1942/01/02", 64, false, false);
 	p1.addKeyword("Try not to cry");
@@ -282,6 +311,8 @@ int main(){
 	p1.addCrewMember("Dumbo's mum", "dead");
 	p1.addGenre("sad");
 	p1.addPhysicalMedium(new VHS(0,"VHS","Dumbo", "MP4", "MP4", "MP4", "MP4", "MP4"));
+
+	logCreation(p1);
 
 	Project p2(1, "Jumbz", "Big elaphant and mum ded 2", "2019/04/27", 90, false, false);
 	p2.addKeyword("Try not to cry 2");
@@ -377,10 +408,14 @@ int main(){
 			break;
 		case 2:
 			screen = create();
+			logCreation(selectedProject);
 			break;
 		case 3:
 			//if (selectedProject.projectID != -1)
 				screen = update();
+				if (_weeklySalesThreshold)
+					logWeeklySales(selectedProject);
+
 			//else
 				//screen = -1;
 			break;
