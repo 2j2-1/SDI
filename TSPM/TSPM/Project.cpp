@@ -28,6 +28,27 @@ Project::Project(int projectID, std::string title, std::string summary, std::str
 Project::~Project()
 {
 }
+void Project::update(std::string title, std::string summary, std::string releaseDate, unsigned int runtime, bool playingInCinimam, bool unreleased, int weeklySales)
+{
+	this->title = title;
+
+	this->summary = summary;
+
+	this->releaseDate = releaseDate;
+
+	this->runtime = runtime;
+
+	this->playingInCinima = playingInCinima;
+
+	this->unreleased = unreleased;
+
+	if (playingInCinima)
+		this->weeklySales = weeklySales;
+	else
+		this->weeklySales = 0;
+
+
+}
 Project::Project()
 {
 	this->projectID = -1;

@@ -223,8 +223,15 @@ int Catalogue::partition(std::vector<std::string>& arr, int start, int end)
 
 void Catalogue::add(Project p)
 {
+	if (projects.size() == 0 || p.projectID == projects.back().projectID + 1)
 	projects.push_back(p);
+	else
+	{
+		projects.insert(projects.begin() + p.projectID, p);
+	}
 }
+
+
 
 void Catalogue::read()
 {
@@ -262,6 +269,16 @@ void Catalogue::updateDirectories()
 		f << std::to_string(p.projectID) << "\n";
 	}
 	f.close();
+}
+
+void Catalogue::deleteProject(int projectID)
+{
+	projects.erase(projects.begin() + projectID, projects.begin() + projectID);
+
+	for (int i = projectID; i < projects.size(); i++)
+	{
+		projects[i].projectID -= 1;
+	}
 }
 
 Project Catalogue::parse(std::string filePath, int projectID)

@@ -44,6 +44,8 @@ public:
 
 	void updateDirectories();
 
+	void deleteProject(int projectID);
+
 	Project parse(std::string filePath, int projectID);
 
 private:

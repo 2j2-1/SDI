@@ -17,6 +17,8 @@ public:
 
 	~Project();
 
+	void update(std::string title, std::string summary, std::string releaseDate, unsigned int runtime, bool playingInCinimam, bool unreleased, int weeklySales = 0);
+
 	void addPhysicalMedium(PhysicalMedium * m);
 
 	bool playingInCinima;
