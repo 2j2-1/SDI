@@ -247,9 +247,7 @@ void Catalogue::read()
 	std::string line;
 	while (std::getline(infile, line))
 	{
-		projects.push_back(parse(line + ".txt", std::stoi(line)));
-		
-		
+		add(parse(line + ".txt", std::stoi(line)));
 	}
 	
 }
@@ -330,6 +328,26 @@ Project Catalogue::parse(std::string filePath, int projectID)
 		std::string role = line;
 
 		p.addCrewMember(name, role);
+	}
+
+	while (std::getline(infile, line))
+	{
+		if (line == ",")
+		{
+			break;
+		}
+		p.addFilmingLocation(line);
+
+	}
+
+	while (std::getline(infile, line))
+	{
+		if (line == ",")
+		{
+			break;
+		}
+		p.addGenre(line);
+
 	}
 
 

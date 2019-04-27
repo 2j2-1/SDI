@@ -138,7 +138,7 @@ int menu() {
 }
 
 int main(){
-	/*Project p1(0, "Dumbo", "Ridiculed because of his enormous ears, a young circus elephant is assisted by a mouse to achieve his full potential.", "1942/01/02", 64, false, false);
+	Project p1(0, "Dumbo", "Ridiculed because of his enormous ears, a young circus elephant is assisted by a mouse to achieve his full potential.", "1942/01/02", 64, false, false);
 	p1.addKeyword("Try not to cry");
 	p1.addKeyword("another keyword");
 	p1.addFilmingLocation("Home");
@@ -163,13 +163,13 @@ int main(){
 	p3.addFilmingLocation("not home 2");
 	p3.addCrewMember("Dumbo", "actor 2");
 	p3.addCrewMember("Dumbo's mum 2", "dead 2");
-	p3.addGenre("sad 2");*/
+	p3.addGenre("sad 2");
 
 	
 
-	//c1.add(p1);
-	//c1.add(p2);
-	//c1.add(p3);
+	c1.add(p1);
+	c1.add(p2);
+	c1.add(p3);
 
 	//c1.write();
 	c1.read();
