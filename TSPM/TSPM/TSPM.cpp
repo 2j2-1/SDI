@@ -12,6 +12,7 @@
 
 cGame game;
 Catalogue c1;
+Project selectedProject;
 void printMetaData(Project current) {
 
 }
@@ -36,7 +37,6 @@ int search() {
 	int projectOffset = 0;
 	std::vector<Project> allProjects = c1.sortByTitle(c1.searchByProjectTitle(c1.projects, ""));
 	std::vector<std::string> projects;
-	Project current = c1.projects.at(selected + projectOffset);
 	int metaDataSize;
 	for (int i = 0; i < allProjects.size(); i++){
 		projects.push_back(allProjects[i].title);
@@ -57,8 +57,6 @@ int search() {
 				selected = min(19, projects.size() - 1);
 				projectOffset++;
 			}
-
-
 		}
 		if (GetAsyncKeyState(VK_UP)) {
 			game.drawColor(3, offsetY + 2 + selected, projects.at(selected + projectOffset).size(), 15);
@@ -69,21 +67,24 @@ int search() {
 				if (projectOffset < 0)
 					projectOffset = 0;
 			}
-
 		}
 		if (GetAsyncKeyState(VK_BACK)) {
 			if (game.stringBuffer.size()>0)
 				game.stringBuffer.pop_back();
 		}
-		if (GetAsyncKeyState(VK_RETURN)) {
+		if (GetAsyncKeyState(VK_TAB)) {
 			allProjects = c1.sortByTitle(c1.searchByProjectTitle(c1.projects, game.stringBuffer));
 			projects.clear();
 			for (int i = 0; i < allProjects.size(); i++) {
 				projects.push_back(allProjects[i].title);
 			}
 		}
+		if (GetAsyncKeyState(VK_RETURN)) {
+			selectedProject = allProjects.at(selected);
+			break;
+		}
 		game.draw();
-		Sleep(150);
+		Sleep(50);
 		
 	}
 	game.drawColor(3, offsetY + 2 + selected, projects.at(selected + projectOffset).size(), 15);
@@ -95,7 +96,7 @@ int menu() {
 	int choice = -1;
 	game.print("1. Load File",3,3 + offset);
 	game.print("2. Create New Project", 3, 4 + offset);
-	game.print("3. Update Box Office Figures", 3, 5 + offset);
+	game.print("3. View/Update File", 3, 5 + offset);
 	game.print("4. Delete Project", 3, 6 + offset);
 	game.print("5. Search", 3, 7 + offset);
 	game.print("6. Maintenance", 3, 8 + offset);
@@ -105,6 +106,79 @@ int menu() {
 		int temp = std::stoi(game.stringBuffer);
 		game.stringBuffer.clear();
 		return temp;
+	}
+	return -1;
+}
+
+int update() {
+	int xoff = 3;
+	int yoff = 3;
+	int dataoff = 20;
+	while (true) {
+		yoff = 3;
+		game.blank_screen();
+		game.print("Title: ", xoff, yoff);
+		game.print(selectedProject.title, xoff + dataoff, yoff);
+		yoff++;
+
+		game.print("Summary: ", xoff, yoff);
+		game.print(selectedProject.summary, xoff + dataoff, yoff);
+		yoff++;
+
+		game.print("Release Date: ", xoff, yoff);
+		game.print(selectedProject.releaseDate, xoff + dataoff, yoff);
+		yoff++;
+
+		game.print("Run Time: ", xoff, yoff);
+		game.print(std::to_string(selectedProject.runtime), xoff + dataoff, yoff);
+		yoff++;
+
+		game.print("Playing In Cinima: ", xoff, yoff);
+		if (selectedProject.playingInCinima)
+			game.print("True", xoff + dataoff, yoff);
+		else
+			game.print("False", xoff + dataoff, yoff);
+		yoff++;
+
+		game.print("unreleased: ", xoff, yoff);
+		if (selectedProject.unreleased)
+			game.print("True", xoff + dataoff, yoff);
+		else
+			game.print("False", xoff + dataoff, yoff);
+		yoff++;
+
+		game.print("weeklySales: ", xoff, yoff);
+		game.print(std::to_string(selectedProject.weeklySales), xoff + dataoff, yoff);
+		yoff++;
+
+		game.print("genres: ", xoff, yoff);
+		for (int i = 0; i < selectedProject.genres.size(); i++){
+			game.print(selectedProject.genres.at(i), xoff + dataoff, yoff);
+			yoff++;
+		}
+		
+		game.print("filmingLocations: ", xoff, yoff);
+		for (int i = 0; i < selectedProject.filmingLocations.size(); i++) {
+			game.print(selectedProject.filmingLocations.at(i), xoff + dataoff, yoff);
+			yoff++;
+		}
+
+		game.print("keywords: ", xoff, yoff);
+		for (int i = 0; i < selectedProject.keywords.size(); i++) {
+			game.print(selectedProject.keywords.at(i), xoff + dataoff, yoff);
+			yoff++;
+		}
+
+		game.print("crewMembers: ", xoff, yoff);
+		for (int i = 0; i < selectedProject.crewMembers.size(); i++) {
+			game.print(selectedProject.crewMembers.at(i).role + " - " + selectedProject.crewMembers.at(i).name, xoff + dataoff, yoff);
+			yoff++;
+		}
+
+		game.print("physcicalMeduims: ", xoff, yoff);
+		
+
+		game.draw();
 	}
 	return -1;
 }
@@ -156,7 +230,7 @@ int main(){
 	c1.read();
 
 
-	int screen = 5;
+	int screen = -1;
 	game.setup();
 	game.blank_screen();
 	while (true) {
@@ -180,7 +254,10 @@ int main(){
 			screen = -1;
 			break;
 		case 3:
-			screen = -1;
+			//if (selectedProject.projectID != -1)
+				screen = update();
+			//else
+				//screen = -1;
 			break;
 		case 4:
 			screen = -1;
@@ -196,7 +273,6 @@ int main(){
 			game.print("Invalid Choice Please Try Again",3,13);
 		}
 		game.draw();
-		Sleep(150);
 	}
 	
 	

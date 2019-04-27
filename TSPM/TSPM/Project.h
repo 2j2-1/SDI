@@ -11,6 +11,8 @@
 class Project
 {
 public:
+	Project();
+
 	Project(int projectID, std::string title, std::string summary, std::string releaseDate, unsigned int runtime, bool playingInCinimam, bool unreleased, int weeklySales = 0);
 
 	~Project();
@@ -41,15 +43,15 @@ public:
 
 	std::string summary;
 
-	std::vector<std::string> genres;
-
 	std::string releaseDate;
-
-	std::vector<std::string> filmingLocations;
 
 	unsigned int runtime;
 
 	int weeklySales;
+
+	std::vector<std::string> genres;
+
+	std::vector<std::string> filmingLocations;
 
 	std::vector<std::string> keywords;
 
