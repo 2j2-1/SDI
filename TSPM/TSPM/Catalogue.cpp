@@ -3,6 +3,7 @@
 #include <fstream>
 #include <sstream>
 
+
 Catalogue::Catalogue()
 {
 }
@@ -240,7 +241,21 @@ void Catalogue::read()
 	std::string line;
 	while (std::getline(infile, line))
 	{
-		add(parse(line + ".txt", std::stoi(line)));
+
+		std::ifstream f((line + ".txt").c_str());
+
+		if (f.good())
+		{
+			f.close();
+			add(parse(line + ".txt", std::stoi(line)));
+		}
+		else
+		{
+			f.close();
+		}
+		
+		
+		
 	}
 
 	infile.close();

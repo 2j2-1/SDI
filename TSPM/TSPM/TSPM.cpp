@@ -360,37 +360,37 @@ int view() {
 		game.blank_screen();
 		if (mode == -1) {
 			game.print("Title: ", xoff, yoff);
-			game.print(selectedProject.title, xoff + dataoff, yoff);
+			game.print(selectedProject.getTitle(), xoff + dataoff, yoff);
 			yoff++;
 
 			game.print("Summary: ", xoff, yoff);
-			game.print(selectedProject.summary, xoff + dataoff, yoff);
+			game.print(selectedProject.getSummary(), xoff + dataoff, yoff);
 			yoff++;
 
 			game.print("Release Date: ", xoff, yoff);
-			game.print(selectedProject.releaseDate, xoff + dataoff, yoff);
+			game.print(selectedProject.getReleaseDate(), xoff + dataoff, yoff);
 			yoff++;
 
 			game.print("Run Time: ", xoff, yoff);
-			game.print(std::to_string(selectedProject.runtime), xoff + dataoff, yoff);
+			game.print(std::to_string(selectedProject.getRunTime()), xoff + dataoff, yoff);
 			yoff++;
 
 			game.print("Playing In Cinima: ", xoff, yoff);
-			if (selectedProject.playingInCinima)
+			if (selectedProject.getPlayingInCinima())
 				game.print("True", xoff + dataoff, yoff);
 			else
 				game.print("False", xoff + dataoff, yoff);
 			yoff++;
 
 			game.print("unreleased: ", xoff, yoff);
-			if (selectedProject.unreleased)
+			if (selectedProject.getUnreleased())
 				game.print("True", xoff + dataoff, yoff);
 			else
 				game.print("False", xoff + dataoff, yoff);
 			yoff++;
 
 			game.print("weeklySales: ", xoff, yoff);
-			game.print(std::to_string(selectedProject.weeklySales), xoff + dataoff, yoff);
+			game.print(std::to_string(selectedProject.getWeeklySales()), xoff + dataoff, yoff);
 			yoff++;
 
 			game.print("genres: ", xoff, yoff);
