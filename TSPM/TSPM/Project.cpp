@@ -212,6 +212,7 @@ std::string Project::save()
 	data += std::to_string(runtime) + "\n";
 	data += (std::string)(playingInCinima ? "true" : "false") + "\n";
 	data += (std::string)(unreleased ? "true" : "false") + "\n";
+	data += std::to_string(weeklySales) + "\n";
 
 	for (std::string keyword : keywords)
 	{

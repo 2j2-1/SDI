@@ -253,6 +253,17 @@ void Catalogue::write()
 	f.close();
 }
 
+void Catalogue::updateDirectories()
+{
+	std::ofstream f;
+	f.open("directories.txt");
+	for (Project p : projects)
+	{
+		f << std::to_string(p.projectID) << "\n";
+	}
+	f.close();
+}
+
 Project Catalogue::parse(std::string filePath, int projectID)
 {
 	std::ifstream infile(filePath);
@@ -287,6 +298,10 @@ Project Catalogue::parse(std::string filePath, int projectID)
 	std::getline(infile, line);
 
 	bool unreleased = (line == "true");
+
+	std::getline(infile, line);
+
+	int weeklySales = std::stoi(line);
 
 	Project p(projectID, title, summary,  releaseDate,  runtime,  playingInCinimam,  unreleased);
 

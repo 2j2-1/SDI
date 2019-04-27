@@ -77,7 +77,14 @@ std::string cGame::input() {
 		}
 	}
 	if (GetAsyncKeyState(VK_SPACE)) {
-			str += ' ';
+		str += ' ';
+	}
+	if (GetAsyncKeyState(VK_OEM_COMMA)) {
+		str += ',';
+	}
+
+	if (GetAsyncKeyState(VK_BACK) && stringBuffer.size()>0) {
+		stringBuffer.pop_back();
 	}
 	if (GetAsyncKeyState(VK_BACK) && stringBuffer.size()>0) {
 		stringBuffer.pop_back();

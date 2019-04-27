@@ -42,6 +42,8 @@ public:
 
 	void write();
 
+	void updateDirectories();
+
 	Project parse(std::string filePath, int projectID);
 
 private:
