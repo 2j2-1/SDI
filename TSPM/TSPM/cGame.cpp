@@ -79,6 +79,9 @@ std::string cGame::input() {
 	if (GetAsyncKeyState(VK_SPACE)) {
 			str += ' ';
 	}
+	if (GetAsyncKeyState(VK_BACK) && stringBuffer.size()>0) {
+		stringBuffer.pop_back();
+	}
 	return str;
 }
 
