@@ -8,6 +8,8 @@
 #include <string>
 #include "Project.h"
 #include "Catalogue.h"
+#include <sstream>
+
 
 
 cGame game;
@@ -72,10 +74,7 @@ int search() {
 					projectOffset = 0;
 			}
 		}
-		if (GetAsyncKeyState(VK_BACK)) {
-			if (game.stringBuffer.size()>0)
-				game.stringBuffer.pop_back();
-		}
+		
 		if (GetAsyncKeyState(VK_TAB)) {
 			allProjects = c1.sortByTitle(c1.searchByProjectTitle(c1.projects, game.stringBuffer));
 			projects.clear();
@@ -180,8 +179,60 @@ int update() {
 		}
 
 		game.print("physcicalMeduims: ", xoff, yoff);
-		
+		for (int i = 0; i < selectedProject.physcicalMeduims.size(); i++) {
+			game.print(selectedProject.physcicalMeduims.at(i)->type, xoff + dataoff, yoff);
+			yoff++;
+		}
 
+		game.draw();
+	}
+	return -1;
+}
+
+int create() {
+	int xoff = 3;
+	int yoff = 3;
+	int dataoff = 20;
+	std::vector<std::string> para;
+	std::vector<std::string> words = {"Title","Summary","Release Date","Run Time","Playing In Cinima","unreleased"};
+	while (true) {
+		game.stringBuffer += game.input();
+		yoff = 3;
+		game.blank_screen();
+		for (int i = 0; i < words.size(); i++){
+			if (para.size() == i)
+				game.print(words.at(i) + ": " + game.stringBuffer, xoff, yoff);
+			else if(para.size() > i)
+				game.print(words.at(i) + ": " + para.at(i), xoff, yoff);
+			else
+				game.print(words.at(i) + ": ", xoff, yoff);
+			yoff++;
+		}
+
+		game.print("genres: ", xoff, yoff);
+		yoff++;
+		game.print("filmingLocations: ", xoff, yoff);
+		yoff++;
+		game.print("keywords: ", xoff, yoff);
+		yoff++;
+		game.print("crewMembers: ", xoff, yoff);
+		yoff++;
+		game.print("physcicalMeduims: ", xoff, yoff);
+		yoff++;
+		if (GetAsyncKeyState(VK_RETURN)) {
+			para.push_back(game.stringBuffer);
+			if (para.size() == words.size()) {
+				bool a;
+				std::istringstream(para.at(4)) >> std::boolalpha >> a;
+				bool b;
+				std::istringstream(para.at(5)) >> std::boolalpha >> b;
+				Project temp(4, para.at(0), para.at(1), para.at(2), std::stoi(para.at(3)), a, b);
+				c1.add(temp);
+				temp.save();
+			}
+			
+			game.stringBuffer.clear();
+		}
 		game.draw();
 	}
 	return -1;
@@ -200,6 +251,7 @@ int main(){
 	p1.addCrewMember("Dumbo", "writer");
 	p1.addCrewMember("Dumbo's mum", "dead");
 	p1.addGenre("sad");
+	p1.addPhysicalMedium(new VHS(0,"VHS","Dumbo", "MP4", "MP4", "MP4", "MP4", "MP4"));
 
 	Project p2(1, "Jumbz", "Big elaphant and mum ded 2", "2019/04/27", 90, false, false);
 	p2.addKeyword("Try not to cry 2");
@@ -238,9 +290,7 @@ int main(){
 		game.print("Welcome to TSPM",game.screenWidth/2-8,2);
 		game.draw_pixel(0, 0, char(screen+48));
 		game.stringBuffer += game.input();
-		if (GetAsyncKeyState(VK_BACK) && game.stringBuffer.size()>0) {
-			game.stringBuffer.pop_back();
-		}
+		
 		switch (screen) {
 		case -1:
 			screen = menu();
@@ -251,7 +301,7 @@ int main(){
 			screen = -1;
 			break;
 		case 2:
-			screen = -1;
+			screen = create();
 			break;
 		case 3:
 			//if (selectedProject.projectID != -1)
