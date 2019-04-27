@@ -4,7 +4,6 @@ Ridiculed because of his enormous ears, a young circus elephant is assisted by a
 64
 false
 false
-0
 Try not to cry
 another keyword
 ,
@@ -29,8 +28,9 @@ sad
 0
 VHS
 Dumbo
+4:3
+Cardboard
+English
+English
 MP4
-MP4
-MP4
-MP4
-MP4
+,
