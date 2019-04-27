@@ -110,9 +110,18 @@ int menu() {
 	game.print("0. Exit", 3, 9 + offset);
 	game.print("Please Enter Choice: " + game.stringBuffer, 3, 11 + offset);
 	if (GetAsyncKeyState(VK_RETURN)) {
-		int temp = std::stoi(game.stringBuffer);
-		game.stringBuffer.clear();
-		return temp;
+		try
+		{
+			int temp = std::stoi(game.stringBuffer);
+			game.stringBuffer.clear();
+			return temp;
+		}
+		catch (std::invalid_argument ex)
+		{
+			game.stringBuffer.clear();
+		}
+		
+		
 	}
 	return -1;
 }

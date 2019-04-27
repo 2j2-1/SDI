@@ -5,15 +5,15 @@
 
 Project::Project(int projectID, std::string title, std::string summary, std::string releaseDate, unsigned int runtime, bool playingInCinimam, bool unreleased, int weeklySales)
 {
-	this->projectID = projectID;
+	setProjectID(projectID);
 
-	this->title = title;
+	setTitle(title);
 
-	this->summary = summary;
+	setSummary(summary);
 
-	this->releaseDate = releaseDate;
+	setReleaseDate(releaseDate);
 
-	this->runtime = runtime;
+	setRunTime(runtime);
 
 	this->playingInCinima = playingInCinima;
 
@@ -167,31 +167,58 @@ std::vector<PhysicalMedium*> Project::getPhyicalMediums()
 
 void Project::setProjectID(int id)
 {
+	if (id < 0)
+	{
+		throw std::invalid_argument("Project ID must be positive.");
+	}
+
 	this->projectID = id;
 }
 
 void Project::setTitle(std::string title)
 {
+	if (title == "")
+	{
+		throw std::invalid_argument("Must include a title");
+	}
+
 	this->title = title;
 }
 
 void Project::setSummary(std::string summary)
 {
+	if (summary == "")
+	{
+		throw std::invalid_argument("Must include a summary");
+	}
 	this->summary = summary;
 }
 
 void Project::setReleaseDate(std::string date)
 {
+	if (date == "")
+	{
+		throw std::invalid_argument("Must include a date");
+	}
 	this->releaseDate = date;
 }
 
 void Project::setRunTime(int runTime)
 {
+	if (runTime < 0)
+	{
+		throw std::invalid_argument("Runtime cannot be negitive");
+	}
+
 	this->runtime = runTime;
 }
 
 void Project::setWeeklySales(int sales)
 {
+	if (sales < 0)
+	{
+		throw std::invalid_argument("Weely ticket sales cannot be negitive");
+	}
 	this->weeklySales = sales;
 }
 
