@@ -9,6 +9,14 @@ another keyword
 ,
 Dumbo
 actor
+Dumbo
+producer
+Dumbo
+director
+Dumbo
+camera man
+Dumbo
+writer
 Dumbo's mum
 dead
 ,
