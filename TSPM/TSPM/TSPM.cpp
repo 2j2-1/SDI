@@ -194,7 +194,7 @@ int create() {
 	int yoff = 3;
 	int dataoff = 20;
 	std::vector<std::string> para;
-	std::vector<std::string> words = {"Title","Summary","Release Date","Run Time","Playing In Cinima","unreleased"};
+	std::vector<std::string> words = {"Title","Summary","Release Date","Run Time","Playing In Cinima","unreleased","genres","filmingLocations","keywords","crewMembers" };
 	while (true) {
 		game.stringBuffer += game.input();
 		yoff = 3;
@@ -208,18 +208,9 @@ int create() {
 				game.print(words.at(i) + ": ", xoff, yoff);
 			yoff++;
 		}
-
-		game.print("genres: ", xoff, yoff);
-		yoff++;
-		game.print("filmingLocations: ", xoff, yoff);
-		yoff++;
-		game.print("keywords: ", xoff, yoff);
-		yoff++;
-		game.print("crewMembers: ", xoff, yoff);
-		yoff++;
 		game.print("physcicalMeduims: ", xoff, yoff);
 		yoff++;
-		if (GetAsyncKeyState(VK_RETURN)) {
+		if (GetAsyncKeyState(VK_RETURN) && para.size() <= words.size()) {
 			para.push_back(game.stringBuffer);
 			if (para.size() == words.size()) {
 				bool a;
@@ -227,12 +218,28 @@ int create() {
 				bool b;
 				std::istringstream(para.at(5)) >> std::boolalpha >> b;
 				Project temp(4, para.at(0), para.at(1), para.at(2), std::stoi(para.at(3)), a, b);
+				for (int i = 0; i < temp.split(para.at(6), ',').size(); i++) {
+					temp.addGenre(temp.split(para.at(6), ',').at(i));
+				}
+				for (int i = 0; i < temp.split(para.at(7), ',').size(); i++) {
+					temp.addFilmingLocation(temp.split(para.at(7), ',').at(i));
+				}
+				for (int i = 0; i < temp.split(para.at(8), ',').size(); i++) {
+					temp.addKeyword(temp.split(para.at(8), ',').at(i));
+				}
+				for (int i = 0; i < temp.split(para.at(9), ',').size(); i+=2) {
+					temp.addCrewMember(temp.split(para.at(9), ',').at(i), temp.split(para.at(9), ',').at(i+1));
+				}
+				
+				
 				c1.add(temp);
 				temp.save();
+				return -1;
 			}
 			
 			game.stringBuffer.clear();
 		}
+		
 		game.draw();
 	}
 	return -1;
@@ -306,13 +313,13 @@ int main(){
 	p3.addPhysicalMedium(dvd1);
 	p3.addPhysicalMedium(dvd2);
 
-	/*c1.add(p1);
+	c1.add(p1);
 	c1.add(p2);
-	c1.add(p3);*/
+	c1.add(p3);
 
 
-	//c1.write();
-	c1.read();
+	c1.write();
+	//c1.read();
 
 
 	int screen = -1;
