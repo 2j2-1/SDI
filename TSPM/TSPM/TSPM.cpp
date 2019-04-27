@@ -136,10 +136,10 @@ int search() {
 		if (mode == 0) {
 			printSearch(projects, offsetY, selected, projectOffset);
 			current = c1.projects.at(selected + projectOffset);
-			printMetaData(current, offsetY, selected, projectOffset, offsetX,mode);
+			//printMetaData(current, offsetY, selected, projectOffset, offsetX,mode);
 		}
 		else {
-			metaDataSize = printMetaData(current, offsetY-2, selected, projectOffset, 3,mode);
+			//metaDataSize = printMetaData(current, offsetY-2, selected, projectOffset, 3,mode);
 		}
 
 		
@@ -252,9 +252,9 @@ int main(){
 
 	
 
-	/*c1.add(p1);
-	c1.add(p2);
-	c1.add(p3);*/
+	//c1.add(p1);
+	//c1.add(p2);
+	//c1.add(p3);
 
 	//c1.write();
 	c1.read();
