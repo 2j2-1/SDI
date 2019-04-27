@@ -288,6 +288,10 @@ Project Catalogue::parse(std::string filePath, int projectID)
 
 	bool unreleased = (line == "true");
 
+	std::getline(infile, line);
+
+	int weeklySales = std::stoi(line);
+
 	Project p(projectID, title, summary,  releaseDate,  runtime,  playingInCinimam,  unreleased);
 
 
