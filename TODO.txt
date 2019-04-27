@@ -1,0 +1,10 @@
+Ben:
+Load a file
+add a delete function to catalog to delete by id
+get and set functions
+
+Geroge:
+search by actor (Contain Actor)
+
+Jordan:
+change print meta data so that it selects by catagroy, change meta data to be a vector of vectors with the first element being the title and the rest the data

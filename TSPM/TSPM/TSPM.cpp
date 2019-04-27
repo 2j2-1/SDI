@@ -12,14 +12,76 @@
 
 cGame game;
 Catalogue c1;
+int printMetaData(Project current, int offsetY, int selected, int projectOffset, int offsetX,int materialOffset,int mode) {
 
+
+	std::vector<std::string> metaData;
+	metaData.push_back("Title: " + current.title);
+	metaData.push_back("Summary: ");
+	int lenOfSummary = 95;
+	int nextline = 0;
+	for (int i = 0; i < current.summary.size() / lenOfSummary + 1; i++) {
+		metaData.push_back(current.summary.substr(i*lenOfSummary, (i + 1)*lenOfSummary));
+	}
+	metaData.push_back("Genre: " + current.genres[0]);
+	for (int i = 1; i < current.genres.size(); i++) {
+		metaData.push_back(current.genres[i]);
+	}
+	metaData.push_back("Release Date: " + current.releaseDate);
+	metaData.push_back("Filming Locations: " + current.filmingLocations[0]);
+	for (int i = 1; i < current.filmingLocations.size(); i++) {
+		metaData.push_back(current.filmingLocations[i]);
+	}
+	metaData.push_back("Runtime: " + std::to_string(current.runtime) + " Minutes");
+	metaData.push_back("Keywords: " + current.keywords[0]);
+	for (int i = 1; i < current.keywords.size(); i++) {
+		metaData.push_back(current.keywords[i]);
+	}
+
+	metaData.push_back("Crew Members: ");
+	for (int i = 0; i < current.crewMembers.size(); i++) {
+		metaData.push_back(current.crewMembers[i].role + " " + current.crewMembers[i].name);
+	}
+	if (current.playingInCinima)
+		metaData.push_back("Currently Playing In Cinemas");
+	else if (current.unreleased)
+		metaData.push_back("Currently Unrealeased");
+	else
+		metaData.push_back("This Project Has Been Realeased");
+	if (mode != 0) 
+		game.drawColor(3, offsetY + selected, metaData.at(selected + projectOffset).size(), 240);
+	
+	for (int i = materialOffset; i < metaData.size(); i++) {
+		game.print(metaData[i], offsetX, offsetY + i - materialOffset);
+	}
+
+	return metaData.size();
+}
+
+void printSearch(std::vector<std::string> projects, int offsetY, int selected, int projectOffset) {
+	game.print("Search Term: " + game.stringBuffer, 3, offsetY - 1);
+	if (projects.size() > 0) {
+		game.drawColor(3, offsetY + 2 + selected, projects.at(selected + projectOffset).size(), 240);
+		for (int i = 0; i < min(20, projects.size()); i++) {
+			game.print(projects.at(i + projectOffset), 3, offsetY + i + 2);
+		}
+		if (projects.size()>20)
+			game.print("More Below...", 3, 27);
+	}
+	else
+		game.drawColor(3, offsetY + 2 + selected, 20, 15);
+}
 int search() {
 	int offsetY = 4;
 	int offsetX = 20;
 	int selected = 0;
 	int projectOffset = 0;
+	int mode = 0;
+	int materialOffset = 0;
 	std::vector<Project> allProjects = c1.sortByTitle(c1.searchByProjectTitle(c1.projects, ""));
 	std::vector<std::string> projects;
+	Project current = c1.projects.at(selected + projectOffset);
+	int metaDataSize;
 	for (int i = 0; i < allProjects.size(); i++){
 		projects.push_back(allProjects[i].title);
 	}
@@ -31,77 +93,53 @@ int search() {
 			selected = 0;
 			projectOffset = 0;
 		}
-		game.print("Search Term: " + game.stringBuffer, 3, offsetY-1);
-		game.drawColor(3, offsetY + 2 + selected, projects.at(selected + projectOffset).size(),240);
-		for (int i = 0; i < min(20,projects.size()); i++) {
-			game.print(projects.at(i+projectOffset), 3, offsetY + i + 2);
-		}
-		game.print("More Below...", 3, 27);
-
-		Project current = c1.projects.at(selected+projectOffset);
-
-		std::vector<std::string> metaData;
-		metaData.push_back("Title: " + current.title);
-		metaData.push_back("Summary: ");
-		int lenOfSummary = 95;
-		int nextline = 0;
-		for (int i = 0; i < current.summary.size()/ lenOfSummary+1; i++){
-			metaData.push_back(current.summary.substr(i*lenOfSummary,(i+1)*lenOfSummary));
-		}
-		metaData.push_back("Genre: " + current.genres[0]);
-		for (int i = 1; i < current.genres.size(); i++) {
-			metaData.push_back(current.genres[i]);
-		}
-		metaData.push_back("Release Date: " + current.releaseDate);
-		metaData.push_back("Filming Locations: " + current.filmingLocations[0]);
-		for (int i = 1; i < current.filmingLocations.size(); i++){
-			metaData.push_back(current.filmingLocations[i]);
-		}
-		metaData.push_back("Runtime: " + std::to_string(current.runtime) + " Minutes");
-		metaData.push_back("Keywords: " + current.keywords[0]);
-		for (int i = 1; i < current.keywords.size(); i++) {
-			metaData.push_back(current.keywords[i]);
-		}
 		
-		metaData.push_back("Crew Members: ");
-		for (int i = 0; i < current.crewMembers.size(); i++) {
-			metaData.push_back(current.crewMembers[i].role + " " + current.crewMembers[i].name);
+		if (mode == 0) {
+			printSearch(projects, offsetY, selected, projectOffset);
+			current = c1.projects.at(selected + projectOffset);
+			printMetaData(current, offsetY, selected, projectOffset, offsetX, 0,mode);
 		}
-		if (current.playingInCinima)
-			metaData.push_back("Currently Playing In Cinemas");
-		else if (current.unreleased)
-			metaData.push_back("Currently Unrealeased");
-		else 
-			metaData.push_back("This Project Has Been Realeased");
-
-
-
-
-		for (int i = 0; i < metaData.size(); i++){
-			game.print(metaData[i], offsetX, offsetY + i);
+		else {
+			metaDataSize = printMetaData(current, offsetY-2, selected, projectOffset, 3, materialOffset,mode);
 		}
+
+		
+
 		if (GetAsyncKeyState(VK_DOWN)) {
-			game.drawColor(3, offsetY + 2 + selected, projects.at(selected + projectOffset).size(), 15);
-			selected++;
-			if (selected > min(19, projects.size()-1)) {
-				selected = min(19, projects.size()-1);
-				projectOffset++;
+			if (mode == 0) {
+				game.drawColor(3, offsetY + 2 + selected, projects.at(selected + projectOffset).size(), 15);
+				selected++;
+				if (selected > min(19, projects.size() - 1)) {
+					selected = min(19, projects.size() - 1);
+					projectOffset++;
+				}
 			}
-			
+			else {
+				if (selected>20)
+					materialOffset++;
+				selected++;
+				selected = min(selected, metaDataSize-1);
+			}
 		}
 		if (GetAsyncKeyState(VK_UP)) {
-			game.drawColor(3, offsetY + 2 + selected, projects.at(selected + projectOffset).size(), 15);
-			selected--;
-			if (selected < 0) {
-				selected = 0;
-				projectOffset--;
-				if (projectOffset < 0)
-					projectOffset = 0;
+			if (mode == 0) {
+				game.drawColor(3, offsetY + 2 + selected, projects.at(selected + projectOffset).size(), 15);
+				selected--;
+				if (selected < 0) {
+					selected = 0;
+					projectOffset--;
+					if (projectOffset < 0)
+						projectOffset = 0;
+				}
+			} else {
+				materialOffset--;
+				materialOffset = max(materialOffset, 0);
 			}
 			
 		}
 		if (GetAsyncKeyState(VK_BACK)) {
-			game.stringBuffer.pop_back();
+			if (game.stringBuffer.size()>0)
+				game.stringBuffer.pop_back();
 		}
 		if (GetAsyncKeyState(VK_RETURN)) {
 			allProjects = c1.sortByTitle(c1.searchByProjectTitle(c1.projects, game.stringBuffer));
@@ -109,6 +147,11 @@ int search() {
 			for (int i = 0; i < allProjects.size(); i++) {
 				projects.push_back(allProjects[i].title);
 			}
+		}
+		if (GetAsyncKeyState(0x53)) {
+			game.stringBuffer.pop_back();
+			mode = 1;
+			game.drawColor(3, offsetY + 2 + selected, projects.at(selected + projectOffset).size(), 15);
 		}
 		game.draw();
 		Sleep(150);
@@ -171,8 +214,8 @@ int main(){
 	c1.add(p2);
 	c1.add(p3);
 
-	//c1.write();
-	c1.read();
+	c1.write();
+	//c1.read();
 
 
 	int screen = 5;
