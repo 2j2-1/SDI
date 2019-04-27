@@ -227,7 +227,7 @@ void Catalogue::add(Project p)
 	projects.push_back(p);
 	else
 	{
-		projects.insert(projects.begin() + p.projectID, p);
+		projects.insert(projects.begin() + p.getProjectID(), p);
 	}
 }
 
