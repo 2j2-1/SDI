@@ -313,8 +313,6 @@ int main(){
 	p1.addGenre("sad");
 	p1.addPhysicalMedium(new VHS(0,"VHS","Dumbo", "MP4", "MP4", "MP4", "MP4", "MP4"));
 
-	logCreation(p1);
-
 	Project p2(1, "Jumbz", "Big elaphant and mum ded 2", "2019/04/27", 90, false, false);
 	p2.addKeyword("Try not to cry 2");
 	p2.addKeyword("another keyword 2");
