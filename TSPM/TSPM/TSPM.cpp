@@ -12,7 +12,7 @@
 
 cGame game;
 Catalogue c1;
-int printMetaData(Project current, int offsetY, int selected, int projectOffset, int offsetX,int materialOffset,int mode) {
+int printMetaData(Project current, int offsetY, int selected, int projectOffset, int offsetX,int mode) {
 
 
 	std::vector<std::vector<std::string>> metaData;
@@ -80,29 +80,22 @@ int printMetaData(Project current, int offsetY, int selected, int projectOffset,
 
 	
 	int lineCount = 0;
-	for (int i = materialOffset; i < metaData.size(); i++) {
+	for (int i = selected; i < metaData.size(); i++) {
 		if(i==selected && mode != 0)
-			game.drawColor(3, offsetY + selected + lineCount, metaData.at(selected + projectOffset)[0].size() - 2, 240);
-
-		game.print(metaData[i][0], offsetX, offsetY + i +lineCount - materialOffset);
-		
+			game.drawColor(3, offsetY  + lineCount, metaData.at(selected + projectOffset)[0].size() - 2, 240);
+		game.print(metaData[i][0], offsetX, offsetY + i + lineCount - selected);
 		if (metaData[i].size() == 2) {
-			game.print(metaData[i][1], offsetX + metaData[i][0].size(), offsetY + i + lineCount - materialOffset);
+			game.print(metaData[i][1], offsetX + metaData[i][0].size(), offsetY + i + lineCount - selected);
 		}
 		else {
-			
 			for (int j = 1; j < metaData[i].size(); j++){
 				lineCount++;
-				game.print(metaData[i][j], offsetX, offsetY + i + lineCount - materialOffset);
-				
+				game.print(metaData[i][j], offsetX, offsetY + i + lineCount - selected);
 			}
 		}
 		lineCount++;
-		
 	}
-		
-
-	return metaData.size();
+	return lineCount;
 }
 
 void printSearch(std::vector<std::string> projects, int offsetY, int selected, int projectOffset) {
@@ -124,7 +117,6 @@ int search() {
 	int selected = 0;
 	int projectOffset = 0;
 	int mode = 0;
-	int materialOffset = 0;
 	std::vector<Project> allProjects = c1.sortByTitle(c1.searchByProjectTitle(c1.projects, ""));
 	std::vector<std::string> projects;
 	Project current = c1.projects.at(selected + projectOffset);
@@ -144,10 +136,10 @@ int search() {
 		if (mode == 0) {
 			printSearch(projects, offsetY, selected, projectOffset);
 			current = c1.projects.at(selected + projectOffset);
-			printMetaData(current, offsetY, selected, projectOffset, offsetX, 0,mode);
+			printMetaData(current, offsetY, selected, projectOffset, offsetX,mode);
 		}
 		else {
-			metaDataSize = printMetaData(current, offsetY-2, selected, projectOffset, 3, materialOffset,mode);
+			metaDataSize = printMetaData(current, offsetY-2, selected, projectOffset, 3,mode);
 		}
 
 		
@@ -162,10 +154,8 @@ int search() {
 				}
 			}
 			else {
-				if (selected>20)
-					materialOffset++;
 				selected++;
-				selected = min(selected, metaDataSize-1);
+				//selected = min(selected, metaDataSize);
 			}
 		}
 		if (GetAsyncKeyState(VK_UP)) {
@@ -179,8 +169,6 @@ int search() {
 						projectOffset = 0;
 				}
 			} else {
-				materialOffset--;
-				materialOffset = max(materialOffset, 0);
 				selected--;
 				selected = max(selected, 0);
 			}
@@ -237,6 +225,10 @@ int main(){
 	p1.addFilmingLocation("Home");
 	p1.addFilmingLocation("not home");
 	p1.addCrewMember("Dumbo", "actor");
+	p1.addCrewMember("Dumbo", "producer");
+	p1.addCrewMember("Dumbo", "director");
+	p1.addCrewMember("Dumbo", "camera man");
+	p1.addCrewMember("Dumbo", "writer");
 	p1.addCrewMember("Dumbo's mum", "dead");
 	p1.addGenre("sad");
 
