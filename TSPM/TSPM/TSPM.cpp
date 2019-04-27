@@ -278,12 +278,37 @@ int main(){
 	DVD * dvd1 = new DVD(8, "Blue ray", "Dumbo on blue ray", "MP4", "Wide sceen", "Plastic");
 	DVD * dvd2 = new DVD(9, "Blue ray", "Dumbo on blue ray remastered", "MP4", "Wide sceen", "Plastic");
 
+	dvd1->addAudioTrack("English");
+	dvd1->addAudioTrack("Spanish");
+	dvd1->addAudioTrack("French");
+
+	dvd1->addSubtitleLanguage("English");
+	dvd1->addSubtitleLanguage("Spanish");
+	dvd1->addSubtitleLanguage("French");
+
+	dvd1->addBonusFeature("English");
+	dvd1->addBonusFeature("Spanish");
+	dvd1->addBonusFeature("French");
+
+
+	dvd2->addAudioTrack("English");
+	dvd2->addAudioTrack("Spanish");
+	dvd2->addAudioTrack("French");
+
+	dvd2->addSubtitleLanguage("English");
+	dvd2->addSubtitleLanguage("Spanish");
+	dvd2->addSubtitleLanguage("French");
+
+	dvd2->addBonusFeature("English");
+	dvd2->addBonusFeature("Spanish");
+	dvd2->addBonusFeature("French");
+
 	p3.addPhysicalMedium(dvd1);
 	p3.addPhysicalMedium(dvd2);
 
-	//c1.add(p1);
-	//c1.add(p2);
-	//c1.add(p3);
+	/*c1.add(p1);
+	c1.add(p2);
+	c1.add(p3);*/
 
 
 	//c1.write();
