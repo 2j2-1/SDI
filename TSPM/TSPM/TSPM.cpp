@@ -19,64 +19,71 @@ int printMetaData(Project current, int offsetY, int selected, int projectOffset,
 	std::vector<std::string> tempMetaData;
 	int lenOfSummary = 110;
 
-	tempMetaData.push_back("Title: ");
-	tempMetaData.push_back(current.title);
-	metaData.push_back(tempMetaData);
-	tempMetaData.clear();
+	std::vector<std::string> titleMetaData;
+	titleMetaData.push_back("Title: ");
+	titleMetaData.push_back(current.title);
+	metaData.push_back(titleMetaData);
 
-	tempMetaData.push_back("Summary: ");
+	std::vector<std::string> summaryMetaData;
+	summaryMetaData.push_back("Summary: ");
 	for (int i = 0; i < current.summary.size() / lenOfSummary + 1; i++) {
-		tempMetaData.push_back(current.summary.substr(i*lenOfSummary, (i + 1)*lenOfSummary));
+		summaryMetaData.push_back(current.summary.substr(i*lenOfSummary, (i + 1)*lenOfSummary));
 	}
-	metaData.push_back(tempMetaData);
-	tempMetaData.clear();
+	metaData.push_back(summaryMetaData);
 
-	tempMetaData.push_back("Genre: ");
+	std::vector<std::string> genreMetaData;
+	genreMetaData.push_back("Genre: ");
 	for (int i = 0; i < current.genres.size(); i++) {
-		tempMetaData.push_back(current.genres[i]);
+		genreMetaData.push_back(current.genres[i]);
 	}
-	metaData.push_back(tempMetaData);
-	tempMetaData.clear();
+	metaData.push_back(genreMetaData);
+	
 
-	tempMetaData.push_back("Release Date: ");
-	tempMetaData.push_back(current.releaseDate);
-	metaData.push_back(tempMetaData);
-	tempMetaData.clear();
+	std::vector<std::string> rdMetaData;
+	rdMetaData.push_back("Release Date: ");
+	rdMetaData.push_back(current.releaseDate);
+	metaData.push_back(rdMetaData);
+	
 
-	tempMetaData.push_back("Filming Locations: ");
+	std::vector<std::string> flMetaData;
+	flMetaData.push_back("Filming Locations: ");
 	for (int i = 0; i < current.filmingLocations.size(); i++) {
-		tempMetaData.push_back(current.filmingLocations[i]);
+		flMetaData.push_back(current.filmingLocations[i]);
 	}
-	metaData.push_back(tempMetaData);
-	tempMetaData.clear();
+	metaData.push_back(flMetaData);
+	
 
-	tempMetaData.push_back("Runtime: ");
-	tempMetaData.push_back(std::to_string(current.runtime) + " Minutes");
-	metaData.push_back(tempMetaData);
-	tempMetaData.clear();
+	std::vector<std::string> runtimeMetaData;
+	runtimeMetaData.push_back("Runtime: ");
+	runtimeMetaData.push_back(std::to_string(current.runtime) + " Minutes");
+	metaData.push_back(runtimeMetaData);
+	
 
-	tempMetaData.push_back("Keywords: ");
+	std::vector<std::string> keywordsMetaData;
+	keywordsMetaData.push_back("Keywords: ");
 	for (int i = 0; i < current.keywords.size(); i++) {
-		tempMetaData.push_back(current.keywords[i]);
+		keywordsMetaData.push_back(current.keywords[i]);
 	}
-	metaData.push_back(tempMetaData);
-	tempMetaData.clear();
+	metaData.push_back(keywordsMetaData);
+	
 
-	tempMetaData.push_back("Crew Members: ");
+	std::vector<std::string> cmMetaData;
+	cmMetaData.push_back("Crew Members: ");
 	for (int i = 0; i < current.crewMembers.size(); i++) {
-		tempMetaData.push_back(current.crewMembers[i].role + " " + current.crewMembers[i].name);
+		cmMetaData.push_back(current.crewMembers[i].role + " " + current.crewMembers[i].name);
 	}
-	metaData.push_back(tempMetaData);
-	tempMetaData.clear();
+	metaData.push_back(cmMetaData);
+	
 
+	std::vector<std::string> rsMetaData;
 	if (current.playingInCinima)
-		tempMetaData.push_back("Currently Playing In Cinemas  ");
+		rsMetaData.push_back("Currently Playing In Cinemas  ");
 	else if (current.unreleased)
-		tempMetaData.push_back("Currently Unrealeased  ");
+		rsMetaData.push_back("Currently Unrealeased  ");
 	else
-		tempMetaData.push_back("This Project Has Been Realeased  ");
-	metaData.push_back(tempMetaData);
-	tempMetaData.clear();
+		rsMetaData.push_back("This Project Has Been Realeased  ");
+	metaData.push_back(rsMetaData);
+	
 
 	
 	int lineCount = 0;
@@ -95,7 +102,7 @@ int printMetaData(Project current, int offsetY, int selected, int projectOffset,
 		}
 		lineCount++;
 	}
-	return lineCount;
+	return metaData.size();
 }
 
 void printSearch(std::vector<std::string> projects, int offsetY, int selected, int projectOffset) {
@@ -155,7 +162,7 @@ int search() {
 			}
 			else {
 				selected++;
-				//selected = min(selected, metaDataSize);
+				selected = min(selected, metaDataSize-1);
 			}
 		}
 		if (GetAsyncKeyState(VK_UP)) {
@@ -186,8 +193,7 @@ int search() {
 				projects.push_back(allProjects[i].title);
 			}
 		}
-		if (GetAsyncKeyState(0x53)) {
-			game.stringBuffer.pop_back();
+		if (GetAsyncKeyState(VK_TAB)) {
 			mode = 1;
 			game.drawColor(3, offsetY + 2 + selected, projects.at(selected + projectOffset).size(), 15);
 		}
@@ -219,42 +225,6 @@ int menu() {
 }
 
 int main(){
-	Project p1(0, "Dumbo", "Ridiculed because of his enormous ears, a young circus elephant is assisted by a mouse to achieve his full potential.", "1942/01/02", 64, false, false);
-	p1.addKeyword("Try not to cry");
-	p1.addKeyword("another keyword");
-	p1.addFilmingLocation("Home");
-	p1.addFilmingLocation("not home");
-	p1.addCrewMember("Dumbo", "actor");
-	p1.addCrewMember("Dumbo", "producer");
-	p1.addCrewMember("Dumbo", "director");
-	p1.addCrewMember("Dumbo", "camera man");
-	p1.addCrewMember("Dumbo", "writer");
-	p1.addCrewMember("Dumbo's mum", "dead");
-	p1.addGenre("sad");
-
-	Project p2(1, "Jumbz", "Big elaphant and mum ded 2", "2019/04/27", 90, false, false);
-	p2.addKeyword("Try not to cry 2");
-	p2.addKeyword("another keyword 2");
-	p2.addFilmingLocation("Home 2");
-	p2.addFilmingLocation("not home 2");
-	p2.addCrewMember("Dumbo", "actor 2");
-	p2.addCrewMember("Dumbo's mum 2", "dead 2");
-	p2.addGenre("sad 2");
-
-	Project p3(2, "Jumbo", "Big elaphant and mum ded 2", "2019/04/27", 90, false, false);
-	p3.addKeyword("Try not to cry 2");
-	p3.addKeyword("another keyword 2");
-	p3.addFilmingLocation("Home 2");
-	p3.addFilmingLocation("not home 2");
-	p3.addCrewMember("Dumbo", "actor 2");
-	p3.addCrewMember("Dumbo's mum 2", "dead 2");
-	p3.addGenre("sad 2");
-
-	
-
-	c1.add(p1);
-	c1.add(p2);
-	c1.add(p3);
 
 	//c1.write();
 	c1.read();
