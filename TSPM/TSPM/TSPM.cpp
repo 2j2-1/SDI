@@ -113,6 +113,60 @@ int menu() {
 	return -1;
 }
 
+int addPhysicalMedia(){
+	int xoff = 3;
+	int yoff = 3;
+	int dataoff = 20;
+	std::vector<std::string> para;
+	std::vector<std::string> words = { "ID","Type","Title","Format","Frame Aspect","Packing","Audio Track Language","Subtitle Language","Bonus Feature" };
+	while (true) {
+		game.stringBuffer += game.input();
+		yoff = 3;
+		game.blank_screen();
+		for (int i = 0; i < words.size(); i++) {
+			if (para.size() == i)
+				game.print(words.at(i) + ": " + game.stringBuffer, xoff, yoff);
+			else if (para.size() > i)
+				game.print(words.at(i) + ": " + para.at(i), xoff, yoff);
+			else
+				game.print(words.at(i) + ": ", xoff, yoff);
+			yoff++;
+		}
+		game.print("physcicalMeduims: ", xoff, yoff);
+		yoff++;
+		if (GetAsyncKeyState(VK_RETURN) && para.size() <= words.size()) {
+			para.push_back(game.stringBuffer);
+			if (para.size() == words.size()) {
+				if (para.at(2) == "VHS") {
+					VHS * temp= new VHS(1, "VHS", para.at(2), para.at(3), para.at(4), para.at(5), para.at(6), para.at(7));
+					selectedProject.addPhysicalMedium(temp);
+				}
+				else {
+					DVD * temp = new DVD(1, para.at(1), para.at(2), para.at(3), para.at(4), para.at(5));
+					for (int i = 0; i < Project::split(para.at(6), ',').size(); i++) {
+						temp->addAudioTrack(Project::split(para.at(6), ',').at(i));
+					}
+					for (int i = 0; i < Project::split(para.at(7), ',').size(); i++) {
+						temp->addSubtitleLanguage(Project::split(para.at(7), ',').at(i));
+					}
+					for (int i = 0; i < Project::split(para.at(8), ',').size(); i++) {
+						temp->addBonusFeature(Project::split(para.at(8), ',').at(i));
+					}
+					selectedProject.addPhysicalMedium(temp);
+				}
+				selectedProject.save();
+				
+				return -1;
+			}
+
+			game.stringBuffer.clear();
+		}
+
+		game.draw();
+	}
+	return -1;
+}
+
 int update() {
 	int xoff = 3;
 	int yoff = 3;
@@ -398,7 +452,7 @@ int main(){
 			screen = search();
 			break;
 		case 6:
-			
+			addPhysicalMedia();
 			screen = -1;
 			break;
 		default:
