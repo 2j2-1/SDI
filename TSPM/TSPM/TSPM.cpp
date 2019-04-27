@@ -15,45 +15,92 @@ Catalogue c1;
 int printMetaData(Project current, int offsetY, int selected, int projectOffset, int offsetX,int materialOffset,int mode) {
 
 
-	std::vector<std::string> metaData;
-	metaData.push_back("Title: " + current.title);
-	metaData.push_back("Summary: ");
-	int lenOfSummary = 95;
-	int nextline = 0;
-	for (int i = 0; i < current.summary.size() / lenOfSummary + 1; i++) {
-		metaData.push_back(current.summary.substr(i*lenOfSummary, (i + 1)*lenOfSummary));
-	}
-	metaData.push_back("Genre: " + current.genres[0]);
-	for (int i = 1; i < current.genres.size(); i++) {
-		metaData.push_back(current.genres[i]);
-	}
-	metaData.push_back("Release Date: " + current.releaseDate);
-	metaData.push_back("Filming Locations: " + current.filmingLocations[0]);
-	for (int i = 1; i < current.filmingLocations.size(); i++) {
-		metaData.push_back(current.filmingLocations[i]);
-	}
-	metaData.push_back("Runtime: " + std::to_string(current.runtime) + " Minutes");
-	metaData.push_back("Keywords: " + current.keywords[0]);
-	for (int i = 1; i < current.keywords.size(); i++) {
-		metaData.push_back(current.keywords[i]);
-	}
+	std::vector<std::vector<std::string>> metaData;
+	std::vector<std::string> tempMetaData;
+	int lenOfSummary = 110;
 
-	metaData.push_back("Crew Members: ");
+	tempMetaData.push_back("Title: ");
+	tempMetaData.push_back(current.title);
+	metaData.push_back(tempMetaData);
+	tempMetaData.clear();
+
+	tempMetaData.push_back("Summary: ");
+	for (int i = 0; i < current.summary.size() / lenOfSummary + 1; i++) {
+		tempMetaData.push_back(current.summary.substr(i*lenOfSummary, (i + 1)*lenOfSummary));
+	}
+	metaData.push_back(tempMetaData);
+	tempMetaData.clear();
+
+	tempMetaData.push_back("Genre: ");
+	for (int i = 0; i < current.genres.size(); i++) {
+		tempMetaData.push_back(current.genres[i]);
+	}
+	metaData.push_back(tempMetaData);
+	tempMetaData.clear();
+
+	tempMetaData.push_back("Release Date: ");
+	tempMetaData.push_back(current.releaseDate);
+	metaData.push_back(tempMetaData);
+	tempMetaData.clear();
+
+	tempMetaData.push_back("Filming Locations: ");
+	for (int i = 0; i < current.filmingLocations.size(); i++) {
+		tempMetaData.push_back(current.filmingLocations[i]);
+	}
+	metaData.push_back(tempMetaData);
+	tempMetaData.clear();
+
+	tempMetaData.push_back("Runtime: ");
+	tempMetaData.push_back(std::to_string(current.runtime) + " Minutes");
+	metaData.push_back(tempMetaData);
+	tempMetaData.clear();
+
+	tempMetaData.push_back("Keywords: ");
+	for (int i = 0; i < current.keywords.size(); i++) {
+		tempMetaData.push_back(current.keywords[i]);
+	}
+	metaData.push_back(tempMetaData);
+	tempMetaData.clear();
+
+	tempMetaData.push_back("Crew Members: ");
 	for (int i = 0; i < current.crewMembers.size(); i++) {
-		metaData.push_back(current.crewMembers[i].role + " " + current.crewMembers[i].name);
+		tempMetaData.push_back(current.crewMembers[i].role + " " + current.crewMembers[i].name);
 	}
+	metaData.push_back(tempMetaData);
+	tempMetaData.clear();
+
 	if (current.playingInCinima)
-		metaData.push_back("Currently Playing In Cinemas");
+		tempMetaData.push_back("Currently Playing In Cinemas  ");
 	else if (current.unreleased)
-		metaData.push_back("Currently Unrealeased");
+		tempMetaData.push_back("Currently Unrealeased  ");
 	else
-		metaData.push_back("This Project Has Been Realeased");
-	if (mode != 0) 
-		game.drawColor(3, offsetY + selected, metaData.at(selected + projectOffset).size(), 240);
+		tempMetaData.push_back("This Project Has Been Realeased  ");
+	metaData.push_back(tempMetaData);
+	tempMetaData.clear();
+
 	
+	int lineCount = 0;
 	for (int i = materialOffset; i < metaData.size(); i++) {
-		game.print(metaData[i], offsetX, offsetY + i - materialOffset);
+		if(i==selected && mode != 0)
+			game.drawColor(3, offsetY + selected + lineCount, metaData.at(selected + projectOffset)[0].size() - 2, 240);
+
+		game.print(metaData[i][0], offsetX, offsetY + i +lineCount - materialOffset);
+		
+		if (metaData[i].size() == 2) {
+			game.print(metaData[i][1], offsetX + metaData[i][0].size(), offsetY + i + lineCount - materialOffset);
+		}
+		else {
+			
+			for (int j = 1; j < metaData[i].size(); j++){
+				lineCount++;
+				game.print(metaData[i][j], offsetX, offsetY + i + lineCount - materialOffset);
+				
+			}
+		}
+		lineCount++;
+		
 	}
+		
 
 	return metaData.size();
 }
@@ -134,7 +181,10 @@ int search() {
 			} else {
 				materialOffset--;
 				materialOffset = max(materialOffset, 0);
+				selected--;
+				selected = max(selected, 0);
 			}
+			
 			
 		}
 		if (GetAsyncKeyState(VK_BACK)) {
