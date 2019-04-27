@@ -87,14 +87,14 @@ int search() {
 			}
 		}
 		if (GetAsyncKeyState(VK_RETURN)) {
-			selectedProject = allProjects.at(selected);
+			if (projects.size()>0)
+				selectedProject = allProjects.at(selected);
 			break;
 		}
 		game.draw();
 		Sleep(50);
 		
 	}
-	game.drawColor(3, offsetY + 2 + selected, projects.at(selected + projectOffset).size(), 15);
 	return -1;
 }
 
@@ -604,33 +604,40 @@ int main(){
 			return 0;
 		case 1:
 			c1.read();
+			game.stringBuffer.clear();
 			screen = -1;
 			break;
 		case 2:
 			screen = create();
 			logCreation(selectedProject);
+			game.stringBuffer.clear();
 			break;
 		case 3:
-			//if (selectedProject.projectID != -1)
-				screen = update();
-				if (_weeklySalesThreshold)
-					logWeeklySales(selectedProject);
+			screen = update();
+			if (_weeklySalesThreshold)
+				logWeeklySales(selectedProject);
+			game.stringBuffer.clear();
 
-			//else
-				//screen = -1;
 			break;
 		case 4:
 			screen = -1;
+			c1.deleteProjectFile(selectedProject.getProjectID());
+			c1.deleteProject(selectedProject.getProjectID());
+			selectedProject = Project();
+			game.stringBuffer.clear();
 			break;
 		case 5:
 			screen = search();
+			game.stringBuffer.clear();
 			break;
 		case 6:
 			addPhysicalMedia();
+			game.stringBuffer.clear();
 			screen = -1;
 			break;
 		case 7:
 			view();
+			game.stringBuffer.clear();
 			screen = -1;
 			break;
 		default:
