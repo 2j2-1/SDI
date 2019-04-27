@@ -45,7 +45,7 @@ int search() {
 	std::vector<std::string> projects;
 	int metaDataSize;
 	for (int i = 0; i < allProjects.size(); i++){
-		projects.push_back(allProjects[i].title);
+		projects.push_back(allProjects[i].getTitle());
 	}
 	while (!GetAsyncKeyState(VK_ESCAPE)){
 		game.blank_screen();
@@ -83,7 +83,7 @@ int search() {
 			allProjects = c1.sortByTitle(c1.searchByProjectTitle(c1.projects, game.stringBuffer));
 			projects.clear();
 			for (int i = 0; i < allProjects.size(); i++) {
-				projects.push_back(allProjects[i].title);
+				projects.push_back(allProjects[i].getTitle());
 			}
 		}
 		if (GetAsyncKeyState(VK_RETURN)) {
@@ -186,7 +186,7 @@ int update() {
 	int yoff = 3;
 	int dataoff = 20;
 	int data = 0;
-	std::vector<std::string> para = { selectedProject.title, selectedProject.summary, selectedProject.releaseDate, std::to_string(selectedProject.runtime),std::to_string(selectedProject.playingInCinima),std::to_string(selectedProject.unreleased)};
+	std::vector<std::string> para = { selectedProject.getTitle(), selectedProject.getSummary(), selectedProject.getReleaseDate(), std::to_string(selectedProject.getRunTime()),std::to_string(selectedProject.getPlayingInCinima()),std::to_string(selectedProject.getUnreleased())};
 	std::vector<std::string> words = { "Title","Summary","Release Date","Run Time","Playing In Cinima","unreleased","genres","filmingLocations","keywords","crewMembers" };
 	game.stringBuffer = para.at(data);
 	std::string temp;
@@ -256,7 +256,7 @@ int update() {
 				std::istringstream(para.at(4)) >> std::boolalpha >> a;
 				bool b;
 				std::istringstream(para.at(5)) >> std::boolalpha >> b;
-				Project temp(selectedProject.projectID, para.at(0), para.at(1), para.at(2), std::stoi(para.at(3)), a, b);
+				Project temp(selectedProject.getProjectID(), para.at(0), para.at(1), para.at(2), std::stoi(para.at(3)), a, b);
 				for (int i = 0; i < temp.split(para.at(6), ',').size(); i++) {
 					temp.addGenre(temp.split(para.at(6), ',').at(i));
 				}
@@ -270,7 +270,7 @@ int update() {
 					temp.addCrewMember(temp.split(para.at(9), ',').at(i), temp.split(para.at(9), ',').at(i + 1));
 				}
 
-				c1.deleteProject(selectedProject.projectID);
+				c1.deleteProject(selectedProject.getProjectID());
 				c1.add(temp);
 				selectedProject = temp;
 				temp.save();
@@ -360,37 +360,37 @@ int view() {
 		game.blank_screen();
 		if (mode == -1) {
 			game.print("Title: ", xoff, yoff);
-			game.print(selectedProject.title, xoff + dataoff, yoff);
+			game.print(selectedProject.getTitle(), xoff + dataoff, yoff);
 			yoff++;
 
 			game.print("Summary: ", xoff, yoff);
-			game.print(selectedProject.summary, xoff + dataoff, yoff);
+			game.print(selectedProject.getSummary(), xoff + dataoff, yoff);
 			yoff++;
 
 			game.print("Release Date: ", xoff, yoff);
-			game.print(selectedProject.releaseDate, xoff + dataoff, yoff);
+			game.print(selectedProject.getReleaseDate(), xoff + dataoff, yoff);
 			yoff++;
 
 			game.print("Run Time: ", xoff, yoff);
-			game.print(std::to_string(selectedProject.runtime), xoff + dataoff, yoff);
+			game.print(std::to_string(selectedProject.getRunTime()), xoff + dataoff, yoff);
 			yoff++;
 
 			game.print("Playing In Cinima: ", xoff, yoff);
-			if (selectedProject.playingInCinima)
+			if (selectedProject.getPlayingInCinima())
 				game.print("True", xoff + dataoff, yoff);
 			else
 				game.print("False", xoff + dataoff, yoff);
 			yoff++;
 
 			game.print("unreleased: ", xoff, yoff);
-			if (selectedProject.unreleased)
+			if (selectedProject.getUnreleased())
 				game.print("True", xoff + dataoff, yoff);
 			else
 				game.print("False", xoff + dataoff, yoff);
 			yoff++;
 
 			game.print("weeklySales: ", xoff, yoff);
-			game.print(std::to_string(selectedProject.weeklySales), xoff + dataoff, yoff);
+			game.print(std::to_string(selectedProject.getWeeklySales()), xoff + dataoff, yoff);
 			yoff++;
 
 			game.print("genres: ", xoff, yoff);

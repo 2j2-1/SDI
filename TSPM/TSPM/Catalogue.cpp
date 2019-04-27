@@ -3,6 +3,7 @@
 #include <fstream>
 #include <sstream>
 
+
 Catalogue::Catalogue()
 {
 }
@@ -32,7 +33,7 @@ std::vector<Project> Catalogue::searchByProjectTitle(std::vector<Project> projec
 	std::vector<std::string> titles;
 	for (int i = 0; i < projects.size(); i++)
 	{
-		titles.push_back(projects[i].title);
+		titles.push_back(projects[i].getTitle());
 	}
 
 	std::vector<int> indexes = searchByText(titles, searchTerm);
@@ -104,7 +105,7 @@ std::vector<Project> Catalogue::sortByTitle(std::vector<Project> projects)
 	std::vector<int> indexes;
 	for (int i = 0; i < projects.size(); i++)
 	{
-		titles.push_back(projects[i].title);
+		titles.push_back(projects[i].getTitle());
 		indexes.push_back(i);
 	}
 
@@ -168,7 +169,7 @@ std::vector<Project> Catalogue::sortByDate(std::vector<Project> projects)
 	std::vector<int> indexes;
 	for (int i = 0; i < projects.size(); i++)
 	{
-		dates.push_back(projects[i].releaseDate);
+		dates.push_back(projects[i].getReleaseDate());
 		indexes.push_back(i);
 	}
 
@@ -223,7 +224,7 @@ int Catalogue::partition(std::vector<std::string>& arr, int start, int end)
 
 void Catalogue::add(Project p)
 {
-	if (projects.size() == 0 || p.projectID == projects.back().projectID + 1)
+	if (projects.size() == 0 || p.getProjectID() == projects.back().getProjectID() + 1)
 	projects.push_back(p);
 	else
 	{
@@ -240,7 +241,21 @@ void Catalogue::read()
 	std::string line;
 	while (std::getline(infile, line))
 	{
-		add(parse(line + ".txt", std::stoi(line)));
+
+		std::ifstream f((line + ".txt").c_str());
+
+		if (f.good())
+		{
+			f.close();
+			add(parse(line + ".txt", std::stoi(line)));
+		}
+		else
+		{
+			f.close();
+		}
+		
+		
+		
 	}
 
 	infile.close();
@@ -255,7 +270,7 @@ void Catalogue::write()
 	{
 		p.save();
 
-		f << std::to_string(p.projectID) << "\n";
+		f << std::to_string(p.getProjectID()) << "\n";
 	}
 	f.close();
 }
@@ -266,7 +281,7 @@ void Catalogue::updateDirectories()
 	f.open("directories.txt");
 	for (Project p : projects)
 	{
-		f << std::to_string(p.projectID) << "\n";
+		f << std::to_string(p.getProjectID()) << "\n";
 	}
 	f.close();
 }
@@ -277,7 +292,7 @@ void Catalogue::deleteProject(int projectID)
 
 	for (int i = projectID; i < projects.size(); i++)
 	{
-		projects[i].projectID -= 1;
+		projects[i].setProjectID(projects[i].getProjectID() - 1);
 	}
 }
 

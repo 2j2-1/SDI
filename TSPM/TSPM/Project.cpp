@@ -140,6 +140,16 @@ int Project::getWeeklySales()
 	return weeklySales;
 }
 
+bool Project::getUnreleased()
+{
+	return unreleased;
+}
+
+bool Project::getPlayingInCinima()
+{
+	return playingInCinima;
+}
+
 std::vector<std::string> Project::getGenres()
 {
 	return genres;
@@ -245,6 +255,16 @@ void Project::setCrewMembers(std::vector<CrewMember> crewVector)
 void Project::setPhyicalMediums(std::vector<PhysicalMedium*> mediumVector)
 {
 	this->physcicalMeduims = mediumVector;
+}
+
+void Project::setUnreleased(bool unreleased)
+{
+	this->unreleased = unreleased;
+}
+
+void Project::setPlayingInCinima(bool playing)
+{
+	this->playingInCinima = playing;
 }
 
 std::string Project::save()
