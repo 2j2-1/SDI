@@ -71,6 +71,7 @@ std::vector<Project> Catalogue::searchByActor(std::vector<Project> projects, std
 
 std::vector<int> Catalogue::sortByText(std::vector<std::string> text, std::vector<int> IDs)
 {
+	// Creates two vectors or pairs in order to compare the unsorted list to the sorted list
 	std::vector<std::pair<int, std::string>> oldIndexes;
 	std::vector<std::pair<int, std::string>> newIndexes;
 
@@ -88,6 +89,7 @@ std::vector<int> Catalogue::sortByText(std::vector<std::string> text, std::vecto
 		newIndexes.push_back(std::make_pair(i, text[i]));
 	}
 
+	// Can now use while loop to compare the elements of text, and thus organise the indexes
 	int count = 0;
 	std::vector<int> ret;
 	while (count != newIndexes.size()){
@@ -133,6 +135,7 @@ std::vector<Project> Catalogue::sortByTitle(std::vector<Project> projects)
 
 std::vector<int> Catalogue::sortByDate(std::vector<std::string> dates, std::vector<int> IDs)
 {
+	// Follows the same logic as sortByText()
 	std::vector<std::pair<int, std::string>> oldIndexes;
 	std::vector<std::pair<int, std::string>> newIndexes;
 
