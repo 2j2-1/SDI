@@ -1,25 +1,24 @@
-Dumbo 2
-Dimbo squal
-2019
-9
+Dumbo
+Dumbo is a 2019 American fantasy adventure film directed by Tim Burton
+20190329
+112
 false
 true
 0
-k1
-k2
-k3
+Disney
+Animal
+Kids
 ,
-n1
-r3
-n2
-r2
+Dumbo
+Actor
+Dumbos mum
+Actor
 ,
-f1
-f2
-f3
+Circus tent
+Field
+US
 ,
-e1
-e2
-e
-
+Family
+Comedy
+Fantasy
 ,
