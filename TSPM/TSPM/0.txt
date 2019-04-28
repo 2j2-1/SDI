@@ -1,0 +1,25 @@
+Dumbo 2
+Dimbo squal
+2019
+9
+false
+true
+0
+k1
+k2
+k3
+,
+n1
+r3
+n2
+r2
+,
+f1
+f2
+f3
+,
+e1
+e2
+e
+
+,

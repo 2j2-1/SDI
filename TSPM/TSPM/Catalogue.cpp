@@ -230,6 +230,8 @@ void Catalogue::add(Project p)
 	{
 		projects.insert(projects.begin() + p.getProjectID(), p);
 	}
+
+	updateDirectories();
 }
 
 
