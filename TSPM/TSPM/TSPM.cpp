@@ -244,6 +244,10 @@ int update() {
 		temp.pop_back();
 		para.push_back(temp);
 	}
+	if (selectedProject.getPlayingInCinima()) {
+		words.push_back("Box Office Sales");
+		para.push_back(std::to_string(selectedProject.getWeeklySales()));
+	}
 		
 
 	while(!GetAsyncKeyState(VK_ESCAPE)) {
@@ -293,7 +297,7 @@ int update() {
 					for (int i = 0; i < temp.split(para.at(9), ',').size(); i += 2) {
 						temp.addCrewMember(temp.split(para.at(9), ',').at(i), temp.split(para.at(9), ',').at(i + 1));
 					}
-
+					temp.setWeeklySales(std::stoi(para.at(10)));
 					c1.deleteProject(selectedProject.getProjectID());
 					c1.add(temp);
 					selectedProject = temp;
@@ -317,7 +321,7 @@ int create() {
 	int yoff = 3;
 	int dataoff = 20;
 	std::vector<std::string> para;
-	std::vector<std::string> words = {"Title","Summary","Release Date","Run Time","Playing In Cinima","unreleased","genres","filmingLocations","keywords","crewMembers" };
+	std::vector<std::string> words = {"Title","Summary","Release Date","Run Time","Playing In Cinima","unreleased","genres","filmingLocations","keywords","crewMembers","Box Office Sales" };
 	while(!GetAsyncKeyState(VK_ESCAPE)) {
 		game.stringBuffer += game.input();
 		yoff = 3;
@@ -331,8 +335,6 @@ int create() {
 				game.print(words.at(i) + ": ", xoff, yoff);
 			yoff++;
 		}
-		game.print("physcicalMeduims: ", xoff, yoff);
-		yoff++;
 		if (GetAsyncKeyState(VK_RETURN) && para.size() <= words.size()) {
 			para.push_back(game.stringBuffer);
 			if (para.size() == words.size()) {
@@ -353,6 +355,9 @@ int create() {
 					}
 					for (int i = 0; i < temp.split(para.at(9), ',').size(); i += 2) {
 						temp.addCrewMember(temp.split(para.at(9), ',').at(i), temp.split(para.at(9), ',').at(i + 1));
+					}
+					if (a) {
+						temp.setWeeklySales(std::stoi(para.at(10)));
 					}
 
 
