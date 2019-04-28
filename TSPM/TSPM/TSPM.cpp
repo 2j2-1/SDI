@@ -331,7 +331,7 @@ int update() {
 				game.print(words.at(i) + ": ", xoff, yoff);
 			yoff++;
 		}
-		game.print("Physcial Meduims: ", xoff, yoff);
+		game.print("Physical Mediums: ", xoff, yoff);
 		yoff++;
 		for (int i = 0; i < selectedProject.physcicalMeduims.size(); i++){
 			game.print(selectedProject.physcicalMeduims.at(i)->type, xoff, yoff);
@@ -514,7 +514,7 @@ int view() {
 				yoff++;
 			}
 
-			game.print("Physcical Meduims: ", xoff, yoff);
+			game.print("Physical Mediums: ", xoff, yoff);
 			for (int i = 0; i < selectedProject.physcicalMeduims.size(); i++) {
 				game.print(selectedProject.physcicalMeduims.at(i)->type, xoff + dataoff, yoff);
 				yoff++;
