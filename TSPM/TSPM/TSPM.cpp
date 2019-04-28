@@ -279,7 +279,7 @@ int update() {
 			
 			if (data == words.size()) {
 				try {
-					Project temp(selectedProject.getProjectID(), para.at(0), para.at(1), para.at(2), std::stoi(para.at(3)), para.at(4)=="true", para.at(4) == "true");
+					Project temp(selectedProject.getProjectID(), para.at(0), para.at(1), para.at(2), std::stoi(para.at(3)), (para.at(4)=="true"|| para.at(4) == "1"), (para.at(5) == "true" || para.at(5) == "1"));
 					for (int i = 0; i < temp.split(para.at(6), ',').size(); i++) {
 						temp.addGenre(temp.split(para.at(6), ',').at(i));
 					}
@@ -295,6 +295,7 @@ int update() {
 					if (para.size()==11)
 						temp.setWeeklySales(std::stoi(para.at(10)));
 					c1.deleteProject(selectedProject.getProjectID());
+					c1.deleteProjectFile(selectedProject.getProjectID());
 					c1.add(temp);
 					selectedProject = temp;
 					temp.save();
@@ -335,7 +336,7 @@ int create() {
 			para.push_back(game.stringBuffer);
 			if (para.size() == words.size()) {
 				try {
-					Project temp(c1.projects.size(), para.at(0), para.at(1), para.at(2), std::stoi(para.at(3)), para.at(4) == "true", para.at(4) == "true");
+					Project temp(c1.projects.size(), para.at(0), para.at(1), para.at(2), std::stoi(para.at(3)), (para.at(4) == "true" || para.at(4) == "1"), (para.at(5) == "true" || para.at(5) == "1"));
 					for (int i = 0; i < temp.split(para.at(6), ',').size(); i++) {
 						temp.addGenre(temp.split(para.at(6), ',').at(i));
 					}
@@ -488,7 +489,7 @@ int view() {
 					game.print(((DVD*)selectedProject.physcicalMeduims.at(mode))->SubtitleLanguages.at(i), xoff + dataoff, yoff);
 					yoff++;
 				}
-				game.print("AudioTracksDubs: ", xoff, yoff);
+				game.print("Bonus Features: ", xoff, yoff);
 				for (int i = 0; i < ((DVD*)selectedProject.physcicalMeduims.at(mode))->bonusFeatures.size(); i++) {
 					game.print(((DVD*)selectedProject.physcicalMeduims.at(mode))->bonusFeatures.at(i), xoff + dataoff, yoff);
 					yoff++;

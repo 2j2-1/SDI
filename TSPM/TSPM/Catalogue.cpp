@@ -342,7 +342,7 @@ Project Catalogue::parse(std::string filePath, int projectID)
 
 	int weeklySales = std::stoi(line);
 
-	Project p(projectID, title, summary,  releaseDate,  runtime,  playingInCinimam,  unreleased);
+	Project p(projectID, title, summary,  releaseDate,  runtime,  playingInCinimam,  unreleased, weeklySales);
 
 
 
