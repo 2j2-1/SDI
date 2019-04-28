@@ -607,6 +607,7 @@ int main(){
 			screen = menu();
 			game.print("Invalid Choice Please Try Again",3,13);
 		}
+		Sleep(100);
 		game.draw();
 	}
 	
