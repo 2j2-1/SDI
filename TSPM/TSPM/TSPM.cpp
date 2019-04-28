@@ -232,8 +232,6 @@ int addPhysicalMedia(){
 				game.print(words.at(i) + ": ", xoff, yoff);
 			yoff++;
 		}
-		game.print("physcicalMeduims: ", xoff, yoff);
-		yoff++;
 		if (GetAsyncKeyState(VK_RETURN) && para.size() <= words.size()) {
 			para.push_back(game.stringBuffer);
 			if (para.size() == words.size()) {
