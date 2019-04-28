@@ -25,6 +25,7 @@ void printMetaData(Project current) {
 
 void printSearch(std::vector<std::string> projects, int offsetY, int selected, int projectOffset) {
 	game.print("Search Term: " + game.stringBuffer, 3, offsetY - 1);
+	std::string temp;
 	if (projects.size() > 0) {
 		game.drawColor(3, offsetY + 2 + selected, projects.at(selected + projectOffset).size(), 240);
 		for (int i = 0; i < min(20, projects.size()); i++) {
@@ -41,9 +42,22 @@ int search(int searchMode) {
 	int projectOffset = 0;
 	std::vector<Project> allProjects = c1.sortByTitle(c1.projects);
 	std::vector<std::string> projects;
+	std::string temp;
 	int metaDataSize;
 	for (int i = 0; i < allProjects.size(); i++){
-		projects.push_back(allProjects[i].getTitle());
+		temp.clear();
+		if (allProjects.at(i).getPhyicalMediums().size() > 0) {
+			temp += allProjects[i].getTitle() + " is Availible on ";
+			for (int j = 0; j < allProjects.at(i).getPhyicalMediums().size() - 1; j++)
+			{
+				temp += allProjects.at(i).getPhyicalMediums().at(j)->type + " and ";
+			}
+			temp += allProjects.at(i).getPhyicalMediums().at(allProjects.at(i).getPhyicalMediums().size() - 1)->type;
+			
+		}
+		else
+			temp += allProjects[i].getTitle();
+		projects.push_back(temp);
 	}
 	while (!GetAsyncKeyState(VK_ESCAPE)){
 		game.blank_screen();
@@ -95,7 +109,19 @@ int search(int searchMode) {
 			allProjects = reversed;
 			
 			for (int i = 0; i < allProjects.size(); i++) {
-				projects.push_back(allProjects[i].getTitle());
+				temp.clear();
+				if (allProjects.at(i).getPhyicalMediums().size() > 0) {
+					temp += allProjects[i].getTitle() + " is Availible on ";
+					for (int j = 0; j < allProjects.at(i).getPhyicalMediums().size() - 1; j++)
+					{
+						temp += allProjects.at(i).getPhyicalMediums().at(j)->type + " and ";
+					}
+					temp += allProjects.at(i).getPhyicalMediums().at(allProjects.at(i).getPhyicalMediums().size() - 1)->type;
+
+				}
+				else
+					temp += allProjects[i].getTitle();
+				projects.push_back(temp);
 			}
 		}
 		if (GetAsyncKeyState(VK_TAB)) {
@@ -105,7 +131,19 @@ int search(int searchMode) {
 				allProjects = c1.sortByTitle(c1.searchByProjectTitle(c1.projects, game.stringBuffer));
 			projects.clear();
 			for (int i = 0; i < allProjects.size(); i++) {
-				projects.push_back(allProjects[i].getTitle());
+				temp.clear();
+				if (allProjects.at(i).getPhyicalMediums().size() > 0) {
+					temp += allProjects[i].getTitle() + " is Availible on ";
+					for (int j = 0; j < allProjects.at(i).getPhyicalMediums().size() - 1; j++)
+					{
+						temp += allProjects.at(i).getPhyicalMediums().at(j)->type + " and ";
+					}
+					temp += allProjects.at(i).getPhyicalMediums().at(allProjects.at(i).getPhyicalMediums().size() - 1)->type;
+
+				}
+				else
+					temp += allProjects[i].getTitle();
+				projects.push_back(temp);
 			}
 		}
 		if (GetAsyncKeyState(VK_RETURN)) {
