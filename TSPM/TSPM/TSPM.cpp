@@ -90,7 +90,7 @@ int search(int searchMode) {
 		}
 		if (GetAsyncKeyState(VK_RIGHT)) {
 			Stack reverse;
-			if (searchMode = 0)
+			if (searchMode == 0)
 				allProjects = c1.sortByTitle(c1.searchByActor(c1.projects, game.stringBuffer));
 			else
 				allProjects = c1.sortByTitle(c1.searchByProjectTitle(c1.projects, game.stringBuffer));
@@ -125,7 +125,7 @@ int search(int searchMode) {
 			}
 		}
 		if (GetAsyncKeyState(VK_TAB)) {
-			if (searchMode=0)
+			if (searchMode==0)
 				allProjects = c1.sortByTitle(c1.searchByActor(c1.projects, game.stringBuffer));
 			else
 				allProjects = c1.sortByTitle(c1.searchByProjectTitle(c1.projects, game.stringBuffer));
@@ -559,7 +559,7 @@ void logWeeklySales(Project p)
 	std::ofstream outfile;
 
 	outfile.open(getCurrentDate() + ".txt", std::ios_base::app);
-	outfile << p.getTitle() << "'s weekly ticket sales: " << p.getWeeklySales();
+	outfile << p.getTitle() << "'s weekly ticket sales: " << p.getWeeklySales() << "\n";
 	outfile.close();
 }
 

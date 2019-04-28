@@ -2,9 +2,9 @@ Dumbo
 Dumbo is a 2019 American fantasy adventure film directed by Tim Burton
 20190329
 112
+true
 false
-false
-0
+109
 Disney
 Animal
 Kids
@@ -12,13 +12,27 @@ Kids
 Dumbo
 Actor
 Dumbos mum
-Acto
+Actor
 ,
 Circus tent
 Field
-US
+Us
 ,
 Family
 Comedy
 Fantasy
 ,
+3
+VHS
+Dumbo At Home
+MP4
+4 3
+Plastic
+English
+French
+,
+English
+German
+,
+Chapters 1 to 30
+OutTakes
