@@ -114,7 +114,6 @@ int search(int searchMode) {
 			break;
 		}
 		game.draw();
-		Sleep(50);
 		
 	}
 	return -1;
@@ -373,7 +372,6 @@ int create() {
 		}
 		
 		game.draw();
-		Sleep(150);
 	}
 	return -1;
 }
@@ -607,7 +605,6 @@ int main(){
 			screen = menu();
 			game.print("Invalid Choice Please Try Again",3,13);
 		}
-		Sleep(100);
 		game.draw();
 	}
 	

@@ -42,6 +42,7 @@ void cGame::draw() {
 	border(2);
 	DWORD written;
 	WriteConsoleOutputCharacterA(hConsole, screen, screenHeight*screenWidth, { 0,0 }, &written);
+	Sleep(150);
 }
 
 void cGame::setup() {
