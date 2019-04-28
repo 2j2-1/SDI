@@ -1,4 +1,4 @@
-Friends 
+Friends
 A Group of Friends living close by in New York.
 19940922
 5100
@@ -31,8 +31,8 @@ Comedy
 Romance
 ,
 1
-Combo Box Set Disc 1
-Friends Season 1
+Combo Box Set
+Friends Season 1 Disc 1
 MP4
 4 3
 Plastic
@@ -49,8 +49,8 @@ Spanish
 Episodes 1 to 11
 ,
 2
-Combo Box Set Disc 2
-Friends Season 1
+Combo Box Set
+Friends Season 1 Disc 2
 MP4
 4 3
 Plastic
@@ -67,8 +67,8 @@ Spanish
 Episodes 12 to 24
 ,
 3
-Combo Box Set Disc 3
-Friends Season 2
+Combo Box Set
+Friends Season 2 Disc 1
 MP4
 4 3
 Plastic

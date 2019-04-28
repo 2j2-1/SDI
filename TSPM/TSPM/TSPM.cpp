@@ -40,6 +40,8 @@ int search(int searchMode) {
 	int offsetX = 20;
 	int selected = 0;
 	int projectOffset = 0;
+	bool combo = false;
+	bool dual = false;
 	std::vector<Project> allProjects = c1.sortByTitle(c1.projects);
 	std::vector<std::string> projects;
 	std::string temp;
@@ -47,13 +49,21 @@ int search(int searchMode) {
 	for (int i = 0; i < allProjects.size(); i++){
 		temp.clear();
 		if (allProjects.at(i).getPhyicalMediums().size() > 0) {
-			temp += allProjects[i].getTitle() + " is Availible on ";
-			for (int j = 0; j < allProjects.at(i).getPhyicalMediums().size() - 1; j++)
-			{
-				temp += allProjects.at(i).getPhyicalMediums().at(j)->type + " and ";
+			combo = allProjects.at(i).getPhyicalMediums().at(0)->type.find("Combo") != std::string::npos;
+			dual = allProjects.at(i).getPhyicalMediums().at(0)->type.find("Dual") != std::string::npos;
+			temp += allProjects[i].getTitle() + " is Available on " + allProjects.at(i).getPhyicalMediums().at(0)->type;
+			for (int j = 1; j < allProjects.at(i).getPhyicalMediums().size() - 1; j++){
+				if (allProjects.at(i).getPhyicalMediums().at(j)->type.find("Combo") != std::string::npos && !combo) {
+					temp += " and " + allProjects.at(i).getPhyicalMediums().at(j)->type;
+					combo = true;
+				}
+				else if (allProjects.at(i).getPhyicalMediums().at(j)->type.find("Dual") != std::string::npos && !dual) {
+					temp += " and " + allProjects.at(i).getPhyicalMediums().at(j)->type;
+					dual = true;
+				}
+				else if (allProjects.at(i).getPhyicalMediums().at(j)->type.find("Combo") == std::string::npos && allProjects.at(i).getPhyicalMediums().at(j)->type.find("Dual") == std::string::npos)
+					temp += " and " + allProjects.at(i).getPhyicalMediums().at(j)->type;
 			}
-			temp += allProjects.at(i).getPhyicalMediums().at(allProjects.at(i).getPhyicalMediums().size() - 1)->type;
-			
 		}
 		else
 			temp += allProjects[i].getTitle();
@@ -111,13 +121,21 @@ int search(int searchMode) {
 			for (int i = 0; i < allProjects.size(); i++) {
 				temp.clear();
 				if (allProjects.at(i).getPhyicalMediums().size() > 0) {
-					temp += allProjects[i].getTitle() + " is Availible on ";
-					for (int j = 0; j < allProjects.at(i).getPhyicalMediums().size() - 1; j++)
-					{
-						temp += allProjects.at(i).getPhyicalMediums().at(j)->type + " and ";
+					combo = allProjects.at(i).getPhyicalMediums().at(0)->type.find("Combo") != std::string::npos;
+					dual = allProjects.at(i).getPhyicalMediums().at(0)->type.find("Dual") != std::string::npos;
+					temp += allProjects[i].getTitle() + " is Available on " + allProjects.at(i).getPhyicalMediums().at(0)->type;
+					for (int j = 1; j < allProjects.at(i).getPhyicalMediums().size() - 1; j++) {
+						if (allProjects.at(i).getPhyicalMediums().at(j)->type.find("Combo") != std::string::npos && !combo) {
+							temp += " and " + allProjects.at(i).getPhyicalMediums().at(j)->type;
+							combo = true;
+						}
+						else if (allProjects.at(i).getPhyicalMediums().at(j)->type.find("Dual") != std::string::npos && !dual) {
+							temp += " and " + allProjects.at(i).getPhyicalMediums().at(j)->type;
+							dual = true;
+						}
+						else if (allProjects.at(i).getPhyicalMediums().at(j)->type.find("Combo") == std::string::npos && allProjects.at(i).getPhyicalMediums().at(j)->type.find("Dual") == std::string::npos)
+							temp += " and " + allProjects.at(i).getPhyicalMediums().at(j)->type;
 					}
-					temp += allProjects.at(i).getPhyicalMediums().at(allProjects.at(i).getPhyicalMediums().size() - 1)->type;
-
 				}
 				else
 					temp += allProjects[i].getTitle();
@@ -133,13 +151,21 @@ int search(int searchMode) {
 			for (int i = 0; i < allProjects.size(); i++) {
 				temp.clear();
 				if (allProjects.at(i).getPhyicalMediums().size() > 0) {
-					temp += allProjects[i].getTitle() + " is Availible on ";
-					for (int j = 0; j < allProjects.at(i).getPhyicalMediums().size() - 1; j++)
-					{
-						temp += allProjects.at(i).getPhyicalMediums().at(j)->type + " and ";
+					combo = allProjects.at(i).getPhyicalMediums().at(0)->type.find("Combo") != std::string::npos;
+					dual = allProjects.at(i).getPhyicalMediums().at(0)->type.find("Dual") != std::string::npos;
+					temp += allProjects[i].getTitle() + " is Available on " + allProjects.at(i).getPhyicalMediums().at(0)->type;
+					for (int j = 1; j < allProjects.at(i).getPhyicalMediums().size() - 1; j++) {
+						if (allProjects.at(i).getPhyicalMediums().at(j)->type.find("Combo") != std::string::npos && !combo) {
+							temp += " and " + allProjects.at(i).getPhyicalMediums().at(j)->type;
+							combo = true;
+						}
+						else if (allProjects.at(i).getPhyicalMediums().at(j)->type.find("Dual") != std::string::npos && !dual) {
+							temp += " and " + allProjects.at(i).getPhyicalMediums().at(j)->type;
+							dual = true;
+						}
+						else if (allProjects.at(i).getPhyicalMediums().at(j)->type.find("Combo") == std::string::npos && allProjects.at(i).getPhyicalMediums().at(j)->type.find("Dual") == std::string::npos)
+							temp += " and " + allProjects.at(i).getPhyicalMediums().at(j)->type;
 					}
-					temp += allProjects.at(i).getPhyicalMediums().at(allProjects.at(i).getPhyicalMediums().size() - 1)->type;
-
 				}
 				else
 					temp += allProjects[i].getTitle();
