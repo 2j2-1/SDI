@@ -36,6 +36,8 @@ public:
 
 	void add(Project p);
 
+	void update(Project p);
+
 	std::vector<Project> projects;
 
 	void read();
