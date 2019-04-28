@@ -565,8 +565,9 @@ int main(){
 		case 4:
 			screen = -1;
 			if (selectedProject.getProjectID() != -1) {
-				c1.deleteProjectFile(selectedProject.getProjectID());
+				//c1.deleteProjectFile(selectedProject.getProjectID());
 				c1.deleteProject(selectedProject.getProjectID());
+				c1.updateDirectories();
 				selectedProject = Project();
 			}
 			game.stringBuffer.clear();
