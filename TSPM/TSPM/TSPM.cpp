@@ -105,7 +105,7 @@ int search(int searchMode) {
 		}
 		//uses the stack to reverse the displayed project
 		if (GetAsyncKeyState(VK_RIGHT)) {
-			Stack reverse;
+			Stack<Project> reverse;
 			if (searchMode == 0)
 				allProjects = c1.sortByTitle(c1.searchByActor(c1.projects, game.stringBuffer));
 			else
