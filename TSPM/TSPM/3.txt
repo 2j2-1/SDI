@@ -1,0 +1,86 @@
+Friends 
+A Group of Friends living close by in New York.
+19940922
+5100
+false
+false
+0
+Friends
+Real Life
+90s
+,
+Courteney Cox
+Actor
+David Crane
+Writer
+David Schwimmer
+Actor
+Jennifer Aniston
+Actor
+Lisa Kudrow
+Actor
+Matt LeBlanc
+Actor
+Matthew Perry
+Actor
+,
+New York
+Central Perk
+,
+Comedy
+Romance
+,
+1
+Combo Box Set Disc 1
+Friends Season 1
+MP4
+4 3
+Plastic
+English
+French
+Spanish
+,
+Russian
+German
+English
+French
+Spanish
+,
+Episodes 1 to 11
+,
+2
+Combo Box Set Disc 2
+Friends Season 1
+MP4
+4 3
+Plastic
+English
+French
+Spanish
+,
+Russian
+German
+English
+French
+Spanish
+,
+Episodes 12 to 24
+,
+3
+Combo Box Set Disc 3
+Friends Season 2
+MP4
+4 3
+Plastic
+English
+French
+Spanish
+,
+Russian
+German
+English
+French
+Spanish
+,
+Episodes 1 to 12
+,
