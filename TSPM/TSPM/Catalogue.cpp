@@ -110,7 +110,8 @@ std::vector<Project> Catalogue::sortByTitle(std::vector<Project> projects)
 {
 	std::vector<std::string> titles;
 	std::vector<int> indexes;
-	//
+	
+	//Constructs a vector of strings from the projects titles for the sort function
 	for (int i = 0; i < projects.size(); i++)
 	{
 		titles.push_back(projects[i].getTitle());
@@ -121,6 +122,7 @@ std::vector<Project> Catalogue::sortByTitle(std::vector<Project> projects)
 
 	std::vector<Project> ret;
 
+	//Constructs the sorted vector of projects
 	for (int i : newIndexes)
 	{
 		ret.push_back(projects[i]);
@@ -175,6 +177,7 @@ std::vector<Project> Catalogue::sortByDate(std::vector<Project> projects)
 {
 	std::vector<std::string> dates;
 	std::vector<int> indexes;
+	//Creates vector of date strings for the sort function
 	for (int i = 0; i < projects.size(); i++)
 	{
 		dates.push_back(projects[i].getReleaseDate());
@@ -185,6 +188,7 @@ std::vector<Project> Catalogue::sortByDate(std::vector<Project> projects)
 
 	std::vector<Project> ret;
 
+	//Constructs sorted vector of projects 
 	for (int i : newIndexes)
 	{
 		ret.push_back(projects[i]);
@@ -235,13 +239,19 @@ int Catalogue::partition(std::vector<std::string>& arr, int start, int end)
 
 void Catalogue::add(Project p)
 {
+	//Projects are added in order of project id so available IDs can be retrieved by viewing the project ID at the end of the vector
+
+	//If the current project should be the last elemement 
 	if (projects.size() == 0 || p.getProjectID() == projects.back().getProjectID() + 1)
+		//push the project the end of the vector
 	projects.push_back(p);
 	else
 	{
+		//inserts the project into the correct place using the projects id as an index
 		projects.insert(projects.begin() + p.getProjectID(), p);
 	}
 
+	//Updates directories file to include the new project
 	updateDirectories();
 }
 
@@ -255,25 +265,26 @@ void Catalogue::update(Project p)
 
 void Catalogue::read()
 {
+	//Opens directories file which contains the names of the files for all the saved projects
 	std::ifstream infile("directories.txt");
 
+	//Loops through each directory
 	std::string line;
 	while (std::getline(infile, line))
 	{
-
+		
 		std::ifstream f((line + ".txt").c_str());
-
+		//Checks that the file exsists
 		if (f.good())
 		{
 			f.close();
+			//Adds the project from the file
 			add(parse(line + ".txt", std::stoi(line)));
 		}
 		else
 		{
 			f.close();
 		}
-		
-		
 		
 	}
 
@@ -285,6 +296,8 @@ void Catalogue::write()
 {
 	std::ofstream f;
 	f.open("directories.txt");
+
+	//Writes all active projects to a file
 	for (Project p : projects)
 	{
 		p.save();
@@ -298,6 +311,7 @@ void Catalogue::updateDirectories()
 {
 	std::ofstream f;
 	f.open("directories.txt");
+	//Adds all active projects to directories list
 	for (Project p : projects)
 	{
 		f << std::to_string(p.getProjectID()) << "\n";
@@ -307,35 +321,38 @@ void Catalogue::updateDirectories()
 
 void Catalogue::deleteProject(int projectID)
 {
+	//Deletes the file of the project
 	deleteProjectFile(projectID);
 
+	//Removes project from the vector
 	projects.erase(projects.begin() + projectID);
 
+	//Updates the IDs of all active projects to fill the gap left by the deleted project
 	for (int i = projectID; i < projects.size(); i++)
 	{
 		projects[i].setProjectID(projects[i].getProjectID() - 1);
 		projects[i].save();
 	}
+
+	//Removes the final file as it will not get overwritten
 	deleteProjectFile(projects.size());
 }
 
 void Catalogue::deleteProjectFile(int projectID)
 {
+	//Deletes file for a project
 	remove((std::to_string(projectID) + ".txt").c_str());
 }
 
 Project Catalogue::parse(std::string filePath, int projectID)
 {
+	//Opens file containing project data
 	std::ifstream infile(filePath);
 
 	std::string line;
 
-	
+	//Stores attributes needed for contructor from the file 
 	std::getline(infile, line);
-
-	//int projectID = std::stoi(line);
-
-	//std::getline(infile, line);
 
 	std::string title = line;
 
@@ -363,11 +380,12 @@ Project Catalogue::parse(std::string filePath, int projectID)
 
 	int weeklySales = std::stoi(line);
 
+	//Constructs project from read data
 	Project p(projectID, title, summary,  releaseDate,  runtime,  playingInCinimam,  unreleased, weeklySales);
 
 
 
-
+	//Adds keywords for project
 	while (std::getline(infile, line))
 	{
 		if (line == ",")
@@ -378,6 +396,7 @@ Project Catalogue::parse(std::string filePath, int projectID)
 
 	}
 
+	//Adds crew for project
 	while (std::getline(infile, line))
 	{
 		if (line == ",")
@@ -393,6 +412,8 @@ Project Catalogue::parse(std::string filePath, int projectID)
 		p.addCrewMember(name, role);
 	}
 
+
+	//Adds locations for project
 	while (std::getline(infile, line))
 	{
 		if (line == ",")
@@ -403,6 +424,7 @@ Project Catalogue::parse(std::string filePath, int projectID)
 
 	}
 
+	//Adds genre for project
 	while (std::getline(infile, line))
 	{
 		if (line == ",")
@@ -412,6 +434,7 @@ Project Catalogue::parse(std::string filePath, int projectID)
 		p.addGenre(line);
 	}
 
+	//Adds metarials for project
 	while (std::getline(infile, line))
 	{
 		if (line == ",")
@@ -480,7 +503,7 @@ Project Catalogue::parse(std::string filePath, int projectID)
 	}
 
 
-
+	//Returns project
 	return p;
 }
 
