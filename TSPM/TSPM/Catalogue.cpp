@@ -15,10 +15,13 @@ Catalogue::~Catalogue()
 
 std::vector<int> Catalogue::searchByText(std::vector<std::string> text, std::string searchTerm)
 {
+	//Creates a vector to store the indexes of items which contain the search term
 	std::vector<int> indexes;
 
+	//Loops through each elements
 	for (int i = 0; i < text.size(); i++)
 	{
+		//If the current element contain the search term the index is added to the vector 
 		if (text[i].find(searchTerm) != std::string::npos)
 		{
 			indexes.push_back(i);
@@ -30,6 +33,7 @@ std::vector<int> Catalogue::searchByText(std::vector<std::string> text, std::str
 
 std::vector<Project> Catalogue::searchByProjectTitle(std::vector<Project> projects, std::string searchTerm)
 {
+	//Stores titles in a vector of strings to be used for the search
 	std::vector<std::string> titles;
 	for (int i = 0; i < projects.size(); i++)
 	{
@@ -40,17 +44,20 @@ std::vector<Project> Catalogue::searchByProjectTitle(std::vector<Project> projec
 
 	std::vector<Project> ret;
 
+	//Adds items which match the search term to a vector 
 	for (int i : indexes)
 	{
 		ret.push_back(projects[i]);
 	}
 
+	//Returns project
 	return ret;
 }
 
 std::vector<Project> Catalogue::searchByActor(std::vector<Project> projects, std::string actorName)
 {
 	std::vector<Project> ret;
+	//Finds Projects which contain the actor
 	for (Project p : projects)
 	{
 		if (p.containsCast(actorName, "actor"))
@@ -103,6 +110,7 @@ std::vector<Project> Catalogue::sortByTitle(std::vector<Project> projects)
 {
 	std::vector<std::string> titles;
 	std::vector<int> indexes;
+	//
 	for (int i = 0; i < projects.size(); i++)
 	{
 		titles.push_back(projects[i].getTitle());
@@ -205,11 +213,14 @@ void Catalogue::swap(std::string & x, std::string & y)
 
 int Catalogue::partition(std::vector<std::string>& arr, int start, int end)
 {
+	//Creates pivot in the centre of the partition
 	int pivot = start + ((end - start) / 2);
 	std::string pivotVal = arr[pivot];
+	
 	swap(arr[pivot], arr[end]);
 	int store = start;
 
+	//Places pivot in correct position
 	for (int i = start; i < end; i++) {
 		if (arr[i] < pivotVal) {
 			swap(arr[i], arr[store]);

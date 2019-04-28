@@ -6,8 +6,6 @@ DVD::DVD(int ID, std::string type, std::string title, std::string format, std::s
 	: PhysicalMedium(ID, type, title, format, frameAspect, packaging)
 {
 	
-
-
 }
 
 
@@ -19,6 +17,7 @@ std::string DVD::save()
 {
 	std::string data = PhysicalMedium::save();
 
+	//Adds the vector of audio track languages to the file a comma represents the end of the audio track languages in the file
 	for (std::string aTrack : AudioTracksDubs)
 	{
 		data += aTrack + "\n";
@@ -26,6 +25,7 @@ std::string DVD::save()
 
 	data += ",\n";
 
+	//Adds the vector of Subtitle languages to the file a comma represents the end of the Subtitle languages in the file
 	for (std::string sTrack : SubtitleLanguages)
 	{
 		data += sTrack + "\n";
@@ -33,6 +33,7 @@ std::string DVD::save()
 
 	data += ",\n";
 
+	//Adds the vector of bonus features to the file a comma represents the end of the features in the file
 	for (std::string feature : bonusFeatures)
 	{
 		data += feature + "\n";

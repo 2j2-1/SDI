@@ -600,6 +600,7 @@ int main(){
 		game.draw_pixel(0, 0, char(screen+48));
 		game.stringBuffer += game.input();
 		
+		//Launches menu option that the user selects
 		switch (screen) {
 		case -1:
 			screen = menu();
