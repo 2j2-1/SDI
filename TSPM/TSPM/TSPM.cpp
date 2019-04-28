@@ -296,7 +296,7 @@ int update() {
 					for (int i = 0; i < temp.split(para.at(9), ',').size(); i += 2) {
 						temp.addCrewMember(temp.split(para.at(9), ',').at(i), temp.split(para.at(9), ',').at(i + 1));
 					}
-					if (para.size()==10)
+					if (para.size()==11)
 						temp.setWeeklySales(std::stoi(para.at(10)));
 					c1.deleteProject(selectedProject.getProjectID());
 					c1.add(temp);
