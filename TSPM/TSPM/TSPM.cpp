@@ -72,8 +72,32 @@ int search(int searchMode) {
 				if (projectOffset < 0)
 					projectOffset = 0;
 			}
+			
 		}
-		
+		if (GetAsyncKeyState(VK_RIGHT)) {
+			Stack reverse;
+			if (searchMode = 0)
+				allProjects = c1.sortByTitle(c1.searchByActor(c1.projects, game.stringBuffer));
+			else
+				allProjects = c1.sortByTitle(c1.searchByProjectTitle(c1.projects, game.stringBuffer));
+			projects.clear();
+
+			for (Project proj : allProjects)
+			{
+				reverse.push(proj);
+			}
+
+			std::vector<Project> reversed;
+			while (!reverse.isEmpty())
+			{
+				reversed.push_back(reverse.pop());
+			}
+			allProjects = reversed;
+			
+			for (int i = 0; i < allProjects.size(); i++) {
+				projects.push_back(allProjects[i].getTitle());
+			}
+		}
 		if (GetAsyncKeyState(VK_TAB)) {
 			if (searchMode=0)
 				allProjects = c1.sortByTitle(c1.searchByActor(c1.projects, game.stringBuffer));
@@ -561,7 +585,7 @@ int main(){
 			game.stringBuffer.clear();
 			break;
 		case 7:
-			if (selectedProject.getProjectID() != -1) {
+			if (selectedProject.getProjectID() != -1 && !selectedProject.getPlayingInCinima() && !selectedProject.getUnreleased()) {
 				addPhysicalMedia();
 			}
 			game.stringBuffer.clear();
