@@ -13,7 +13,7 @@ class Project
 public:
 	Project();
 
-	Project(int projectID, std::string title, std::string summary, std::string releaseDate, unsigned int runtime, bool playingInCinimam, bool unreleased, int weeklySales = 0);
+	Project(int projectID, std::string title, std::string summary, std::string releaseDate, unsigned int runtime, bool playingInCinima, bool unreleased, int weeklySales = 0);
 
 	~Project();
 

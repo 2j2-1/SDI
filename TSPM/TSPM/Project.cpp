@@ -4,7 +4,7 @@
 #include <fstream>
 #include "Catalogue.h"
 
-Project::Project(int projectID, std::string title, std::string summary, std::string releaseDate, unsigned int runtime, bool playingInCinimam, bool unreleased, int weeklySales)
+Project::Project(int projectID, std::string title, std::string summary, std::string releaseDate, unsigned int runtime, bool playingInCinima, bool unreleased, int weeklySales)
 {
 	setProjectID(projectID);
 
