@@ -237,6 +237,7 @@ void Catalogue::add(Project p)
 void Catalogue::update(Project p)
 {
 	projects[p.getProjectID()] = p;
+	p.save();
 }
 
 
