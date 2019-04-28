@@ -23,6 +23,7 @@ void printMetaData(Project current) {
 
 }
 
+//this displays the search string and all projects meeting that string, it also highlights the area.
 void printSearch(std::vector<std::string> projects, int offsetY, int selected, int projectOffset) {
 	game.print("Search Term: " + game.stringBuffer, 3, offsetY - 1);
 	std::string temp;
@@ -35,6 +36,8 @@ void printSearch(std::vector<std::string> projects, int offsetY, int selected, i
 			game.print("More Below...", 3, 27);
 	}
 }
+
+//search is used to display all projects until they are narrowed down by the user
 int search(int searchMode) {
 	int offsetY = 4;
 	int offsetX = 20;
@@ -46,6 +49,7 @@ int search(int searchMode) {
 	std::vector<std::string> projects;
 	std::string temp;
 	int metaDataSize;
+	// this for loop stops displaying if multiple entries of the same physical material is present 
 	for (int i = 0; i < allProjects.size(); i++){
 		temp.clear();
 		if (allProjects.at(i).getPhyicalMediums().size() > 0) {
@@ -82,7 +86,8 @@ int search(int searchMode) {
 		//printSearch(projects, offsetY, selected, projectOffset);
 
 		if (GetAsyncKeyState(VK_DOWN)) {
-			selected++;
+			if (selected < projects.size())
+				selected++;
 			if (selected > min(19, projects.size() - 1)) {
 				selected = min(19, projects.size() - 1);
 				projectOffset++;
@@ -98,6 +103,7 @@ int search(int searchMode) {
 			}
 			
 		}
+		//uses the stack to reverse the displayed project
 		if (GetAsyncKeyState(VK_RIGHT)) {
 			Stack<Project> reverse;
 			if (searchMode == 0)
@@ -213,6 +219,7 @@ int menu() {
 	return -1;
 }
 
+//Since physical media is alwasys in the same format a static structure can be used to set them
 int addPhysicalMedia(){
 	int xoff = 3;
 	int yoff = 3;
@@ -232,8 +239,6 @@ int addPhysicalMedia(){
 				game.print(words.at(i) + ": ", xoff, yoff);
 			yoff++;
 		}
-		game.print("physcicalMeduims: ", xoff, yoff);
-		yoff++;
 		if (GetAsyncKeyState(VK_RETURN) && para.size() <= words.size()) {
 			para.push_back(game.stringBuffer);
 			if (para.size() == words.size()) {
@@ -273,7 +278,7 @@ int update() {
 	int dataoff = 20;
 	int data = 0;
 	std::vector<std::string> para = { selectedProject.getTitle(), selectedProject.getSummary(), selectedProject.getReleaseDate(), std::to_string(selectedProject.getRunTime()),std::to_string(selectedProject.getPlayingInCinima()),std::to_string(selectedProject.getUnreleased())};
-	std::vector<std::string> words = { "Title","Summary","Release Date","Run Time","Playing In Cinima","unreleased","genres","filmingLocations","keywords","crewMembers" };
+	std::vector<std::string> words = { "Title","Summary","Release Date","Run Time","Playing In Cinema","Unreleased","Genres","Filming Locations","Keywords","Crew Members" };
 	game.stringBuffer = para.at(data);
 	std::string temp;
 	for (int i = 0; i < selectedProject.genres.size(); i++) {
@@ -381,7 +386,7 @@ int create() {
 	int yoff = 3;
 	int dataoff = 20;
 	std::vector<std::string> para;
-	std::vector<std::string> words = {"Title","Summary","Release Date","Run Time","Playing In Cinima","unreleased","genres","filmingLocations","keywords","crewMembers","Box Office Sales" };
+	std::vector<std::string> words = {"Title","Summary","Release Date","Run Time","Playing In Cinema","Unreleased","Genres","Filming Locations","Keywords","Crew Members","Box Office Sales" };
 	while(!GetAsyncKeyState(VK_ESCAPE)) {
 		game.stringBuffer += game.input();
 		yoff = 3;
@@ -467,49 +472,49 @@ int view() {
 			game.print(std::to_string(selectedProject.getRunTime()), xoff + dataoff, yoff);
 			yoff++;
 
-			game.print("Playing In Cinima: ", xoff, yoff);
+			game.print("Playing In Cinema: ", xoff, yoff);
 			if (selectedProject.getPlayingInCinima())
 				game.print("True", xoff + dataoff, yoff);
 			else
 				game.print("False", xoff + dataoff, yoff);
 			yoff++;
 
-			game.print("unreleased: ", xoff, yoff);
+			game.print("Unreleased: ", xoff, yoff);
 			if (selectedProject.getUnreleased())
 				game.print("True", xoff + dataoff, yoff);
 			else
 				game.print("False", xoff + dataoff, yoff);
 			yoff++;
 
-			game.print("weeklySales: ", xoff, yoff);
+			game.print("Weekly Sales: ", xoff, yoff);
 			game.print(std::to_string(selectedProject.getWeeklySales()), xoff + dataoff, yoff);
 			yoff++;
 
-			game.print("genres: ", xoff, yoff);
+			game.print("Genres: ", xoff, yoff);
 			for (int i = 0; i < selectedProject.genres.size(); i++) {
 				game.print(selectedProject.genres.at(i), xoff + dataoff, yoff);
 				yoff++;
 			}
 
-			game.print("filmingLocations: ", xoff, yoff);
+			game.print("Filming Locations: ", xoff, yoff);
 			for (int i = 0; i < selectedProject.filmingLocations.size(); i++) {
 				game.print(selectedProject.filmingLocations.at(i), xoff + dataoff, yoff);
 				yoff++;
 			}
 
-			game.print("keywords: ", xoff, yoff);
+			game.print("Keywords: ", xoff, yoff);
 			for (int i = 0; i < selectedProject.keywords.size(); i++) {
 				game.print(selectedProject.keywords.at(i), xoff + dataoff, yoff);
 				yoff++;
 			}
 
-			game.print("crewMembers: ", xoff, yoff);
+			game.print("Crew Members: ", xoff, yoff);
 			for (int i = 0; i < selectedProject.crewMembers.size(); i++) {
 				game.print(selectedProject.crewMembers.at(i).role + " - " + selectedProject.crewMembers.at(i).name, xoff + dataoff, yoff);
 				yoff++;
 			}
 
-			game.print("physcicalMeduims: ", xoff, yoff);
+			game.print("Physcical Meduims: ", xoff, yoff);
 			for (int i = 0; i < selectedProject.physcicalMeduims.size(); i++) {
 				game.print(selectedProject.physcicalMeduims.at(i)->type, xoff + dataoff, yoff);
 				yoff++;
@@ -528,32 +533,32 @@ int view() {
 			game.print("format: ", xoff, yoff);
 			game.print(selectedProject.physcicalMeduims.at(mode)->format, xoff + dataoff, yoff);
 			yoff++;
-			game.print("frameAspect: ", xoff, yoff);
+			game.print("Frame Aspect: ", xoff, yoff);
 			game.print(selectedProject.physcicalMeduims.at(mode)->frameAspect, xoff + dataoff, yoff);
 			yoff++;
-			game.print("packaging: ", xoff, yoff);
+			game.print("Packaging: ", xoff, yoff);
 			game.print(selectedProject.physcicalMeduims.at(mode)->packaging, xoff + dataoff, yoff);
 			yoff++;
 			if (selectedProject.physcicalMeduims.at(mode)->type == "VHS") {
-				game.print("AudioTrackLanguage: ", xoff, yoff);
+				game.print("Audio Track Language: ", xoff, yoff);
 				game.print(((VHS*)selectedProject.physcicalMeduims.at(mode))->AudioTrackLanguage, xoff + dataoff, yoff);
 				yoff++;
-				game.print("subtitlesLanguage: ", xoff, yoff);
+				game.print("Subtitles Language: ", xoff, yoff);
 				game.print(((VHS*)selectedProject.physcicalMeduims.at(mode))->subtitlesLanguage, xoff + dataoff, yoff);
 				yoff++;
 			}
 			else {
-				game.print("AudioTracksDubs: ", xoff, yoff);
+				game.print("Audio Tracks: ", xoff, yoff);
 				for (int i = 0; i < ((DVD*)selectedProject.physcicalMeduims.at(mode))->AudioTracksDubs.size(); i++) {
 					game.print(((DVD*)selectedProject.physcicalMeduims.at(mode))->AudioTracksDubs.at(i), xoff + dataoff, yoff);
 					yoff++;
 				}
-				game.print("SubtitleLanguages: ", xoff, yoff);
+				game.print("Subtitle Languages: ", xoff, yoff);
 				for (int i = 0; i < ((DVD*)selectedProject.physcicalMeduims.at(mode))->SubtitleLanguages.size(); i++) {
 					game.print(((DVD*)selectedProject.physcicalMeduims.at(mode))->SubtitleLanguages.at(i), xoff + dataoff, yoff);
 					yoff++;
 				}
-				game.print("Bonus Features: ", xoff, yoff);
+				game.print("Contents: ", xoff, yoff);
 				for (int i = 0; i < ((DVD*)selectedProject.physcicalMeduims.at(mode))->bonusFeatures.size(); i++) {
 					game.print(((DVD*)selectedProject.physcicalMeduims.at(mode))->bonusFeatures.at(i), xoff + dataoff, yoff);
 					yoff++;
