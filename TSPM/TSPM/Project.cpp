@@ -103,7 +103,7 @@ void Project::addCrewMember(std::string name, std::string role)
 
 	for (int i = 0; i < crewMembers.size(); i++)
 	{
-		if (crewMembers[i].name > name && !added)
+		if (crewMembers[i].name >= name && !added)
 		{
 			temp.push_back({ name, role });
 			added = true;
