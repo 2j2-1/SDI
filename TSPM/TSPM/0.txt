@@ -2,9 +2,9 @@ Dumbo
 Dumbo is a 2019 American fantasy adventure film directed by Tim Burton
 20190329
 112
-false
 true
-0
+true
+100
 Disney
 Animal
 Kids

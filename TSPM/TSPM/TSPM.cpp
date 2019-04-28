@@ -279,11 +279,7 @@ int update() {
 			
 			if (data == words.size()) {
 				try {
-					bool a;
-					std::istringstream(para.at(4)) >> std::boolalpha >> a;
-					bool b;
-					std::istringstream(para.at(5)) >> std::boolalpha >> b;
-					Project temp(selectedProject.getProjectID(), para.at(0), para.at(1), para.at(2), std::stoi(para.at(3)), a, b);
+					Project temp(selectedProject.getProjectID(), para.at(0), para.at(1), para.at(2), std::stoi(para.at(3)), para.at(4)=="true", para.at(4) == "true");
 					for (int i = 0; i < temp.split(para.at(6), ',').size(); i++) {
 						temp.addGenre(temp.split(para.at(6), ',').at(i));
 					}
@@ -339,11 +335,7 @@ int create() {
 			para.push_back(game.stringBuffer);
 			if (para.size() == words.size()) {
 				try {
-					bool a;
-					std::istringstream(para.at(4)) >> std::boolalpha >> a;
-					bool b;
-					std::istringstream(para.at(5)) >> std::boolalpha >> b;
-					Project temp(c1.projects.size(), para.at(0), para.at(1), para.at(2), std::stoi(para.at(3)), a, b);
+					Project temp(c1.projects.size(), para.at(0), para.at(1), para.at(2), std::stoi(para.at(3)), para.at(4) == "true", para.at(4) == "true");
 					for (int i = 0; i < temp.split(para.at(6), ',').size(); i++) {
 						temp.addGenre(temp.split(para.at(6), ',').at(i));
 					}
@@ -356,7 +348,7 @@ int create() {
 					for (int i = 0; i < temp.split(para.at(9), ',').size(); i += 2) {
 						temp.addCrewMember(temp.split(para.at(9), ',').at(i), temp.split(para.at(9), ',').at(i + 1));
 					}
-					if (a) {
+					if (para.at(4) == "true") {
 						temp.setWeeklySales(std::stoi(para.at(10)));
 					}
 
