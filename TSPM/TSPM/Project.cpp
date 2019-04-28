@@ -62,14 +62,17 @@ void Project::addPhysicalMedium(PhysicalMedium * m)
 
 bool Project::containsCast(std::string name, std::string role)
 {
+	//Creates a list of crew members to be used in the binary search
 	std::vector<std::string> names;
 	for (CrewMember c : crewMembers)
 	{
 		names.push_back(c.name);
 	}
 
+	//
 	int index = binarySearch(names, 0, names.size() - 1, name);
 
+	//If the binary search returns -1 then the element was not found
 	if (index == -1)
 	{
 		return false;
@@ -78,17 +81,6 @@ bool Project::containsCast(std::string name, std::string role)
 	{
 		return true;
 	}
-
-	/*
-	for (CrewMember c : crewMembers)
-	{
-		if (c.name == name && c.role == role)
-		{
-			return true;
-		}
-	}
-	return false;
-	*/
 }
 
 void Project::addKeyword(std::string keyword)
@@ -98,11 +90,14 @@ void Project::addKeyword(std::string keyword)
 
 void Project::addCrewMember(std::string name, std::string role)
 {
+	//Stores the new vector of crew members 
 	std::vector<CrewMember> temp;
 	bool added = false;
 
+	//Adds all the crew members to the new vector
 	for (int i = 0; i < crewMembers.size(); i++)
 	{
+		//Inserts the new crew member at the correct place which will result in an alphebetically orderd vector of crew members 
 		if (crewMembers[i].name >= name && !added)
 		{
 			temp.push_back({ name, role });
@@ -112,13 +107,14 @@ void Project::addCrewMember(std::string name, std::string role)
 		
 
 	}
+	//Updates the crew members vector 
 	crewMembers = temp;
 
+	//Adds the current crew member to the end of the vector if it should be at the end alphabetically
 	if (crewMembers.size() == 0 || crewMembers.back().name < name)
 	{
 		crewMembers.push_back({ name, role });
 	}
-	std::cout <<  "";
 }
 
 void Project::addFilmingLocation(std::string location)
@@ -286,10 +282,13 @@ void Project::setPlayingInCinima(bool playing)
 std::string Project::save()
 {
 	std::ofstream f;
+	//Creates a file where the file name is the project id
 	f.open(std::to_string(projectID) + ".txt");
 
 	std::string data;
 
+
+	//Adds each attribute to the file delimeting by newlines
 	data = title + "\n";
 	data += summary + "\n";
 	data += releaseDate + "\n";
@@ -298,6 +297,7 @@ std::string Project::save()
 	data += (std::string)(unreleased ? "true" : "false") + "\n";
 	data += std::to_string(weeklySales) + "\n";
 
+	//Adds the vector of keywords to the file a comma represents the end of the keywords in the file
 	for (std::string keyword : keywords)
 	{
 		data += keyword + "\n";
@@ -305,6 +305,7 @@ std::string Project::save()
 
 	data += ",\n";
 
+	//Adds the vector of crew members to the file a comma represents the end of the crew members in the file
 	for (CrewMember crewMember : crewMembers)
 	{
 		data += crewMember.name + "\n";
@@ -313,12 +314,16 @@ std::string Project::save()
 
 	data += ",\n";
 
+	//Adds the vector of locations to the file a comma represents the end of the locations in the file
+
 	for (std::string location : filmingLocations)
 	{
 		data += location + "\n";
 	}
 
 	data += ",\n";
+
+	//Adds the vector of genres to the file a comma represents the end of the genres in the file
 
 	for (std::string genre : genres)
 	{
@@ -327,8 +332,11 @@ std::string Project::save()
 
 	data += ",\n";
 
+
+	//Writes the materials to the file
 	for (PhysicalMedium * physicalMedium : physcicalMeduims)
 	{
+		
 		if (physicalMedium->type == "VHS")
 		{
 			data += ((VHS*)physicalMedium)->save();
@@ -348,19 +356,23 @@ std::string Project::save()
 std::vector<std::string> Project::split(std::string text, char del)
 {
 	std::vector < std::string > ret;
+	//Adds first string to the vector to be appended to
 	ret.push_back("");
 	for (int i = 0; i < text.size(); i++)
 	{
+		//If the delimter is the current character, add the next element
 		if (text[i] == del)
 		{
 			ret.push_back("");
 		}
 		else
 		{
+			//Adds current character to the current element
 			ret.back() += text[i];
 		}
 	}
 
+	//Returns split string
 	return ret;
 }
 
