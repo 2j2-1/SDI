@@ -393,6 +393,7 @@ int create() {
 
 					c1.add(temp);
 					temp.save();
+					selectedProject = temp;
 				}
 				catch (std::invalid_argument ex){}
 				catch(std::out_of_range){}
@@ -593,7 +594,7 @@ int main(){
 		case 3:
 			if (selectedProject.getProjectID() != -1) {
 				screen = update();
-				if (_weeklySalesThreshold)
+				if (_weeklySalesThreshold<= selectedProject.getWeeklySales() && selectedProject.getPlayingInCinima() )
 					logWeeklySales(selectedProject);
 			}
 			game.stringBuffer.clear();
