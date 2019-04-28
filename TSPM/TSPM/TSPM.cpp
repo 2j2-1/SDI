@@ -343,7 +343,7 @@ int create() {
 					std::istringstream(para.at(4)) >> std::boolalpha >> a;
 					bool b;
 					std::istringstream(para.at(5)) >> std::boolalpha >> b;
-					Project temp(c1.projects.back().getProjectID()+1, para.at(0), para.at(1), para.at(2), std::stoi(para.at(3)), a, b);
+					Project temp(c1.projects.size(), para.at(0), para.at(1), para.at(2), std::stoi(para.at(3)), a, b);
 					for (int i = 0; i < temp.split(para.at(6), ',').size(); i++) {
 						temp.addGenre(temp.split(para.at(6), ',').at(i));
 					}
@@ -373,6 +373,7 @@ int create() {
 		}
 		
 		game.draw();
+		Sleep(150);
 	}
 	return -1;
 }
@@ -534,94 +535,6 @@ void logWeeklySales(Project p)
 }
 
 int main(){
-	Project p1(0, "Dumbo", "Ridiculed because of his enormous ears, a young circus elephant is assisted by a mouse to achieve his full potential.", "1942/01/02", 64, false, false);
-	p1.addKeyword("Try not to cry");
-	p1.addKeyword("another keyword");
-	p1.addFilmingLocation("Home");
-	p1.addFilmingLocation("not home");
-	p1.addCrewMember("Dumbo", "actor");
-	p1.addCrewMember("Dumbo", "producer");
-	p1.addCrewMember("Dumbo", "director");
-	p1.addCrewMember("Dumbo", "camera man");
-	p1.addCrewMember("Dumbo", "writer");
-	p1.addCrewMember("Dumbo's mum", "dead");
-	p1.addGenre("sad");
-	p1.addPhysicalMedium(new VHS(0,"VHS","Dumbo", "MP4", "MP4", "MP4", "MP4", "MP4"));
-
-	Project p2(1, "Jumbz", "Big elaphant and mum ded 2", "2019/04/27", 90, false, false);
-	p2.addKeyword("Try not to cry 2");
-	p2.addKeyword("another keyword 2");
-	p2.addFilmingLocation("Home 2");
-	p2.addFilmingLocation("not home 2");
-	p2.addCrewMember("Dumbo", "actor 2");
-	p2.addCrewMember("Dumbo's mum 2", "dead 2");
-	p2.addGenre("sad 2");
-
-	Project p3(2, "Jumbo", "Big elaphant and mum ded 2", "2019/04/27", 90, false, false);
-	p3.addKeyword("Try not to cry 2");
-	p3.addKeyword("another keyword 2");
-	p3.addFilmingLocation("Home 2");
-	p3.addFilmingLocation("not home 2");
-	p3.addCrewMember("Dumbo", "actor 2");
-	p3.addCrewMember("Dumbo's mum 2", "dead 2");
-	p3.addGenre("sad 2");
-
-	p3.addPhysicalMedium(new VHS(5, "VHS", "Dumbo on vhs", "MP4", "Standard", "Card", "English", "English"));
-	p3.addPhysicalMedium(new VHS(6, "VHS", "Dumbo on vhs", "MP4", "Standard", "Card", "English", "English"));
-	p3.addPhysicalMedium(new VHS(7, "VHS", "Dumbo on vhs", "MP4", "Standard", "Card", "English", "English"));
-
-	DVD * dvd1 = new DVD(8, "Blue ray", "Dumbo on blue ray", "MP4", "Wide sceen", "Plastic");
-	DVD * dvd2 = new DVD(9, "Blue ray", "Dumbo on blue ray remastered", "MP4", "Wide sceen", "Plastic");
-
-	dvd1->addAudioTrack("English");
-	dvd1->addAudioTrack("Spanish");
-	dvd1->addAudioTrack("French");
-
-	dvd1->addSubtitleLanguage("English");
-	dvd1->addSubtitleLanguage("Spanish");
-	dvd1->addSubtitleLanguage("French");
-
-	dvd1->addBonusFeature("English");
-	dvd1->addBonusFeature("Spanish");
-	dvd1->addBonusFeature("French");
-
-
-	dvd2->addAudioTrack("English");
-	dvd2->addAudioTrack("Spanish");
-	dvd2->addAudioTrack("French");
-
-	dvd2->addSubtitleLanguage("English");
-	dvd2->addSubtitleLanguage("Spanish");
-	dvd2->addSubtitleLanguage("French");
-
-	dvd2->addBonusFeature("English");
-	dvd2->addBonusFeature("Spanish");
-	dvd2->addBonusFeature("French");
-
-	p3.addPhysicalMedium(dvd1);
-	p3.addPhysicalMedium(dvd2);
-
-	//c1.add(p1);
-	//c1.add(p2);
-	//c1.add(p3);
-
-	Stack stack;
-
-	stack.push(p1);
-	stack.push(p2);
-	stack.push(p3);
-
-	std::vector<Project> vect;
-	
-	while (!stack.isEmpty())
-	{
-		vect.push_back(stack.pop());
-	}
-
-	//c1.write();
-	
-
-
 	int screen = -1;
 	game.setup();
 	game.blank_screen();
