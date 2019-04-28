@@ -317,7 +317,7 @@ int create() {
 					std::istringstream(para.at(4)) >> std::boolalpha >> a;
 					bool b;
 					std::istringstream(para.at(5)) >> std::boolalpha >> b;
-					Project temp(c1.projects.back().getProjectID()+1, para.at(0), para.at(1), para.at(2), std::stoi(para.at(3)), a, b);
+					Project temp(c1.projects.size(), para.at(0), para.at(1), para.at(2), std::stoi(para.at(3)), a, b);
 					for (int i = 0; i < temp.split(para.at(6), ',').size(); i++) {
 						temp.addGenre(temp.split(para.at(6), ',').at(i));
 					}
@@ -344,6 +344,7 @@ int create() {
 		}
 		
 		game.draw();
+		Sleep(150);
 	}
 	return -1;
 }
