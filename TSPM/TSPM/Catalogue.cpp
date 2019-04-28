@@ -290,12 +290,16 @@ void Catalogue::updateDirectories()
 
 void Catalogue::deleteProject(int projectID)
 {
-	projects.erase(projects.begin() + projectID, projects.begin() + projectID);
+	deleteProjectFile(projectID);
+
+	projects.erase(projects.begin() + projectID);
 
 	for (int i = projectID; i < projects.size(); i++)
 	{
 		projects[i].setProjectID(projects[i].getProjectID() - 1);
+		projects[i].save();
 	}
+	deleteProjectFile(projects.size());
 }
 
 void Catalogue::deleteProjectFile(int projectID)
