@@ -234,6 +234,12 @@ void Catalogue::add(Project p)
 	updateDirectories();
 }
 
+void Catalogue::update(Project p)
+{
+	projects[p.getProjectID()] = p;
+	p.save();
+}
+
 
 
 void Catalogue::read()

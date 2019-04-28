@@ -332,9 +332,8 @@ int update() {
 					}
 					if (para.size()==11)
 						temp.setWeeklySales(std::stoi(para.at(10)));
-					c1.deleteProject(selectedProject.getProjectID());
-					c1.deleteProjectFile(selectedProject.getProjectID());
-					c1.add(temp);
+
+					c1.update(temp);
 					selectedProject = temp;
 					temp.save();
 				}
