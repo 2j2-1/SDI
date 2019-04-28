@@ -198,11 +198,6 @@ std::vector<PhysicalMedium*> Project::getPhyicalMediums()
 
 void Project::setProjectID(int id)
 {
-	if (id < 0)
-	{
-		throw std::invalid_argument("Project ID must be positive.");
-	}
-
 	this->projectID = id;
 }
 
